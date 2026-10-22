@@ -1,0 +1,11 @@
+Lab 04 verification: 2026-10-23 00:18:10.111237
+PASS: both worksheets execute with warnings treated as errors.
+PASS: Star Wars plot sample sizes are 36, 81 and 59 as described.
+PASS: category counts and height medians agree with the written answers.
+PASS: Seoul has 8760 records, 365 complete days, no missing or duplicate hours.
+PASS: 295 non-operating zero records are separated; 8465 active records remain.
+PASS: 18:00 is the busiest mean hour among active records.
+PASS: all 10 figures and both rendered HTML files exist.
+PASS: completed HTML documents contain no answer placeholders or R errors.
+Visual review: all 10 PNG figures inspected; axes and legends checked.
+Pending human decisions: candidate topic, invitation acceptance, current Learn dates.
