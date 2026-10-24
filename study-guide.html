@@ -9,9 +9,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="Strong Tiger" />
 
+<meta name="date" content="2026-10-24" />
 
-<title>study-guide</title>
+<title>中文讲解：收入与糖尿病 Final Project</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -265,6 +267,27 @@ if (window.hljs) {
 
 
 
+<style type="text/css">body { color:#203744; line-height:1.65; font-size:16px; }
+.main-container { max-width:1020px; padding:28px 38px 65px; }
+h1,h2,h3 { color:#173e52; line-height:1.2; }
+h1.title { font-size:36px; margin-top:20px; }
+h3.subtitle { font-size:22px; font-weight:400; color:#526d7c; }
+h2 { margin-top:38px; padding-bottom:8px; border-bottom:1px solid #dce5e9; }
+h3 { margin-top:27px; }
+a { color:#126b85; }
+table { font-size:14px; margin:20px auto; }
+th { background:#eaf2f5; }
+.caption { font-size:13px; color:#59717e; line-height:1.45; }
+img { max-width:100%; }
+blockquote { background:#f5f8f9; border-left:3px solid #176b87; font-size:16px; }
+@media print {
+.main-container { max-width:none; padding:0; }
+body { font-size:10pt; }
+h2,h3 { break-after:avoid; }
+img, table { break-inside:avoid; }
+#TOC { display:none; }
+}
+</style>
 
 
 
@@ -361,185 +384,245 @@ display: none;
 
 
 
+<h1 class="title toc-ignore">中文讲解：收入与糖尿病 Final Project</h1>
+<h4 class="author">Strong Tiger</h4>
+<h4 class="date">2026-10-24</h4>
 
 </div>
 
 <div id="TOC">
 <ul>
-<li><a href="#lab-04%E5%85%88%E6%89%93%E5%BC%80%E6%88%90%E5%93%81%E5%86%8D%E8%AF%BB%E4%BB%A3%E7%A0%81" id="toc-lab-04先打开成品再读代码">Lab 04：先打开成品，再读代码</a>
-<ul>
-<li><a href="#%E5%85%88%E7%9C%8B%E5%93%AA%E4%BB%BD%E6%96%87%E4%BB%B6" id="toc-先看哪份文件">先看哪份文件</a></li>
-<li><a href="#%E8%BF%99%E5%91%A8%E5%88%B0%E5%BA%95%E8%A6%81%E5%81%9A%E4%BB%80%E4%B9%88" id="toc-这周到底要做什么">这周到底要做什么</a></li>
-<li><a href="#%E4%B8%A4%E4%BB%BD%E8%AF%BE%E4%BB%B6%E6%80%8E%E6%A0%B7%E7%94%A8%E5%88%B0%E8%BF%99%E9%87%8C" id="toc-两份课件怎样用到这里">两份课件怎样用到这里</a></li>
-<li><a href="#%E5%85%88%E8%AE%B0%E4%BD%8F%E8%BF%99%E4%B8%80%E4%B8%AA%E5%8C%BA%E5%88%ABaes-%E9%87%8C%E5%A4%96" id="toc-先记住这一个区别aes-里外">先记住这一个区别：aes 里外</a></li>
-<li><a href="#%E9%81%93%E7%BB%83%E4%B9%A0%E5%90%84%E7%BB%83%E4%BB%80%E4%B9%88" id="toc-道练习各练什么">8 道练习各练什么</a></li>
-<li><a href="#%E7%BC%BA%E5%A4%B1%E5%80%BC%E9%9B%B6noneunknown" id="toc-缺失值零noneunknown">缺失值、零、none、unknown</a></li>
-<li><a href="#%E7%AC%AC-8-%E9%A2%98%E4%B8%BA%E4%BB%80%E4%B9%88%E7%94%A8-log10" id="toc-第-8-题为什么用-log10">第 8 题为什么用 log10</a></li>
-<li><a href="#%E9%A6%96%E5%B0%94%E6%95%B0%E6%8D%AE%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8D%95%E7%8B%AC%E5%A4%84%E7%90%86%E9%9B%B6%E7%A7%9F%E8%B5%81" id="toc-首尔数据为什么单独处理零租赁">首尔数据为什么单独处理零租赁</a></li>
-<li><a href="#%E5%90%8E%E9%9D%A2%E4%BD%A0%E8%87%AA%E5%B7%B1%E5%B0%9D%E8%AF%95" id="toc-后面你自己尝试">后面你自己尝试</a></li>
-<li><a href="#%E4%BB%8D%E9%9C%80%E4%BD%A0%E4%BB%AC%E5%B0%8F%E7%BB%84%E5%A4%84%E7%90%86" id="toc-仍需你们小组处理">仍需你们小组处理</a></li>
-</ul></li>
+<li><a href="#%E5%85%88%E6%89%93%E5%BC%80%E4%BB%80%E4%B9%88" id="toc-先打开什么">先打开什么</a></li>
+<li><a href="#%E6%88%91%E4%BB%AC%E5%88%B0%E5%BA%95%E7%A0%94%E7%A9%B6%E4%BB%80%E4%B9%88" id="toc-我们到底研究什么">我们到底研究什么</a></li>
+<li><a href="#%E6%95%B0%E6%8D%AE%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%85%88%E6%A0%B8%E5%AF%B9" id="toc-数据为什么要先核对">数据为什么要先核对</a></li>
+<li><a href="#%E7%AC%AC%E4%B8%80%E5%BC%A0%E5%9B%BE%E7%9B%B4%E6%8E%A5%E6%AF%94%E8%BE%83" id="toc-第一张图直接比较">第一张图：直接比较</a></li>
+<li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E8%83%BD%E5%88%B0%E8%BF%99%E9%87%8C%E5%B0%B1%E4%B8%8B%E7%BB%93%E8%AE%BA" id="toc-为什么不能到这里就下结论">为什么不能到这里就下结论</a></li>
+<li><a href="#logistic-regression-%E6%98%AF%E4%BB%80%E4%B9%88" id="toc-logistic-regression-是什么">Logistic regression 是什么</a></li>
+<li><a href="#%E6%A0%87%E5%87%86%E5%8C%96%E4%BB%A5%E5%90%8E-23.7-%E5%AF%B9-9.4%E6%98%AF%E4%BB%80%E4%B9%88%E6%84%8F%E6%80%9D" id="toc-标准化以后-23.7-对-9.4是什么意思">“标准化以后 23.7% 对
+9.4%”是什么意思</a></li>
+<li><a href="#or-3.39-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E6%98%AF%E6%A6%82%E7%8E%87-3.39-%E5%80%8D" id="toc-or-3.39-为什么不是概率-3.39-倍">OR = 3.39 为什么不是概率 3.39
+倍</a></li>
+<li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%85%88%E5%88%86%E8%AE%AD%E7%BB%83%E9%9B%86%E5%92%8C%E6%B5%8B%E8%AF%95%E9%9B%86" id="toc-为什么先分训练集和测试集">为什么先分训练集和测试集</a></li>
+<li><a href="#%E7%AC%AC%E4%BA%8C%E4%B8%AA%E9%87%8D%E7%82%B986-%E5%87%86%E7%A1%AE%E7%8E%87%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E5%8E%89%E5%AE%B3" id="toc-第二个重点86-准确率为什么不厉害">第二个重点：86%
+准确率为什么不厉害</a></li>
+<li><a href="#%E5%81%9A%E4%BA%86%E5%93%AA%E4%BA%9B%E5%8F%AF%E9%9D%A0%E6%80%A7%E6%A3%80%E6%9F%A5" id="toc-做了哪些可靠性检查">做了哪些可靠性检查</a></li>
+<li><a href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E7%BB%93%E8%AE%BA" id="toc-一句话结论">一句话结论</a></li>
+<li><a href="#%E6%80%8E%E4%B9%88%E5%A4%8D%E7%8E%B0" id="toc-怎么复现">怎么复现</a></li>
+<li><a href="#%E4%BA%A4%E4%B9%8B%E5%89%8D%E7%94%B1%E5%B0%8F%E7%BB%84%E5%AE%8C%E6%88%90" id="toc-交之前由小组完成">交之前由小组完成</a></li>
 </ul>
 </div>
 
-<div id="lab-04先打开成品再读代码" class="section level1">
-<h1>Lab 04：先打开成品，再读代码</h1>
-<div id="先看哪份文件" class="section level2">
-<h2>先看哪份文件</h2>
-<p>双击本文件夹里的 <code>lab-04.html</code>，就能在浏览器看完整的 Star
-Wars 8 道练习：代码、图和英文解释都在一起。</p>
-<p><code>investigation.html</code>
-是期末小组项目的<strong>候选数据探索稿</strong>。这里先用首尔
-自行车租赁数据演示；你们四人还要讨论是否采用，并和老师核对选题。</p>
-<p>要在 RStudio 改代码，先双击 <code>ids-project.Rproj</code>
-打开这个项目， 再在 Files 面板打开 <code>lab-04.Rmd</code> 或
-<code>investigation.Rmd</code>。 修改 Rmd 后点 Knit，HTML
-才会更新。网页里的输出不能直接当作源代码修改。</p>
-<p><code>report.Rmd</code> 和 <code>presentation.Rmd</code>
-是课程给的期末报告和演示模板，
-本周不需要把整个期末项目交完，所以里面保留了原模板。</p>
+<div id="先打开什么" class="section level2">
+<h2>先打开什么</h2>
+<p>先看 <a href="report.html">英文报告</a>，再看 <a href="presentation.html">展示稿</a>。 用 RStudio 打开
+<code>cdc-diabetes-final.Rproj</code>；代码主要在
+<code>R/analysis.R</code>。 更完整的分析过程在 <a href="investigation.html">investigation.html</a>。 英文讲稿与答辩准备在
+<a href="speaker-notes.html">speaker-notes.html</a>。</p>
+<p>展示稿用左右方向键翻页；按 P 可查看讲者备注。前 8 页是约 7
+分钟的主要内容， 第 9 页是来源，后面 4 页是问答备用。直接打开 HTML
+不需要安装 R。</p>
 </div>
-<div id="这周到底要做什么" class="section level2">
-<h2>这周到底要做什么</h2>
-<p>根据你提供的 Lab 04 第 1–2 页，必做部分是：确定组员、准备 GitHub
-项目仓库、开始探索项目数据。第 3–6 页的 Star Wars 练习是可选练习。
-这里也把它们做完，方便你后面练习画图。</p>
-<p>“选数据集”就是选<strong>期末小组项目想研究的一套数据</strong>，不是在
-R 里挑一列， 也不是重新选择 Star Wars
-练习的数据。例如首尔自行车的每一行是一个小时，
-有租赁量、温度、小时、季节等信息，可以问“不同季节一天里的租赁高峰有什么区别”。</p>
-<p>选题还要你们四人同意。这里已经做出可看的初稿，不代表已经替全组决定。</p>
+<div id="我们到底研究什么" class="section level2">
+<h2>我们到底研究什么</h2>
+<p>问题是：<strong>把年龄、BMI
+和性别考虑进去以后，样本中不同收入群体的糖尿病状态是否还有差异？</strong></p>
+<p>这里的 diabetes status
+是“受访者报告自己是否被告知患有糖尿病”，不是我们做了验血，
+也不是预测这个人以后会不会得病。研究数据来自 2015 年美国 BRFSS
+调查的整理版本。</p>
+<p>我们不能把项目说成“证明贫困导致糖尿病”，也不能说“能诊断你或家人的疾病”。
+它可以帮助我们看清样本中的社会经济差异，提出值得进一步调查的问题。</p>
 </div>
-<div id="两份课件怎样用到这里" class="section level2">
-<h2>两份课件怎样用到这里</h2>
+<div id="数据为什么要先核对" class="section level2">
+<h2>数据为什么要先核对</h2>
+<p>UCI 文件有 253,680 行、23 列：21 个特征、一个结果、一个 ID。 Age 和
+Income 看起来是数字，但实际上是分组编号。</p>
 <ul>
-<li><code>Doing Data Science.pdf</code> 第 4–6
-页区分问题类型和检查数据是否适合问题：
-这里先做描述和探索，不提前给出因果结论。</li>
-<li>第 14–17 页讲观察性研究和混杂因素（confounding）：
-天气、季节、时段可能一起变化，“越暖租得越多”不能直接解释成升温导致更多租赁。</li>
-<li>第 33–34 页讲 Simpson’s paradox（辛普森悖论）：
-合并数据看到的关系，分组后可能改变。按季节分面，是提醒我们检查分组，而不是证明本数据一定有悖论。</li>
-<li><code>Visualising data.pdf</code> 第 9–10 页用 Anscombe 数据说明：
-平均数等摘要相近，图形仍可能很不同，所以既检查数字，也画图。</li>
-<li>第 18–19 页讲 ggplot2
-的层：<code>ggplot() + geom_...() + labs()</code>。 第 26、31–32
-页讲颜色映射、图例和继续调整图表。</li>
+<li>Age = 1 是 18-24 岁，不是 1 岁；Age = 9 是 60-64 岁。</li>
+<li>Income = 1 是家庭年收入低于 10,000 美元；Income = 8 是至少 75,000
+美元。</li>
+<li>ID 是行编号，不能当成一种健康特征放进模型。</li>
 </ul>
-<p>页码是 PDF
-阅读器显示的页序。这里没有把课件上的例子当作自己的数据分析结果。</p>
-</div>
-<div id="先记住这一个区别aes-里外" class="section level2">
-<h2>先记住这一个区别：aes 里外</h2>
-<pre class="r"><code>ggplot(starwars_df, aes(x = height, y = mass)) +
-  geom_point(color = &quot;pink&quot;)</code></pre>
-<p>例如 Luke 和 Leia 的点全是粉色：颜色是固定设置，写在
-<code>aes()</code> 外面。</p>
-<pre class="r"><code>ggplot(starwars_df, aes(x = height, y = mass, color = gender)) +
-  geom_point()</code></pre>
-<p>这次颜色跟着每个角色的 <code>gender</code> 改变，R 还会自动给图例。
-这叫 mapping（映射）。<code>aes(size = birth_year)</code>
-同理：不同数值映射成不同点大小。</p>
-<p>注意：整理表格时常用 <code>%&gt;%</code>；给 ggplot 加图层用
-<code>+</code>。</p>
-</div>
-<div id="道练习各练什么" class="section level2">
-<h2>8 道练习各练什么</h2>
+<p>网页对 Diabetes_binary
+的解释与实际文件不一致。我们对照了同一发布者的三分类原文件，
+逐行核对全部 21 个特征，发现：</p>
 <table>
 <thead>
 <tr class="header">
-<th>题号</th>
-<th>做什么</th>
-<th>最需要理解的地方</th>
+<th>原始状态</th>
+<th align="right">人数</th>
+<th align="right">二分类文件</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>1</td>
-<td><code>glimpse()</code> 看数据结构</td>
-<td>一行是什么、每列是什么类型</td>
+<td>没有报告糖尿病，或只在怀孕期间有过</td>
+<td align="right">213,703</td>
+<td align="right">0</td>
 </tr>
 <tr class="even">
-<td>2</td>
-<td>所有点设成粉色</td>
-<td>固定颜色放在 <code>aes()</code> 外</td>
+<td>糖尿病前期</td>
+<td align="right">4,631</td>
+<td align="right">0</td>
 </tr>
 <tr class="odd">
-<td>3</td>
-<td>标题、坐标轴、大小图例</td>
-<td><code>labs(size = &quot;...&quot;)</code> 改的是大小图例标题</td>
-</tr>
-<tr class="even">
-<td>4</td>
-<td>身高直方图</td>
-<td><code>binwidth = 20</code> 表示每个区间宽 20 cm</td>
-</tr>
-<tr class="odd">
-<td>5</td>
-<td>身高与 sex 的箱线图加散点</td>
-<td>中位数、分布范围、每组人数都要看</td>
-</tr>
-<tr class="even">
-<td>6</td>
-<td>sex 的条形图</td>
-<td>比较每个类别有多少角色</td>
-</tr>
-<tr class="odd">
-<td>7</td>
-<td>sex 与 gender 的堆叠条形图</td>
-<td>两列有关联，不代表两列完全一样</td>
-</tr>
-<tr class="even">
-<td>8</td>
-<td>身高、体重、sex、gender 的散点图</td>
-<td>x、y、颜色、形状分别表达四列</td>
+<td>糖尿病</td>
+<td align="right">35,346</td>
+<td align="right">1</td>
 </tr>
 </tbody>
 </table>
-<p>题 5 把原始点也画出来，是因为有的组只有一个角色，
-单看箱线图容易误以为每组的信息都一样多。</p>
+<p>所以我们把 1 理解为“报告糖尿病”。0
+里面也可能有人身体不适、有其他疾病，不能叫“健康组”。
+报告中说明了这个发现，另外做了“排除糖尿病前期”的检查。</p>
+<p>文件里没有
+NA，不代表原始调查没有缺失、没有人拒绝回答，整理文件可能已经删过这些记录。
+这个文件也没有调查权重，因此我们的百分比是<strong>样本百分比，不是全美国的患病率</strong>。</p>
 </div>
-<div id="缺失值零noneunknown" class="section level2">
-<h2>缺失值、零、none、unknown</h2>
-<p><code>NA</code> 表示没有记录；<code>0</code>
-是有记录的数值零。它们不能互换。</p>
-<p><code>drop_na(height, mass)</code> 只排除身高或体重缺失的行，不会因为
-角色缺失“出生年份”就把它从只看身高体重的图里删掉。</p>
-<p>题 2–3 需要身高、体重、出生年份，能用 36 行；题 8
-只要求身高体重完整， 能用 59 行。各题的缺失规则写在答案里。</p>
-<p>Star Wars 的 <code>none</code>
-是数据里本来就有的类别；<code>unknown</code> 是我们给
-原来的分类缺失值加的显示标签。这两个组没有合并。</p>
+<div id="第一张图直接比较" class="section level2">
+<h2>第一张图：直接比较</h2>
+<p>训练样本中：</p>
+<ul>
+<li>家庭年收入低于 10,000 美元：约 24.3% 报告糖尿病。</li>
+<li>年收入至少 75,000 美元：约 8.0%。</li>
+<li>两者相减，约 16.3 个百分点。</li>
+</ul>
+<p><strong>百分点（percentage points）</strong>和百分比变化不同。 例如
+25% 减去 10% 是 15 个百分点；相对增加则是 150%。
+我们主要用前一种说法，比较直观。</p>
+<p>注意原始比例不是每档收入提高就严格下降。第二低收入档的原始比例最高；
+不能为了让故事好听就写成“原始数据完全单调”。</p>
 </div>
-<div id="第-8-题为什么用-log10" class="section level2">
-<h2>第 8 题为什么用 log10</h2>
-<p>Jabba 的体重是 1,358 kg，会把其他角色压在图底部。
-对数坐标保留这条记录，同时让其他点容易看清。</p>
-<p>纵轴从 10 到 100、从 100 到 1000，都是乘 10，距离相同。
-因此相等的纵向距离表示相同的倍数，不是相同的公斤差。
-如果觉得这里陌生，可以先读完普通坐标的第 3 题再回来对照。</p>
+<div id="为什么不能到这里就下结论" class="section level2">
+<h2>为什么不能到这里就下结论</h2>
+<p>想象两组各有 100 人，一组大部分是退休老人，一组大部分是年轻人。
+即使两组收入不同，糖尿病比例的差异也可能和年龄分布有关。
+只比较两组的总比例，就把年龄差异和收入差异混在一起了。</p>
+<p>这就是我们要考虑 age、BMI 和 sex 的原因。它们是本项目选定的调整变量，
+不是全部可能影响糖尿病的因素。BMI
+也可能在确诊后改变，所以调整不等于找出了因果。</p>
 </div>
-<div id="首尔数据为什么单独处理零租赁" class="section level2">
-<h2>首尔数据为什么单独处理零租赁</h2>
-<p>假设一个小时租了 0 辆：
-可能真的没人租，也可能系统没开。两种含义不能混在一起。</p>
-<p>这份数据里，295 个未运营小时全是零租赁。原表完整保留在
-<code>bikes</code>， 而画运营期租赁图时使用
-<code>bikes_active</code>，里面有 8,465 个小时。
-这里描述的是实际租赁记录，不是所有人的潜在出行需求。</p>
+<div id="logistic-regression-是什么" class="section level2">
+<h2>Logistic regression 是什么</h2>
+<p>Logistic regression（逻辑回归）适合研究 0/1 结果。 它让模型输出处于 0
+和 1 之间的概率，而不是可能超过 100% 的普通直线预测。</p>
+<p>本项目的模型结构是：</p>
+<pre class="r"><code>Diabetes ~ Income + Age + splines::ns(BMI, df = 3) + Sex</code></pre>
+<ul>
+<li><code>Diabetes</code>：要解释的 0/1 结果。</li>
+<li><code>Income</code>：用八档类别，不把 1 到 8 当成等距金额。</li>
+<li><code>Age</code>：用十三档类别，不把分组代码当真实年龄。</li>
+<li><code>ns(BMI, df = 3)</code>：允许 BMI
+与结果之间是一条比较平滑的曲线。</li>
+<li><code>Sex</code>：进一步考虑记录中的性别差异。</li>
+</ul>
+<p>自然三次样条这个词不需要先硬背。先理解它的作用： BMI 从 20 增到
+25，与从 40 增到 45，对模型的关联未必相同，因此不强迫它是一条直线。
+报告也检查了改成线性 BMI 后，主要结论是否变化。</p>
 </div>
-<div id="后面你自己尝试" class="section level2">
-<h2>后面你自己尝试</h2>
-<p>先改第 2 题的颜色，再把第 4 题的 binwidth 从 20 改成 10，
-观察图怎样变化。最后只看题目，尝试自己写第 6 题。 每次改完点
-Knit，对照图与代码，不必一次看懂所有段落。</p>
+<div id="标准化以后-23.7-对-9.4是什么意思" class="section level2">
+<h2>“标准化以后 23.7% 对 9.4%”是什么意思</h2>
+<p>为了公平比较，我们让每一档收入都使用相同的年龄、BMI、性别分布。
+具体做法是：保留每位训练受访者的这些特征，分别计算模型在八个收入档下的概率，
+再对同一批参考受访者求平均。</p>
+<p>这是一种<strong>模型比较方法</strong>。不能理解成“把某个人收入提高，他就一定会变成这个风险”。</p>
+<p>得到的最低与最高收入组模型标准化概率约为 23.7% 和 9.4%，差约
+<strong>14.3 个百分点</strong>。 95% 模型区间约为 <strong>13.4-15.2
+个百分点</strong>。</p>
+<p>这里的区间反映给定模型下的估计不确定性，不包含原始复杂抽样设计的完整不确定性。
+样本大使区间比较窄，也不能消除遗漏变量和抽样偏差。</p>
 </div>
-<div id="仍需你们小组处理" class="section level2">
-<h2>仍需你们小组处理</h2>
-<p>确认候选数据是否采用、接受 GitHub 邀请、核对 Learn 当前的项目安排。
-模板 README 和旧课程网页的第一次 check-in
-周次不一致，所以这里没有替你确认日期。</p>
+<div id="or-3.39-为什么不是概率-3.39-倍" class="section level2">
+<h2>OR = 3.39 为什么不是概率 3.39 倍</h2>
+<p>Odds（优势）是 p/(1-p)，而 probability（概率）是
+p，两者不是同一个量。 本模型的最低相对最高收入组条件 odds ratio 约为
+3.39。</p>
+<p>它不是“患病概率是 3.39 倍”，也不是“贫困造成 3.39 倍风险”。
+报告优先用标准化后的百分比与百分点差来解释实际大小。</p>
+<p>还有一个细节：23.7% 和 9.4% 是跨所有参考受访者平均后的概率， 而 3.39
+来自模型的条件优势比。不能用这两个平均概率强求算出同一个条件 OR。</p>
 </div>
+<div id="为什么先分训练集和测试集" class="section level2">
+<h2>为什么先分训练集和测试集</h2>
+<p>训练集有 202,943 条，测试集有 50,737
+条。分组时保留了相近的糖尿病比例。
+由于两类分别向下取整，训练人数不一定恰好是总人数乘 0.8 的整数。</p>
+<p>训练集用于看图、估计模型。测试集留着检查模型在没有用于拟合的记录上表现怎样，
+可以减少“只在做过的题上考试”的问题。本项目没有用测试集来挑阈值。</p>
+</div>
+<div id="第二个重点86-准确率为什么不厉害" class="section level2">
+<h2>第二个重点：86% 准确率为什么不厉害</h2>
+<p>样本里约 86% 的记录属于二分类的 0。 如果模型什么都不看，每个人都猜
+0，就已经有约 86% 的 accuracy（准确率）。</p>
+<p>因此我们同时看：</p>
+<table>
+<thead>
+<tr class="header">
+<th>英文</th>
+<th>中文和用途</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>AUC</td>
+<td>检查模型是否倾向于给阳性记录更高分；0.5 接近随机排序</td>
+</tr>
+<tr class="even">
+<td>Brier score</td>
+<td>概率预测与真实 0/1 的平方误差平均；越低越好</td>
+</tr>
+<tr class="odd">
+<td>Sensitivity</td>
+<td>真正阳性的人里面，被判为阳性的比例</td>
+</tr>
+<tr class="even">
+<td>Calibration</td>
+<td>预测某组有 20% 阳性时，实际比例是否也接近 20%</td>
+</tr>
+</tbody>
+</table>
+<p>加收入以后，测试 AUC 从约 0.750 增到 0.768。 但在固定 0.5
+阈值下，敏感度只有约 6.5%。 所以不能拿约 86%
+的准确率宣传成有效的糖尿病筛查工具。</p>
+</div>
+<div id="做了哪些可靠性检查" class="section level2">
+<h2>做了哪些可靠性检查</h2>
+<p>我们分别改动了三个具体选择：</p>
+<ol style="list-style-type: decimal">
+<li>把 BMI 曲线换成直线。</li>
+<li>排除原始三分类中的糖尿病前期记录。</li>
+<li>排除 BMI 大于 60 的记录。</li>
+</ol>
+<p>最低相对最高收入的 OR 分别约为 3.46、3.52、3.37，主分析约为 3.39。
+方向和大致大小比较稳定，但不代表所有偏差都已经消失。</p>
+<p>24,206 条重复回答模式没有直接删除：两个人完全可能给出一样的离散答案。
+没有真实身份信息时，不能仅凭回答一样就认定是同一个人被重复记录。</p>
+</div>
+<div id="一句话结论" class="section level2">
+<h2>一句话结论</h2>
+<p><strong>在这份样本中，考虑年龄、BMI
+和性别后，收入组间的糖尿病报告比例仍存在明显差异；
+但这不能证明因果，也不能把模型直接用于临床诊断。</strong></p>
+<p>它为进一步研究健康公平提供线索，而不是替医生给出治疗建议。</p>
+</div>
+<div id="怎么复现" class="section level2">
+<h2>怎么复现</h2>
+<p>在 RStudio 中打开项目文件，在 Console 运行：</p>
+<pre class="r"><code>source(&quot;render_project.R&quot;)
+source(&quot;verify_project.R&quot;)</code></pre>
+<p>如果新电脑缺少包，先运行：</p>
+<pre class="r"><code>source(&quot;R/install.R&quot;)</code></pre>
+<p>原始 CSV 已经包含在文件夹里，复现分析不需要再次下载数据。
+不要只移动单个 Rmd；保留整个项目的 data、R、results、figures 和 vendor
+文件夹。</p>
+</div>
+<div id="交之前由小组完成" class="section level2">
+<h2>交之前由小组完成</h2>
+<p>大家需要确认题目、理解图和方法、练习讲稿，并按照当前 Learn
+要求完成实际提交。 项目还包括真实的 tutor check-in、组员协作与个人 peer
+evaluation； 这些不能用一份生成的文件代替。</p>
+<p>报告已经如实说明 ChatGPT 参与了代码与文字起草。按课程当前规定填写 AI
+使用声明。</p>
 </div>
 
 

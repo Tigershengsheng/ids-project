@@ -1,0 +1,23 @@
+{
+  "rows_compared": 253680,
+  "predictor_row_mismatches": 0,
+  "uci_binary_matches_original_binary": true,
+  "cross_tab_threeclass_vs_binary": [
+    {
+      "original_class": 0,
+      "binary_code": 0,
+      "n": 213703
+    },
+    {
+      "original_class": 1,
+      "binary_code": 0,
+      "n": 4631
+    },
+    {
+      "original_class": 2,
+      "binary_code": 1,
+      "n": 35346
+    }
+  ],
+  "interpretation": "Original class 2 maps to binary 1; original classes 0 and 1 map to binary 0. The UCI text saying binary 1 includes prediabetes disagrees with these files."
+}

@@ -1,0 +1,162 @@
+{
+  "offline_network_blocked": true,
+  "slide_count": 13,
+  "slides": [
+    {
+      "title": "Household income and\nreported diabetes",
+      "text": "Household income and\nreported diabetes\nDoes the income gap remain after accounting\nfor age and BMI?\n\nStrong Tiger · Tiger, Harry, yingcheLiu and Reiyume\n\nCleaned 2015 BRFSS sample · University of Edinburgh · 24 October 2026\n\n1 / 13",
+      "scrollHeight": 681,
+      "clientHeight": 681,
+      "canvasHeight": 900.495849609375,
+      "overflow": [],
+      "slide": 1
+    },
+    {
+      "title": "Data and outcome",
+      "text": "Data and outcome\n\n253,680 adult survey responses · 21 indicators\n\nSource: cleaned 2015 CDC BRFSS files, linked through UCI\nOutcome: reported diabetes, verified against the original three-category file\nAge and income are categories, not exact ages or dollar amounts\n202,943 training / 50,737 test records\n\nNo survey weights in this extract: our results describe this sample.\n\nSources: CDC 2015 documentation; UCI dataset 891; Teboul's original files\n\n2 / 13",
+      "scrollHeight": 681,
+      "clientHeight": 681,
+      "canvasHeight": 900.495849609375,
+      "overflow": [],
+      "slide": 2
+    },
+    {
+      "title": "Observed income differences",
+      "text": "Observed income differences\n\nLowest income: 24.3% · Highest income: 8.0%\n\nTraining sample. Points show observed proportions; bars show 95% Wilson intervals.\n\n3 / 13",
+      "scrollHeight": 681,
+      "clientHeight": 681,
+      "canvasHeight": 900.495849609375,
+      "overflow": [],
+      "slide": 3
+    },
+    {
+      "title": "Making an adjusted comparison",
+      "text": "Making an adjusted comparison\n\nThe income groups differ in age and BMI.\n\nCharacteristic\tIncome < $10,000\tIncome $75,000+\nAged 60 or older\t41.4%\t36.5%\nMean BMI\t29.7\t27.6\n\nLogistic regression: income band + age category + curved BMI term + sex\n\nWe compare income bands using the same age, BMI and sex distribution.\n\nIncome and age are categorical. BMI uses a natural cubic spline with 3 degrees of freedom.\n\n4 / 13",
+      "scrollHeight": 681,
+      "clientHeight": 681,
+      "canvasHeight": 900.495849609375,
+      "overflow": [],
+      "slide": 4
+    },
+    {
+      "title": "The adjusted income gap remains",
+      "text": "The adjusted income gap remains\n\nLowest minus highest: 14.3 percentage points\n95% model-based interval: 13.4-15.2 points\n\nStandardised to the training sample's joint covariate distribution. Not a causal effect.\n\n5 / 13",
+      "scrollHeight": 681,
+      "clientHeight": 681,
+      "canvasHeight": 900.495849609375,
+      "overflow": [],
+      "slide": 5
+    },
+    {
+      "title": "Why 86% accuracy is not enough",
+      "text": "Why 86% accuracy is not enough\nModel\tAUC\tAccuracy\tSensitivity\nAlways predict no diabetes\t0.500\t86.1%\t0.0%\nAge + BMI + sex\t0.750\t86.0%\t3.9%\nAdd income\t0.768\t86.1%\t6.5%\n\nAdding income improves ranking and probability error modestly.\n\nAt a 0.5 threshold, the model identifies only 6.5% of the diabetes cases.\n\nUseful for describing group differences; not a validated screening rule.\n\nUntouched test sample, n = 50,737. Sensitivity is the fraction of positive cases identified.\n\n6 / 13",
+      "scrollHeight": 681,
+      "clientHeight": 681,
+      "canvasHeight": 900.495849609375,
+      "overflow": [],
+      "slide": 6
+    },
+    {
+      "title": "Robustness of the income comparison",
+      "text": "Robustness of the income comparison\n\nLowest versus highest income: adjusted odds ratio\n\nAnalysis\tOR\t95% model-based interval\nPrimary model\t3.39\t3.18 - 3.61\nLinear BMI\t3.46\t3.25 - 3.68\nExclude prediabetes\t3.52\t3.30 - 3.75\nExclude BMI above 60\t3.37\t3.16 - 3.59\n\nThe association is similar under these three checks.\n\nAn odds ratio is not a probability ratio. Sensitivity checks do not eliminate confounding.\n\n7 / 13",
+      "scrollHeight": 681,
+      "clientHeight": 681,
+      "canvasHeight": 900.495849609375,
+      "overflow": [],
+      "slide": 7
+    },
+    {
+      "title": "What the findings support",
+      "text": "What the findings support\n\nA substantial income difference remains in this sample.\n\nIt deserves further investigation when discussing accessible health education and support.\n\nThe analysis cannot establish:\n\nthat changing income would cause the observed difference;\ncurrent national prevalence from selected 2015 responses;\nan individual's diagnosis or the best service allocation.\n\nNext step: newer survey data with weights and sampling design.\n\n8 / 13",
+      "scrollHeight": 681,
+      "clientHeight": 681,
+      "canvasHeight": 900.495849609375,
+      "overflow": [],
+      "slide": 8
+    },
+    {
+      "title": "Sources and acknowledgement",
+      "text": "Sources and acknowledgement\nCDC. 2015 BRFSS survey data and documentation\nCDC. 2015 BRFSS codebook: household income, age and diabetes\nCDC. BRFSS survey methods and weighting\nAlex Teboul. Original cleaned files, CC0\nUCI. CDC Diabetes Health Indicators, accessed 24 October 2026\n\nR code and results: project repository\n\nChatGPT assisted with planning, code, debugging and drafting. Numerical results were generated and checked in R.\n\n9 / 13",
+      "scrollHeight": 681,
+      "clientHeight": 681,
+      "canvasHeight": 900.495849609375,
+      "overflow": [],
+      "slide": 9
+    },
+    {
+      "title": "Backup: test-sample calibration",
+      "text": "Backup: test-sample calibration\n\nTen probability groups; 95% Wilson intervals. Calibration slope = 0.98.\n\n10 / 13",
+      "scrollHeight": 681,
+      "clientHeight": 681,
+      "canvasHeight": 900.495849609375,
+      "overflow": [],
+      "slide": 10
+    },
+    {
+      "title": "Backup: the outcome coding audit",
+      "text": "Backup: the outcome coding audit\n\nAll 253,680 rows and all 21 predictor columns were compared.\n\nOriginal\tBinary\tRespondents\n0: no diabetes / pregnancy only\t0\t213,703\n1: prediabetes\t0\t4,631\n2: diabetes\t1\t35,346\n\nThe binary positive class matches diabetes only, despite the website wording.\n\nDirect comparison of the UCI CSV and the original three-category file. No predictor-row mismatches.\n\n11 / 13",
+      "scrollHeight": 681,
+      "clientHeight": 681,
+      "canvasHeight": 900.495849609375,
+      "overflow": [],
+      "slide": 11
+    },
+    {
+      "title": "Backup: adjusted odds ratios",
+      "text": "Backup: adjusted odds ratios\n\nReference: income $75,000+. Model-based 95% intervals; odds ratios are not risk ratios.\n\n12 / 13",
+      "scrollHeight": 681,
+      "clientHeight": 681,
+      "canvasHeight": 900.495849609375,
+      "overflow": [],
+      "slide": 12
+    },
+    {
+      "title": "Backup: allowing a curved BMI association",
+      "text": "Backup: allowing a curved BMI association\n\nExample profile: female, age 50-54, income $75,000+. Illustration, not an individual clinical assessment.\n\n13 / 13",
+      "scrollHeight": 681,
+      "clientHeight": 681,
+      "canvasHeight": 900.495849609375,
+      "overflow": [],
+      "slide": 13
+    }
+  ],
+  "report": {
+    "title": "Household income and reported diabetes",
+    "width": 1200,
+    "scrollWidth": 1185,
+    "imageCount": 3,
+    "h2": [
+      "Research question",
+      "Data and preparation",
+      "Methods",
+      "Findings",
+      "Discussion and limitations",
+      "Conclusion",
+      "References"
+    ]
+  },
+  "other_documents": [
+    {
+      "title": "中文讲解：收入与糖尿病 Final Project",
+      "width": 1200,
+      "scrollWidth": 1185,
+      "textLength": 3838,
+      "imageErrors": 0
+    },
+    {
+      "title": "Presentation script and questions",
+      "width": 1200,
+      "scrollWidth": 1185,
+      "textLength": 9382,
+      "imageErrors": 0
+    },
+    {
+      "title": "Investigation: income and reported diabetes",
+      "width": 1200,
+      "scrollWidth": 1185,
+      "textLength": 8845,
+      "imageErrors": 0
+    }
+  ],
+  "javascript_exceptions": []
+}

@@ -1,0 +1,583 @@
+{
+  "audit": {
+    "n": 253680,
+    "n_features": 21,
+    "n_positive": 35346,
+    "n_prediabetes": 4631,
+    "n_no_diabetes": 213703,
+    "positive_fraction": 0.13933301798,
+    "duplicated_response_profiles": 24206,
+    "bmi_over_60": 805,
+    "data_sha256": "9f71fda9d4ae5f4878c99b9233b6a16accfa9a17c194116a6b78100540934964",
+    "original_sha256": "a971809d0786d2d7d7f6070f83dfe8af9d860ea33a79e0e2701c8a49f78f9861"
+  },
+  "train_n": 202943,
+  "test_n": 50737,
+  "train_cases": 28276,
+  "test_cases": 7070,
+  "raw_income": [
+    {
+      "IncomeCode": 1,
+      "N": 7831,
+      "Cases": 1900,
+      "Rate": 0.2426254629,
+      "MeanBMI": 29.7416677308,
+      "Age60plus": 0.41437875112,
+      "Female": 0.6705401609,
+      "lower": 0.23325884239,
+      "upper": 0.25224446725,
+      "IncomeLabel": "< $10,000"
+    },
+    {
+      "IncomeCode": 2,
+      "N": 9475,
+      "Cases": 2483,
+      "Rate": 0.26205804749,
+      "MeanBMI": 29.8387335092,
+      "Age60plus": 0.58005277045,
+      "Female": 0.67609498681,
+      "lower": 0.25330115922,
+      "upper": 0.27100779567,
+      "IncomeLabel": "$10,000-14,999"
+    },
+    {
+      "IncomeCode": 3,
+      "N": 12782,
+      "Cases": 2891,
+      "Rate": 0.22617743702,
+      "MeanBMI": 29.199890471,
+      "Age60plus": 0.58097324362,
+      "Female": 0.6560788609,
+      "lower": 0.21900772405,
+      "upper": 0.23351168795,
+      "IncomeLabel": "$15,000-19,999"
+    },
+    {
+      "IncomeCode": 4,
+      "N": 16077,
+      "Cases": 3228,
+      "Rate": 0.20078372831,
+      "MeanBMI": 28.946507433,
+      "Age60plus": 0.59451390185,
+      "Female": 0.63562853766,
+      "lower": 0.19466337582,
+      "upper": 0.20704703687,
+      "IncomeLabel": "$20,000-24,999"
+    },
+    {
+      "IncomeCode": 5,
+      "N": 20756,
+      "Cases": 3637,
+      "Rate": 0.17522644055,
+      "MeanBMI": 28.7511081133,
+      "Age60plus": 0.60604162652,
+      "Female": 0.60705338215,
+      "lower": 0.17011484638,
+      "upper": 0.18045822873,
+      "IncomeLabel": "$25,000-34,999"
+    },
+    {
+      "IncomeCode": 6,
+      "N": 29171,
+      "Cases": 4194,
+      "Rate": 0.14377292517,
+      "MeanBMI": 28.6382366048,
+      "Age60plus": 0.56233930959,
+      "Female": 0.56213362586,
+      "lower": 0.13979352771,
+      "upper": 0.14784613164,
+      "IncomeLabel": "$35,000-49,999"
+    },
+    {
+      "IncomeCode": 7,
+      "N": 34454,
+      "Cases": 4157,
+      "Rate": 0.12065362512,
+      "MeanBMI": 28.3924943403,
+      "Age60plus": 0.48325303303,
+      "Female": 0.53468392639,
+      "lower": 0.11725648107,
+      "upper": 0.12413535042,
+      "IncomeLabel": "$50,000-74,999"
+    },
+    {
+      "IncomeCode": 8,
+      "N": 72397,
+      "Cases": 5786,
+      "Rate": 0.079920438692,
+      "MeanBMI": 27.5844164813,
+      "Age60plus": 0.3645869304,
+      "Female": 0.49506195008,
+      "lower": 0.077967370554,
+      "upper": 0.081918084167,
+      "IncomeLabel": "$75,000 or more"
+    }
+  ],
+  "standardised": [
+    {
+      "IncomeCode": 1,
+      "Estimate": 0.23734710577,
+      "lower": 0.22854084283,
+      "upper": 0.24615336872,
+      "IncomeLabel": "< $10,000"
+    },
+    {
+      "IncomeCode": 2,
+      "Estimate": 0.22411426551,
+      "lower": 0.21661102776,
+      "upper": 0.23161750326,
+      "IncomeLabel": "$10,000-14,999"
+    },
+    {
+      "IncomeCode": 3,
+      "Estimate": 0.20287439686,
+      "lower": 0.19652797341,
+      "upper": 0.20922082032,
+      "IncomeLabel": "$15,000-19,999"
+    },
+    {
+      "IncomeCode": 4,
+      "Estimate": 0.18114060903,
+      "lower": 0.17570490395,
+      "upper": 0.18657631411,
+      "IncomeLabel": "$20,000-24,999"
+    },
+    {
+      "IncomeCode": 5,
+      "Estimate": 0.15732517811,
+      "lower": 0.15279937196,
+      "upper": 0.16185098425,
+      "IncomeLabel": "$25,000-34,999"
+    },
+    {
+      "IncomeCode": 6,
+      "Estimate": 0.13295511749,
+      "lower": 0.12935891441,
+      "upper": 0.13655132057,
+      "IncomeLabel": "$35,000-49,999"
+    },
+    {
+      "IncomeCode": 7,
+      "Estimate": 0.12064267257,
+      "lower": 0.11735782529,
+      "upper": 0.12392751984,
+      "IncomeLabel": "$50,000-74,999"
+    },
+    {
+      "IncomeCode": 8,
+      "Estimate": 0.094397365229,
+      "lower": 0.092147959973,
+      "upper": 0.096646770484,
+      "IncomeLabel": "$75,000 or more"
+    }
+  ],
+  "odds_ratios": [
+    {
+      "IncomeCode": 1,
+      "OR_crude": 3.6880194363,
+      "lower_crude": 3.479384164,
+      "upper_crude": 3.909165163,
+      "OR_adjusted": 3.3914453827,
+      "lower_adjusted": 3.1839372827,
+      "upper_adjusted": 3.6124774966
+    },
+    {
+      "IncomeCode": 2,
+      "OR_crude": 4.0883006335,
+      "lower_crude": 3.8769260951,
+      "upper_crude": 4.3111995587,
+      "OR_adjusted": 3.1115489478,
+      "lower_adjusted": 2.9375543497,
+      "upper_adjusted": 3.2958494386
+    },
+    {
+      "IncomeCode": 3,
+      "OR_crude": 3.3649251959,
+      "lower_crude": 3.2027866518,
+      "upper_crude": 3.5352718756,
+      "OR_adjusted": 2.691042936,
+      "lower_adjusted": 2.5510577701,
+      "upper_adjusted": 2.8387095614
+    },
+    {
+      "IncomeCode": 4,
+      "OR_crude": 2.8922226386,
+      "lower_crude": 2.7593836763,
+      "upper_crude": 3.031456576,
+      "OR_adjusted": 2.2946298049,
+      "lower_adjusted": 2.1813493388,
+      "upper_adjusted": 2.4137930812
+    },
+    {
+      "IncomeCode": 5,
+      "OR_crude": 2.445864724,
+      "lower_crude": 2.3388325345,
+      "upper_crude": 2.5577950365,
+      "OR_adjusted": 1.8961287268,
+      "lower_adjusted": 1.8073577718,
+      "upper_adjusted": 1.9892597939
+    },
+    {
+      "IncomeCode": 6,
+      "OR_crude": 1.9331060345,
+      "lower_crude": 1.8529947643,
+      "upper_crude": 2.0166807875,
+      "OR_adjusted": 1.5237316687,
+      "lower_adjusted": 1.4570250793,
+      "upper_adjusted": 1.5934922679
+    },
+    {
+      "IncomeCode": 7,
+      "OR_crude": 1.579602898,
+      "lower_crude": 1.5144795974,
+      "upper_crude": 1.6475265297,
+      "OR_adjusted": 1.3481684049,
+      "lower_adjusted": 1.2900876292,
+      "upper_adjusted": 1.4088640235
+    }
+  ],
+  "gap": {
+    "raw": 0.16270502421,
+    "adjusted": 0.14294974054,
+    "lower": 0.13384337281,
+    "upper": 0.15205610828
+  },
+  "metrics": [
+    {
+      "Model": "Constant baseline",
+      "AUC": 0.5,
+      "Brier": 0.11992872095,
+      "LogLoss": 0.40377457968,
+      "Accuracy": 0.86065396062,
+      "Sensitivity": 0,
+      "Specificity": 1
+    },
+    {
+      "Model": "Age + BMI + sex",
+      "AUC": 0.75015255452,
+      "Brier": 0.10766923628,
+      "LogLoss": 0.35427290339,
+      "Accuracy": 0.86043715632,
+      "Sensitivity": 0.038755304102,
+      "Specificity": 0.99347333226
+    },
+    {
+      "Model": "Age + BMI + sex + income",
+      "AUC": 0.7681541792,
+      "Brier": 0.1058568313,
+      "LogLoss": 0.34671305207,
+      "Accuracy": 0.86085105544,
+      "Sensitivity": 0.065063649222,
+      "Specificity": 0.98969473515
+    }
+  ],
+  "calibration": [
+    {
+      "Decile": 1,
+      "N": 5073,
+      "Cases": 62,
+      "Observed": 0.012221565149,
+      "Predicted": 0.011115852921,
+      "lower": 0.0095458485215,
+      "upper": 0.015635449705
+    },
+    {
+      "Decile": 2,
+      "N": 5074,
+      "Cases": 122,
+      "Observed": 0.02404414663,
+      "Predicted": 0.028440274409,
+      "lower": 0.020175499203,
+      "upper": 0.028632928715
+    },
+    {
+      "Decile": 3,
+      "N": 5074,
+      "Cases": 201,
+      "Observed": 0.039613716989,
+      "Predicted": 0.047963940477,
+      "lower": 0.034585902619,
+      "upper": 0.045338108816
+    },
+    {
+      "Decile": 4,
+      "N": 5073,
+      "Cases": 345,
+      "Observed": 0.068007096393,
+      "Predicted": 0.068504451435,
+      "lower": 0.061401021446,
+      "upper": 0.075266917556
+    },
+    {
+      "Decile": 5,
+      "N": 5074,
+      "Cases": 474,
+      "Observed": 0.093417422152,
+      "Predicted": 0.090946650804,
+      "lower": 0.085714748564,
+      "upper": 0.10173526667
+    },
+    {
+      "Decile": 6,
+      "N": 5074,
+      "Cases": 615,
+      "Observed": 0.12120614899,
+      "Predicted": 0.11774202309,
+      "lower": 0.1125114878,
+      "upper": 0.13047393599
+    },
+    {
+      "Decile": 7,
+      "N": 5073,
+      "Cases": 806,
+      "Observed": 0.15888034693,
+      "Predicted": 0.15028926533,
+      "lower": 0.14907937893,
+      "upper": 0.16919754028
+    },
+    {
+      "Decile": 8,
+      "N": 5074,
+      "Cases": 1061,
+      "Observed": 0.20910524241,
+      "Predicted": 0.19447579123,
+      "lower": 0.19813777438,
+      "upper": 0.22051284244
+    },
+    {
+      "Decile": 9,
+      "N": 5074,
+      "Cases": 1363,
+      "Observed": 0.26862435948,
+      "Predicted": 0.26253999624,
+      "lower": 0.25660680131,
+      "upper": 0.28099199553
+    },
+    {
+      "Decile": 10,
+      "N": 5074,
+      "Cases": 2021,
+      "Observed": 0.39830508475,
+      "Predicted": 0.41953371742,
+      "lower": 0.38491685253,
+      "upper": 0.41184718424
+    }
+  ],
+  "sensitivity": [
+    {
+      "Model": "adjusted",
+      "N": 202943,
+      "OR": 3.3914453827,
+      "lower": 3.1839372827,
+      "upper": 3.6124774966
+    },
+    {
+      "Model": "linear_bmi",
+      "N": 202943,
+      "OR": 3.461086246,
+      "lower": 3.2511585576,
+      "upper": 3.6845689898
+    },
+    {
+      "Model": "without_prediabetes",
+      "N": 199241,
+      "OR": 3.5201252951,
+      "lower": 3.3028375622,
+      "upper": 3.7517079966
+    },
+    {
+      "Model": "without_extreme_bmi",
+      "N": 202286,
+      "OR": 3.366146522,
+      "lower": 3.1593164429,
+      "upper": 3.5865170876
+    }
+  ],
+  "label_audit": [
+    {
+      "Original_class": "0",
+      "Binary_code": "0",
+      "N": 213703
+    },
+    {
+      "Original_class": "1",
+      "Binary_code": "0",
+      "N": 4631
+    },
+    {
+      "Original_class": "2",
+      "Binary_code": "1",
+      "N": 35346
+    }
+  ],
+  "calibration_intercept": 0.0017863222508,
+  "calibration_slope": 0.98354729311,
+  "model_formula": "Diabetes ~ Income + Age + splines::ns(BMI, df = 3) + Sex",
+  "model_converged": true,
+  "model_rank": 24,
+  "train_aic": [
+    {
+      "Model": "unadjusted",
+      "AIC": 158382.8435984239,
+      "_row": "unadjusted"
+    },
+    {
+      "Model": "covariates",
+      "AIC": 143365.1146015882,
+      "_row": "covariates"
+    },
+    {
+      "Model": "adjusted",
+      "AIC": 140192.0798493715,
+      "_row": "adjusted"
+    },
+    {
+      "Model": "linear_bmi",
+      "AIC": 142667.4148709884,
+      "_row": "linear_bmi"
+    },
+    {
+      "Model": "without_prediabetes",
+      "AIC": 138299.5955944671,
+      "_row": "without_prediabetes"
+    },
+    {
+      "Model": "without_extreme_bmi",
+      "AIC": 139597.25494827,
+      "_row": "without_extreme_bmi"
+    }
+  ],
+  "coefficient_table": [
+    {
+      "term": "(Intercept)",
+      "estimate": -7.0762207459,
+      "std_error": 0.17234572965
+    },
+    {
+      "term": "Income7",
+      "estimate": 0.29874693414,
+      "std_error": 0.022467749201
+    },
+    {
+      "term": "Income6",
+      "estimate": 0.42116237133,
+      "std_error": 0.022839607801
+    },
+    {
+      "term": "Income5",
+      "estimate": 0.63981429542,
+      "std_error": 0.024463424113
+    },
+    {
+      "term": "Income4",
+      "estimate": 0.83057152546,
+      "std_error": 0.025830549691
+    },
+    {
+      "term": "Income3",
+      "estimate": 0.98992882704,
+      "std_error": 0.027255480655
+    },
+    {
+      "term": "Income2",
+      "estimate": 1.1351206562,
+      "std_error": 0.029358813686
+    },
+    {
+      "term": "Income1",
+      "estimate": 1.2212561971,
+      "std_error": 0.032213074991
+    },
+    {
+      "term": "Age25-29",
+      "estimate": 0.16058720206,
+      "std_error": 0.16008270019
+    },
+    {
+      "term": "Age30-34",
+      "estimate": 0.60088042019,
+      "std_error": 0.14297890233
+    },
+    {
+      "term": "Age35-39",
+      "estimate": 1.1225933285,
+      "std_error": 0.13527741757
+    },
+    {
+      "term": "Age40-44",
+      "estimate": 1.5251808005,
+      "std_error": 0.13213654229
+    },
+    {
+      "term": "Age45-49",
+      "estimate": 1.8259438196,
+      "std_error": 0.13022285005
+    },
+    {
+      "term": "Age50-54",
+      "estimate": 2.1652146057,
+      "std_error": 0.12887225869
+    },
+    {
+      "term": "Age55-59",
+      "estimate": 2.3774243354,
+      "std_error": 0.12836475729
+    },
+    {
+      "term": "Age60-64",
+      "estimate": 2.6405067499,
+      "std_error": 0.12803982522
+    },
+    {
+      "term": "Age65-69",
+      "estimate": 2.876444637,
+      "std_error": 0.12792938644
+    },
+    {
+      "term": "Age70-74",
+      "estimate": 2.9894712747,
+      "std_error": 0.12824071641
+    },
+    {
+      "term": "Age75-79",
+      "estimate": 2.9903018735,
+      "std_error": 0.12889313849
+    },
+    {
+      "term": "Age80+",
+      "estimate": 2.9242880943,
+      "std_error": 0.12894642016
+    },
+    {
+      "term": "splines::ns(BMI, df = 3)1",
+      "estimate": 5.0486432829,
+      "std_error": 0.06547313987
+    },
+    {
+      "term": "splines::ns(BMI, df = 3)2",
+      "estimate": 4.0543682464,
+      "std_error": 0.26523619844
+    },
+    {
+      "term": "splines::ns(BMI, df = 3)3",
+      "estimate": -0.0059897202833,
+      "std_error": 0.22599921064
+    },
+    {
+      "term": "SexMale",
+      "estimate": 0.3292003221,
+      "std_error": 0.014114163602
+    }
+  ],
+  "primary_or_low": [
+    {
+      "IncomeCode": 1,
+      "OR": 3.3914453827,
+      "lower": 3.1839372827,
+      "upper": 3.6124774966
+    }
+  ],
+  "acquisition_date": "2026-10-24",
+  "analysis_source_sha256": "3112fcd14fbe57c6a266d2b49a68185a2c46891106f614b24c6aed588b11d54a",
+  "seed": 20261024
+}

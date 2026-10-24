@@ -1,216 +1,239 @@
 ---
-title: "Presentation title"
-subtitle: "Presentation subtitle (if any)"
-author: "Team name <br> Names of team members"
-institute: "University of Edinburgh"
-date: "`r Sys.Date()`"
+title: "Household income and reported diabetes"
+author: "Strong Tiger"
+date: "24 October 2026"
 output:
   xaringan::moon_reader:
-    css: xaringan-themer.css
-    lib_dir: libs
+    css: ["default", "slides.css"]
+    self_contained: true
+    seal: false
+    mathjax: null
+    chakra: vendor/remark-latest.min.js
     nature:
       ratio: "16:9"
       highlightStyle: github
-      highlightLines: true
       countIncrementalSlides: false
-      
 ---
-
-```{r install-package, include = FALSE, eval = FALSE}
-# Copy and paste the following code into your console to download and install
-# the `xaringan` package that contains all of the code which allows you 
-# to create presentation slides in Rmarkdown
-install.packages('xaringan')
-```
-
-
-```{r load-packages, include = FALSE}
-# Add any additional packages you need to this chunk
-library(tidyverse)
-library(tidymodels)
-library(palmerpenguins)
-library(knitr)
-library(xaringanthemer)
-```
 
 ```{r setup, include=FALSE}
-# For better figure resolution
-knitr::opts_chunk$set(fig.retina = 3, dpi = 300, fig.width = 6, fig.asp = 0.618, out.width = "80%")
+source("R/setup.R")
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE)
+r <- load_results()
+lo <- r$raw_income[r$raw_income$IncomeCode == 1, ]
+hi <- r$raw_income[r$raw_income$IncomeCode == 8, ]
 ```
 
-```{r load-data, include=FALSE}
-# Load your data here
+class: inverse, middle, title-slide
 
+# Household income and<br>reported diabetes
+
+## Does the income gap remain after accounting<br>for age and BMI?
+
+Strong Tiger · Tiger, Harry, yingcheLiu and Reiyume
+
+.source[Cleaned 2015 BRFSS sample · University of Edinburgh · 24 October 2026]
+
+???
+Suggested speaker: Tiger. Introduce the question, not every variable in the dataset.
+
+---
+
+# Data and outcome
+
+**`r num(r$audit$n)` adult survey responses · 21 indicators**
+
+- Source: cleaned **2015 CDC BRFSS** files, linked through UCI
+- Outcome: **reported diabetes**, verified against the original three-category file
+- Age and income are **categories**, not exact ages or dollar amounts
+- **`r num(r$train_n)` training / `r num(r$test_n)` test** records
+
+.emphasis[No survey weights in this extract: our results describe this sample.]
+
+.source[Sources: CDC 2015 documentation; UCI dataset 891; Teboul's original files]
+
+???
+Suggested speaker: Tiger. The binary file actually includes prediabetes in zero. The detailed mapping is in backup slide 11.
+
+---
+
+# Observed income differences
+
+```{r raw-plot, results='asis'}
+slide_plot("figures/slides/observed-income.png", "420px")
 ```
 
-```{r include=FALSE}
+.takeaway[Lowest income: **`r pct(lo$Rate)`** · Highest income: **`r pct(hi$Rate)`**]
 
-#Background image
-style_xaringan(
-  title_slide_background_image = "img/confetti.jpg"
-)
+.source[Training sample. Points show observed proportions; bars show 95% Wilson intervals.]
+
+???
+Suggested speaker: Harry. The raw pattern is not strictly monotonic. The second-lowest income band is the highest before adjustment.
+
+---
+
+# Making an adjusted comparison
+
+The income groups differ in age and BMI.
+
+```{r group-comparison, results='asis'}
+tab <- data.frame(
+  Characteristic=c("Aged 60 or older", "Mean BMI"),
+  Lowest=c(pct(lo$Age60plus), num(lo$MeanBMI,1)),
+  Highest=c(pct(hi$Age60plus), num(hi$MeanBMI,1)))
+names(tab)[2:3] <- c("Income < $10,000", "Income $75,000+")
+cat(knitr::kable(tab, format="html"))
 ```
 
-class: center, middle
+**Logistic regression:** income band + age category + curved BMI term + sex
 
-## A statement of the overall goal / research question
+We compare income bands using the **same age, BMI and sex distribution**.
 
----
+.source[Income and age are categorical. BMI uses a natural cubic spline with 3 degrees of freedom.]
 
-class: inverse, center, middle
-
-# Section title
-
----
-
-# Hello World
-
-- Click the `Knit` button to compile your presentation
-
-- Make sure to commit and push all resulting files to your GitHub repo
+???
+Suggested speaker: Harry. This is adjustment for measured characteristics, not proof of a causal effect.
 
 ---
 
-class: inverse, middle, center
+# The adjusted income gap remains
 
-# Using xaringan
+```{r adjusted-plot, results='asis'}
+slide_plot("figures/slides/adjusted-income.png", "410px")
+```
 
----
+.takeaway[Lowest minus highest: **`r pp(r$gap$adjusted)`**<br>95% model-based interval: **`r num(100*r$gap$lower,1)`-`r num(100*r$gap$upper,1)` points**]
 
-# xaringan
+.source[Standardised to the training sample's joint covariate distribution. Not a causal effect.]
 
-- The presentation is created using the `xaringan` package
-
-- Use `---` to separate slides and `--` for incremental builds
-
---
-
-- Like this
+???
+Suggested speaker: yingcheLiu. Adjusted proportions are 23.7% and 9.4%. Percentage points are the subtraction of percentages.
 
 ---
 
-# Layouts
+# Why 86% accuracy is not enough
 
-You can use plain text
+```{r test-metrics, results='asis'}
+m <- r$metrics
+tab <- data.frame(
+  Model=c("Always predict no diabetes", "Age + BMI + sex", "Add income"),
+  AUC=num(m$AUC,3), Accuracy=pct(m$Accuracy),
+  Sensitivity=pct(m$Sensitivity))
+cat(knitr::kable(tab, format="html"))
+```
 
-- or bullet points
+Adding income improves ranking and probability error modestly.
 
-.pull-left[
-or text in two columns $^*$
+At a **0.5 threshold**, the model identifies only **`r pct(m$Sensitivity[3])`** of the diabetes cases.
+
+.emphasis[Useful for describing group differences; not a validated screening rule.]
+
+.source[Untouched test sample, n = 50,737. Sensitivity is the fraction of positive cases identified.]
+
+???
+Suggested speaker: yingcheLiu. AUC is useful across thresholds, but does not establish clinical usefulness.
+
+---
+
+# Robustness of the income comparison
+
+Lowest versus highest income: adjusted **odds ratio**
+
+```{r sensitivity-table, results='asis'}
+s <- r$sensitivity
+tab <- data.frame(
+  Analysis=c("Primary model", "Linear BMI", "Exclude prediabetes", "Exclude BMI above 60"),
+  OR=num(s$OR,2),
+  Interval=paste0(num(s$lower,2)," - ",num(s$upper,2)))
+names(tab)[3] <- "95% model-based interval"
+cat(knitr::kable(tab, format="html"))
+```
+
+The association is similar under these three checks.
+
+.source[An odds ratio is not a probability ratio. Sensitivity checks do not eliminate confounding.]
+
+???
+Suggested speaker: Reiyume. Explain why checking the outcome definition mattered.
+
+---
+
+# What the findings support
+
+**A substantial income difference remains in this sample.**
+
+It deserves further investigation when discussing accessible health education and support.
+
+The analysis cannot establish:
+
+- that changing income would cause the observed difference;
+- current national prevalence from selected 2015 responses;
+- an individual's diagnosis or the best service allocation.
+
+**Next step:** newer survey data with weights and sampling design.
+
+???
+Suggested speaker: Reiyume. Close with the main finding and its practical limits. Main talk ends here.
+
+---
+
+# Sources and acknowledgement
+
+.references[
+- CDC. [2015 BRFSS survey data and documentation](https://www.cdc.gov/brfss/annual_data/annual_2015.html)
+- CDC. [2015 BRFSS codebook](https://www.cdc.gov/brfss/annual_data/2015/pdf/codebook15_llcp.pdf): household income, age and diabetes
+- CDC. [BRFSS survey methods and weighting](https://www.cdc.gov/brfss/about/brfss_faq.htm)
+- Alex Teboul. [Original cleaned files](https://www.kaggle.com/datasets/alexteboul/diabetes-health-indicators-dataset), CC0
+- UCI. [CDC Diabetes Health Indicators](https://doi.org/10.24432/C53919), accessed 24 October 2026
 ]
-.pull-right[
-- like
-- this
-]
 
-.footnote[
-[*] And add footnotes
-]
+R code and results: [project repository](https://github.com/Tigershengsheng/ids-project/tree/cdc-diabetes-final)
+
+.small[ChatGPT assisted with planning, code, debugging and drafting. Numerical results were generated and checked in R.]
 
 ---
 
-# Code
+# Backup: test-sample calibration
 
-```{r boring-regression}
-# a boring regression
-model <- lm(dist ~ speed, data = cars)
-tidy(model)
-glance(model)
+```{r calibration-plot, results='asis'}
+slide_plot("figures/slides/calibration.png", "440px")
 ```
+
+.source[Ten probability groups; 95% Wilson intervals. Calibration slope = `r num(r$calibration_slope,2)`.]
 
 ---
 
-# Plots
+# Backup: the outcome coding audit
 
-```{r recode-species, echo = FALSE}
-# In this chunk I'm doing a bunch of analysis that I don't want to present 
-# in my slides. But I need the resulting data frame for a plot I want to present.
-iris_modified <- iris %>%
-  mutate(Species = fct_other(Species, keep = "setosa"))
+All **253,680 rows** and all **21 predictor columns** were compared.
+
+```{r audit-table, results='asis'}
+tab <- data.frame(
+  Original=c("0: no diabetes / pregnancy only", "1: prediabetes", "2: diabetes"),
+  Binary=c(0,0,1),
+  Respondents=num(c(r$audit$n_no_diabetes,r$audit$n_prediabetes,r$audit$n_positive)))
+cat(knitr::kable(tab, format="html"))
 ```
 
-```{r plot-iris, echo = FALSE}
-# Code hidden with echo = FALSE
-# Uses modified iris dataset from previous chunk
-# Play around with height and width until you're happy with the look
-ggplot(data = iris_modified, mapping = aes(x = Sepal.Width, y = Sepal.Length, color = Species)) +
-  geom_point() + 
-  theme_minimal() # theme options: https://ggplot2.tidyverse.org/reference/ggtheme.html
-```
+The binary positive class matches **diabetes only**, despite the website wording.
+
+.source[Direct comparison of the UCI CSV and the original three-category file. No predictor-row mismatches.]
 
 ---
 
-## Plot and text
+# Backup: adjusted odds ratios
 
-.pull-left[
-- Some text
-- goes here
-]
-.pull-right[
-```{r warning=FALSE, out.width="100%", fig.width=4, echo=FALSE}
-# see how I changed out.width and fig.width from defaults
-# to make the figure bigger
-ggplot(penguins, aes(x = bill_length_mm, y = species, color = species)) +
-  geom_boxplot() +
-  theme_minimal()
+```{r or-plot, results='asis'}
+slide_plot("figures/slides/odds-ratios.png", "440px")
 ```
-]
+
+.source[Reference: income $75,000+. Model-based 95% intervals; odds ratios are not risk ratios.]
 
 ---
 
-# Tables
+# Backup: allowing a curved BMI association
 
-If you want to generate a table, make sure it is in the HTML format (instead of Markdown or other formats), e.g.,
-
-```{r iris-table, echo = FALSE}
-kable(head(iris), format = "html")
+```{r bmi-plot, results='asis'}
+slide_plot("figures/slides/bmi-shape.png", "430px")
 ```
 
----
-
-# Images
-
-```{r castle, echo = FALSE, out.width = "55%", fig.align = "center", fig.cap = "Image credit: Photo by Jörg Angeli on Unsplash."}
-include_graphics("img/edinburgh-castle.jpg")
-```
-
-Or you can also include a full page image. See next slide.
-
----
-
-
-class: inverse, center, middle
-background-image: url(img/edinburgh-castle.jpg)
-background-size: contain
----
-
-# Math Expressions
-
-You can write LaTeX math expressions inside a pair of dollar signs, e.g. &#36;\alpha+\beta$ renders $\alpha+\beta$. You can use the display style with double dollar signs:
-
-```
-$$\bar{X}=\frac{1}{n}\sum_{i=1}^nX_i$$
-```
-
-$$\bar{X}=\frac{1}{n}\sum_{i=1}^nX_i$$
-
-Limitations:
-
-1. The source code of a LaTeX math expression must be in one line, unless it is inside a pair of double dollar signs, in which case the starting `$$` must appear in the very beginning of a line, followed immediately by a non-space character, and the ending `$$` must be at the end of a line, led by a non-space character;
-
-1. There should not be spaces after the opening `$` or before the closing `$`.
-
-1. Math does not work on the title slide (see [#61](https://github.com/yihui/xaringan/issues/61) for a workaround).
-
----
-
-# Feeling adventurous?
-
-- Want to find out more about `xaringan`? See https://slides.yihui.name/xaringan/#1.
-
-- You are welcome to use the default styling of the slides. In fact, that's what I expect majority of you will do. You will differentiate yourself with the content of your presentation.
-
-- But some of you might want to play around with slide styling. The 
-`xaringanthemer` provides some solutions for this that: https://pkg.garrickadenbuie.com/xaringanthemer.
-
-- And if you want more bells and whistles, there is also `xaringanExtra`: https://pkg.garrickadenbuie.com/xaringanExtra.
+.source[Example profile: female, age 50-54, income $75,000+. Illustration, not an individual clinical assessment.]

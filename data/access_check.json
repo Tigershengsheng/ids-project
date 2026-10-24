@@ -1,0 +1,70 @@
+{
+  "download_url": "https://archive.ics.uci.edu/static/public/891/data.csv",
+  "local_file": "D:\\data science\\cdc-diabetes-final\\data\\uci_cdc_diabetes_891.csv",
+  "bytes": 13494568,
+  "sha256": "9f71fda9d4ae5f4878c99b9233b6a16accfa9a17c194116a6b78100540934964",
+  "rows": 253680,
+  "columns": 23,
+  "column_names": [
+    "ID",
+    "Diabetes_binary",
+    "HighBP",
+    "HighChol",
+    "CholCheck",
+    "BMI",
+    "Smoker",
+    "Stroke",
+    "HeartDiseaseorAttack",
+    "PhysActivity",
+    "Fruits",
+    "Veggies",
+    "HvyAlcoholConsump",
+    "AnyHealthcare",
+    "NoDocbcCost",
+    "GenHlth",
+    "MentHlth",
+    "PhysHlth",
+    "DiffWalk",
+    "Sex",
+    "Age",
+    "Education",
+    "Income"
+  ],
+  "missing_cells_checked": 0,
+  "diabetes_binary_counts": {
+    "0": 218334,
+    "1": 35346
+  },
+  "ranges": {
+    "Age": [
+      1.0,
+      13.0
+    ],
+    "Income": [
+      1.0,
+      8.0
+    ],
+    "BMI": [
+      12.0,
+      98.0
+    ]
+  },
+  "sample": [
+    {
+      "ID": "0",
+      "Diabetes_binary": "0",
+      "Age": "9",
+      "Income": "3",
+      "BMI": "40",
+      "PhysActivity": "0"
+    },
+    {
+      "ID": "1",
+      "Diabetes_binary": "0",
+      "Age": "7",
+      "Income": "1",
+      "BMI": "25",
+      "PhysActivity": "1"
+    }
+  ]
+}

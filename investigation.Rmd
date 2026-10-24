@@ -1,216 +1,195 @@
 ---
-title: "Project kick-off: Seoul bike rentals"
-subtitle: "Candidate dataset — topic awaiting group agreement"
-date: "`r Sys.Date()`"
+title: "Investigation: income and reported diabetes"
+author: "Strong Tiger"
+date: "24 October 2026"
 output:
   html_document:
-    toc: true
-    toc_float: true
-    theme: readable
-    highlight: tango
     self_contained: true
+    toc: true
+    toc_depth: 2
+    code_folding: hide
+    theme: readable
+    css: report.css
     mathjax: null
 ---
 
 ```{r setup, include=FALSE}
-library(tidyverse)
-knitr::opts_chunk$set(echo = TRUE, message = FALSE,
-  fig.width = 8, fig.height = 5, dpi = 120,
-  fig.path = "figures/bikes-", fig.align = "center")
-theme_set(theme_minimal(base_size = 13))
+source("R/setup.R")
+knitr::opts_chunk$set(message=FALSE, warning=FALSE, fig.align="center", out.width="100%")
+r <- load_results()
 ```
 
-## Starting point
+## Question and analysis scope
 
-This is an initial exploration of a possible dataset, not an agreed project
-proposal or a final report. The group still needs to agree the topic and check
-it with the course organiser.
+Does reported diabetes differ by household income after accounting for age, BMI and sex? The primary question concerns adjusted associations in a selected sample. Prediction is a secondary model check.
 
-One possible question is: **How do hourly bike rental counts in Seoul vary
-with time of day, season and recorded weather?** The first step is descriptive:
-check the records, look at distributions and compare patterns before deciding
-on a narrower question.
+The full analysis is in `R/analysis.R`. Rendering a final document checks the code and data fingerprints and regenerates stale results. `render_project.R` runs the analysis afresh before rendering all deliverables.
 
-## Data and source
+No result relies on downloading a dataset, calling an AI model or executing somebody else's notebook at render time.
 
-The dataset is **Seoul Bike Sharing Demand**, distributed by the
-[UCI Machine Learning Repository](https://doi.org/10.24432/C5F62R) under
-[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
-A copy of the original CSV is in `data/SeoulBikeData.csv`, so knitting this
-document does not require an internet connection. See
-[data/README.md](data/README.md) for the source, units and checksum.
+## Provenance and outcome audit
 
-Each row records one hour across the system. The response is the number of
-bikes rented during that hour, not the number of unique riders. Weather,
-season, holiday and operating-status variables are also recorded.
+- UCI file: `data/uci_cdc_diabetes_891.csv`.
+- Linked original: `data/diabetes_012_health_indicators_BRFSS2015.csv`.
+- Source metadata and direct row-matching audit are stored in `data/`.
+- Retrieved: 24 October 2026. Original study year: 2015, established from the original publisher's files and description.
+- Source links: [UCI](https://archive.ics.uci.edu/dataset/891/cdc+diabetes+health+indicators), [original publisher](https://www.kaggle.com/datasets/alexteboul/diabetes-health-indicators-dataset), [CDC documentation](https://www.cdc.gov/brfss/annual_data/annual_2015.html).
 
-## Read and check the records
+The UCI page and the original dataset description both state that binary positives include prediabetes. Direct file comparison contradicts that wording. The original three-category file resolves the interpretation: all original class 2 records are binary positives; original class 1 is included in binary zero. All 21 feature columns match, in the same row order.
 
-```{r load-data}
-# The original file uses Latin-1 encoding and a degree symbol in its headers.
-bikes_raw <- read_csv(
-  "data/SeoulBikeData.csv",
-  locale = locale(encoding = "ISO-8859-1"),
-  col_types = "cddddddddddccc"
-)
-stopifnot(ncol(bikes_raw) == 14L, nrow(problems(bikes_raw)) == 0L)
-
-# Use short names, keeping the original units.
-names(bikes_raw) <- c(
-  "date", "rented_bikes", "hour", "temperature_c", "humidity_pct",
-  "wind_speed_ms", "visibility_10m", "dew_point_c", "solar_radiation",
-  "rainfall_mm", "snowfall_cm", "season", "holiday", "functioning_day"
-)
-
-bikes <- bikes_raw %>%
-  mutate(
-    date = as.Date(date, format = "%d/%m/%Y"),
-    season = factor(season, levels = c("Winter", "Spring", "Summer", "Autumn")),
-    holiday = factor(holiday),
-    functioning_day = factor(functioning_day)
-  )
-
-glimpse(bikes)
+```{r label-audit}
+knitr::kable(r$label_audit)
 ```
 
-```{r quality-checks}
-quality_checks <- bikes %>%
-  summarise(
-    records = n(), days = n_distinct(date),
-    first_date = min(date), last_date = max(date),
-    missing_entries = sum(is.na(pick(everything()))),
-    duplicate_date_hours = n() - n_distinct(date, hour)
-  )
-quality_checks
+This project uses the original class 2 definition of reported diabetes. The comparison category includes no reported diabetes, diabetes reported only during pregnancy, and prediabetes. It is not labelled "healthy". The extract cannot distinguish diabetes type 1 from type 2.
 
-bikes %>% summarise(across(everything(), ~ sum(is.na(.x))))
-
-stopifnot(
-  nrow(bikes) == 8760L, n_distinct(bikes$date) == 365L,
-  sum(is.na(bikes)) == 0L, !anyDuplicated(bikes[c("date", "hour")]),
-  all(bikes$hour %in% 0:23),
-  all(bikes$rented_bikes >= 0),
-  all(bikes$rented_bikes == floor(bikes$rented_bikes)),
-  all(bikes$humidity_pct >= 0 & bikes$humidity_pct <= 100),
-  all(bikes$rainfall_mm >= 0 & bikes$snowfall_cm >= 0)
-)
+```{r audit-summary}
+knitr::kable(data.frame(
+  Check=c("Rows", "Indicators", "Diabetes", "Prediabetes in the comparison class",
+          "Repeated response profiles retained", "BMI above 60 retained initially"),
+  Value=c(r$audit$n,r$audit$n_features,r$audit$n_positive,r$audit$n_prediabetes,
+          r$audit$duplicated_response_profiles,r$audit$bmi_over_60)))
 ```
 
-There are `r nrow(bikes)` hourly records covering 1 December 2017 to
-30 November 2018. No missing entries or duplicate date-hour combinations
-were found. The dates are read as day/month/year: reading `01/12/2017` as
-12 January would put the records in the wrong order.
+There are no NA values in the supplied CSV. That says nothing about excluded or nonresponding people in the original survey. Repeated profiles are kept because the ID is only a row identifier and identical survey answers need not be duplicate people.
 
-### Zero rentals and operating status
+## Selected variables
 
-```{r operating-status}
-bikes %>%
-  group_by(functioning_day) %>%
-  summarise(hours = n(), zero_rental_hours = sum(rented_bikes == 0),
-            mean_rentals = mean(rented_bikes), .groups = "drop")
-
-bikes_active <- bikes %>% filter(functioning_day == "Yes")
+```{r dictionary}
+dictionary <- data.frame(
+  Variable=c("Diabetes_binary","Income","Age","BMI","Sex","ID"),
+  Treatment=c("Binary outcome","Unordered factor; 8 bands","Factor; 13 categories",
+              "Numeric; natural cubic spline with df = 3","Binary recorded category",
+              "Excluded from models"),
+  Interpretation=c("Positive matches original Diabetes_012 = 2",
+                   "Annual household income; reference = $75,000 or more",
+                   "1 is age 18-24, not age one",
+                   "Do not assume a constant linear change in log-odds",
+                   "0 female, 1 male in the supplied coding",
+                   "An arbitrary row identifier, not a clinical attribute"))
+knitr::kable(dictionary)
 ```
 
-All `r sum(bikes$functioning_day == "No")` non-operating hours have zero
-rentals, while none of the `r nrow(bikes_active)` operating hours do. A
-recorded zero is not a missing value, and zero rentals during a closure do
-not measure how many people wanted to rent a bike. The original records
-are retained in `bikes`. The following comparisons use `bikes_active` and
-describe rentals while the system was operating.
+```{r income-dictionary}
+knitr::kable(data.frame(Code=1:8, AnnualHouseholdIncome=income_labels))
+```
 
-## Distribution of rental counts
+```{r age-dictionary}
+knitr::kable(data.frame(Code=1:13, AgeInYears=age_labels))
+```
 
-```{r rental-distribution}
-ggplot(bikes_active, aes(x = rented_bikes)) +
-  geom_histogram(binwidth = 200, boundary = 0,
-                 fill = "#30509C", color = "white") +
-  labs(title = "Hourly rentals while the system was operating",
-       subtitle = "Bins span 200 rentals; non-operating hours are excluded",
-       x = "Bikes rented in one hour", y = "Number of hours")
+The official codebook is linked in the report. Income is not per-person disposable income. No survey weight, stratum, primary sampling unit, ethnicity or state variable is present in this extract.
 
-bikes_active %>% summarise(
-  mean_rentals = mean(rented_bikes), median_rentals = median(rented_bikes),
-  minimum = min(rented_bikes), maximum = max(rented_bikes)
+## Split and prespecified models
+
+The seed is 20261024. The split is stratified by binary outcome and performed before exploratory plots. The training and test ID sets are disjoint.
+
+```{r split-summary}
+knitr::kable(data.frame(
+  Split=c("Training", "Test"),
+  N=c(r$train_n,r$test_n),
+  Diabetes=c(r$train_cases,r$test_cases),
+  Fraction=c(r$train_cases/r$train_n,r$test_cases/r$test_n)))
+```
+
+Three fixed prediction comparisons were specified: the training proportion as a constant baseline; age, BMI and sex; then age, BMI, sex and income. No threshold was tuned on the test set. A threshold of 0.5 is shown to illustrate the danger of accuracy alone.
+
+```{r model-example, eval=FALSE}
+adjusted <- glm(
+  Diabetes ~ Income + Age + splines::ns(BMI, df = 3) + Sex,
+  family = binomial(),
+  data = train
 )
 ```
 
-The distribution is right-skewed. A few busy hours have much higher counts
-than most hours, so the mean and median give different summaries.
+The income coefficients compare each category with $75,000 or more. The model has `r r$model_rank` independent coefficient columns and converged without missing coefficients.
 
-## Time of day and season
+## Exploratory results
 
-```{r hourly-pattern, fig.height=6}
-hourly_pattern <- bikes_active %>%
-  group_by(season, hour) %>%
-  summarise(hours = n(), mean_rentals = mean(rented_bikes), .groups = "drop")
-
-ggplot(hourly_pattern, aes(x = hour, y = mean_rentals)) +
-  geom_line(color = "#30509C", linewidth = 0.8) +
-  geom_point(color = "#30509C", size = 1.5) +
-  facet_wrap(~ season, ncol = 2) +
-  scale_x_continuous(breaks = c(0, 6, 12, 18, 23)) +
-  scale_y_continuous(limits = c(0, NA)) +
-  labs(title = "Hourly rental patterns differ across seasons",
-       subtitle = "Each point averages operating hours at that hour of day",
-       x = "Hour of day (0-23)", y = "Mean hourly rental count")
-
-season_summary <- bikes_active %>%
-  group_by(season) %>%
-  summarise(hours = n(), mean_rentals = mean(rented_bikes),
-            median_rentals = median(rented_bikes), .groups = "drop")
-season_summary
+```{r income-summary}
+tab <- r$raw_income[,c("IncomeLabel","N","Cases","Rate","MeanBMI","Age60plus")]
+tab$Rate <- pct(tab$Rate)
+tab$MeanBMI <- num(tab$MeanBMI,1)
+tab$Age60plus <- pct(tab$Age60plus)
+knitr::kable(tab)
 ```
 
-Winter has the lowest mean hourly count, about
-`r round(season_summary$mean_rentals[season_summary$season == "Winter"])`
-rentals, compared with about
-`r round(season_summary$mean_rentals[season_summary$season == "Summer"])`
-in summer. Across operating hours overall, 18:00 has the highest mean.
-There is also a morning rise. These timings are consistent with commuting,
-but the data do not tell us why people travelled. Season, weather and daily
-routines may all contribute to the pattern.
-
-## Temperature and recorded rentals
-
-```{r temperature-pattern, fig.height=6}
-ggplot(bikes_active, aes(x = temperature_c, y = rented_bikes)) +
-  geom_point(alpha = 0.12, size = 1, color = "#30509C") +
-  facet_wrap(~ season, ncol = 2) +
-  labs(title = "Temperature and hourly rentals within each season",
-       subtitle = "Each point is one operating hour; panels use the same scales",
-       x = "Air temperature (degrees C)", y = "Bikes rented in one hour")
+```{r raw-income-plot, echo=FALSE}
+knitr::include_graphics("figures/01-observed-income.png")
 ```
 
-Warmer hours often have more recorded rentals, especially when comparing
-winter with the warmer seasons, but counts vary widely at similar
-temperatures. This is observational data. Temperature is related to season
-and time of day, so the plot does not show that raising temperature causes
-more rentals. The busiest hours also do not necessarily occur at the
-highest temperatures.
+The second-lowest income band has the highest raw proportion. The income gradient is not strictly monotonic before adjustment.
 
-## Questions for the next group discussion
+```{r age-plot, echo=FALSE}
+knitr::include_graphics("figures/04-age-patterns.png")
+```
 
-- Is this a dataset the whole group wants to investigate? Check the choice
-  with the course organiser before treating it as final.
-- Would comparing hourly patterns on holidays and other days make a more
-  focused question? Check the number of days in each group first.
-- Do temperature patterns remain when comparing the same season and hour?
-- How should closures be reported alongside the analysis of operating hours?
+The age plot uses three broader income bands only to keep the descriptive figure readable. The main models retain all eight original bands. No interaction is fitted in the primary model; that simplification is stated as a limitation.
 
-These records cover one city and one year. They are adjacent observations
-over time, not independent random samples of people. No causal claim or
-significance test is made here, and the patterns should not be presented as
-representative of every city or year.
+## Adjusted comparisons
 
-## Work completed and AI use
+```{r adjusted-odds}
+tab <- r$odds_ratios
+tab$Income <- income_labels[tab$IncomeCode]
+knitr::kable(tab[,c("Income","OR_crude","OR_adjusted","lower_adjusted","upper_adjusted")],digits=3)
+```
 
-The raw data have been saved, checked and plotted. The four-person group
-has been confirmed. The candidate topic still needs group agreement;
-repository access is recorded separately in repository-status.md.
-Final report and presentation files remain course templates for later work.
+```{r adjusted-plot, echo=FALSE}
+knitr::include_graphics("figures/02-adjusted-income.png")
+```
 
-ChatGPT helped prepare this initial exploration, the R code and the written
-descriptions. The code was executed, and the counts and numerical summaries
-were checked in R. The group should review the code and conclusions before
-using this candidate for the project.
+Standardisation averages predictions across the empirical joint distribution of age, BMI and sex in the training sample. For efficiency, repeated covariate combinations are aggregated with their exact frequencies. This produces the same mean as predicting every respondent separately.
+
+For uncertainty, the derivative of a mean fitted probability is the weighted mean of p(1-p) multiplied by each design-matrix column. Its covariance is computed using the model coefficient covariance. The difference between two standardised means uses the difference between their gradient vectors, including their shared coefficient uncertainty. Reference-distribution uncertainty and the original complex survey design are not included.
+
+```{r probability-table}
+knitr::kable(r$standardised[,c("IncomeLabel","Estimate","lower","upper")],digits=4)
+```
+
+```{r odds-plot, echo=FALSE}
+knitr::include_graphics("figures/05-income-odds-ratios.png")
+```
+
+## Model evaluation
+
+```{r full-test-metrics}
+knitr::kable(r$metrics,digits=4)
+```
+
+For a constant probability below 0.5, every predicted class is negative: specificity is one and sensitivity is zero. That baseline still has about 86% accuracy. AUC uses average ranks for tied probabilities. Brier score is mean squared probability error; log loss penalises confidently wrong probabilities.
+
+```{r calibration, echo=FALSE}
+knitr::include_graphics("figures/03-test-calibration.png")
+```
+
+Calibration intercept: `r num(r$calibration_intercept,3)`. Calibration slope: `r num(r$calibration_slope,3)`. Their ideal values are zero and one. The ten-bin plot summarises calibration; agreement within bins does not demonstrate calibration within every income or age group.
+
+```{r roc, echo=FALSE}
+knitr::include_graphics("figures/07-test-roc.png")
+```
+
+ROC thresholds group equal predictions together. AUC evaluates ranking, not future disease incidence. This is an internal holdout from one cleaned survey extract, not external validation.
+
+## Sensitivity analyses
+
+```{r sensitivities}
+knitr::kable(r$sensitivity,digits=3)
+```
+
+The alternate models use the same original training allocation. Prediabetes exclusion removes only original class 1. The high-BMI sensitivity excludes BMI above 60 rather than silently altering values. These choices leave the original data unchanged.
+
+```{r bmi-shape, echo=FALSE}
+knitr::include_graphics("figures/06-bmi-model-shape.png")
+```
+
+The curved BMI plot is for one example profile only. It is not a risk calculator. The model contains no income-by-age or income-by-BMI interactions; a future study should investigate overlap and whether this assumption is adequate.
+
+## Reproducibility and remaining human tasks
+
+The pipeline exports numerical tables, test predictions, figures, metadata and session information. The report and slides read the same results object. Re-running the analysis with the recorded seed regenerates those results. `verify_project.R` checks data labels, the split, the baseline, probability ranges and consistency between reported metrics and saved predictions.
+
+Tutor feedback, live presentation practice, acceptance of repository invitations and individual peer evaluations are human tasks. No tutor feedback or individual contribution history is fabricated here.
+
+## GenAI acknowledgement
+
+ChatGPT assisted with planning and produced initial code and written drafts. The scripts were executed in R and their numerical outputs were checked. External example notebooks were not copied or executed as the analysis pipeline.

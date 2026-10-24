@@ -1,0 +1,96 @@
+{
+  "diabetes_012_health_indicators_BRFSS2015.csv": {
+    "rows": 253680,
+    "columns": [
+      "Diabetes_012",
+      "HighBP",
+      "HighChol",
+      "CholCheck",
+      "BMI",
+      "Smoker",
+      "Stroke",
+      "HeartDiseaseorAttack",
+      "PhysActivity",
+      "Fruits",
+      "Veggies",
+      "HvyAlcoholConsump",
+      "AnyHealthcare",
+      "NoDocbcCost",
+      "GenHlth",
+      "MentHlth",
+      "PhysHlth",
+      "DiffWalk",
+      "Sex",
+      "Age",
+      "Education",
+      "Income"
+    ],
+    "target_counts": {
+      "0.0": 213703,
+      "2.0": 35346,
+      "1.0": 4631
+    }
+  },
+  "diabetes_binary_5050split_health_indicators_BRFSS2015.csv": {
+    "rows": 70692,
+    "columns": [
+      "Diabetes_binary",
+      "HighBP",
+      "HighChol",
+      "CholCheck",
+      "BMI",
+      "Smoker",
+      "Stroke",
+      "HeartDiseaseorAttack",
+      "PhysActivity",
+      "Fruits",
+      "Veggies",
+      "HvyAlcoholConsump",
+      "AnyHealthcare",
+      "NoDocbcCost",
+      "GenHlth",
+      "MentHlth",
+      "PhysHlth",
+      "DiffWalk",
+      "Sex",
+      "Age",
+      "Education",
+      "Income"
+    ],
+    "target_counts": {
+      "0.0": 35346,
+      "1.0": 35346
+    }
+  },
+  "diabetes_binary_health_indicators_BRFSS2015.csv": {
+    "rows": 253680,
+    "columns": [
+      "Diabetes_binary",
+      "HighBP",
+      "HighChol",
+      "CholCheck",
+      "BMI",
+      "Smoker",
+      "Stroke",
+      "HeartDiseaseorAttack",
+      "PhysActivity",
+      "Fruits",
+      "Veggies",
+      "HvyAlcoholConsump",
+      "AnyHealthcare",
+      "NoDocbcCost",
+      "GenHlth",
+      "MentHlth",
+      "PhysHlth",
+      "DiffWalk",
+      "Sex",
+      "Age",
+      "Education",
+      "Income"
+    ],
+    "target_counts": {
+      "0.0": 218334,
+      "1.0": 35346
+    }
+  }
+}

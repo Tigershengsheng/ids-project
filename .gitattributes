@@ -1,8 +1,13 @@
+* text=auto eol=lf
 *.Rmd text eol=lf
 *.R text eol=lf
 *.md text eol=lf
 *.html text eol=lf
 *.Rproj text eol=lf
 *.txt text eol=lf
-# Preserve the downloaded file byte for byte, including original line endings.
-data/SeoulBikeData.csv -text -diff
+*.css text eol=lf
+*.json text eol=lf
+# Keep source data byte-identical across Windows, macOS and Linux checkouts.
+data/*.csv -text -diff
+*.png binary
+*.rds binary

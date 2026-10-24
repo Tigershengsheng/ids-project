@@ -1,8 +1,10 @@
-.Rproj.user
+.Rproj.user/
 .Rhistory
 .RData
 .Ruserdata
-Rplots.pdf
-*_cache/
-*.knit.md
-*.utf8.md
+R-library/
+tmp/
+*.zip
+vendor/BRFSS2015-codebook.pdf
+results/data_split.csv
+results/test_predictions.csv
