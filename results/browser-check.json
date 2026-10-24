@@ -158,5 +158,7 @@
       "imageErrors": 0
     }
   ],
-  "javascript_exceptions": []
+  "javascript_exceptions": [],
+  "final_report_outcome_wording_checked": true,
+  "chinese_guide_text_checked": true
 }

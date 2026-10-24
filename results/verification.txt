@@ -24,12 +24,12 @@ PASS All expected deliverables exist
 PASS All twelve report and slide figures exist
 PASS No authoring markers remain
 PASS Code is hidden in the final report
-PASS Report narrative word count: 1453
+PASS Report narrative word count: 1457
 PASS No remote script dependency: report.html
 PASS No remote script dependency: presentation.html
 PASS No remote script dependency: study-guide.html
 PASS No remote script dependency: speaker-notes.html
 
-Narrative words (excluding tables, figures and references): 1453
+Narrative words (excluding tables, figures and references): 1457
 R version: R version 4.6.1 (2026-06-24 ucrt)
 Visual browser checks are recorded separately in results/browser-check.json.
