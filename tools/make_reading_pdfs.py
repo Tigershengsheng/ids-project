@@ -96,7 +96,6 @@ def container(path):
     return roots[0] if roots else page
 
 notes=container(ROOT/'speaker-notes.html')
-guide=container(ROOT/'study-guide.html')
 sections={}
 for sec in notes.xpath('.//div[contains(concat(" ",normalize-space(@class)," ")," level2 ")]'):
     headings=sec.xpath('./h2')
@@ -121,7 +120,6 @@ for speaker in range(1,5):
     for number in [2*speaker-1,2*speaker]:
         header=plain(sections[number].xpath('./h2')[0])
         english.append(para(header,'en','h2')); english.append(para(script[number],'en','spoken'))
-        transitions=[plain(p) for p in sections[number].xpath('./p') if plain(p).startswith('衔接')]
         # The timed paragraphs now include the main links. Do not add the
         # alternative handover sentences again to the main reading script.
         english.append(Spacer(1,15))
@@ -148,7 +146,7 @@ def add_table(table,story,lang):
     n=max(map(len,rows)); rows=[r+['']*(n-len(r)) for r in rows]
     chunks=[list(range(n))] if n<=6 else [[0]+list(range(start,min(start+5,n))) for start in range(1,n,5)]
     for index,columns in enumerate(chunks):
-        lead=[para(f'同一结果表，第 {index+1}/{len(chunks)} 部分；首列重复便于对照。',lang,'small')] if len(chunks)>1 else []
+        lead=[para(f'Table continuation {index+1}/{len(chunks)}; the first column is repeated.',lang,'small')] if len(chunks)>1 else []
         body=[[Paragraph(escape(row[c]),STYLES[lang]['headcell' if r==0 else 'cell']) for c in columns] for r,row in enumerate(rows)]
         col_widths=[WIDTH/len(columns)]*len(columns)
         if len(columns)>=4:
@@ -194,37 +192,8 @@ for child in qa[0]:
 english.extend([Spacer(1,10),para('Figure-design references','en','h2'),
  para('Data to Viz: The Boxplot and its pitfalls - https://www.data-to-viz.com/caveat/boxplot.html','en','small'),
  para('Data to Viz: The issue with error bars - https://www.data-to-viz.com/caveat/error_bar.html','en','small')])
-english_path=build('02_英文演讲稿.pdf',english,'en','Student dropout warnings | English script')
+english_path=build('02_Speaker_Notes.pdf',english,'en','Student dropout warnings | English script')
 
-chinese=[para('大学生退学预警','zh','title'),para('中文解释与答辩准备','zh','h1'),
- para('对应现有展示的第1-18页。先读逐页解释，再看方法导读；这些是理解材料，不需要全部放进七分钟演讲。','zh','small'),
- para('一、主展示逐页理解','zh','h1')]
-zh_titles={1:'研究问题：预测有没有用，谁更容易被漏掉？',2:'标签：记录里的“退学”究竟指什么？',3:'入学特征：有差异，也有明显重叠',
- 4:'方法：训练、验证和测试各做什么？',5:'阈值：为什么是0.31？',6:'测试结果：识别更多，也误报更多',
- 7:'群体差异：先看清每个比例的分母',8:'结论：预警应怎样用于支持？'}
-for number in range(1,9):
-    chinese.append(para(f'第{number}页 | {zh_titles[number]}','zh','h2'))
-    for node in sections[number]:
-        if node.tag not in ('p','ul','ol'):continue
-        text=plain(node)
-        if text.startswith('衔接') or len(re.findall('[\u4e00-\u9fff]',text))<8:continue
-        convert(node,chinese,'zh')
-chinese.extend([para('网站建议怎样融入演讲？','zh','h2'),
- para('第3页已经把建议写进主讲稿：Quiz第7题推荐我们查看Data to Viz。我们注意到箱线图本身不显示各组人数，所以保留箱线图比较典型值和分散程度，并在类别下面补上人数。这里讲的是实际做过的选择，不需要介绍整座网站。','zh'),
- para('第7页的区间说明适合留作准备：横线是固定模型和阈值下的95% percentile bootstrap区间，不是标准差；每个点旁边的n是这个比例真正用到的分母。网站提醒我们讲清楚横线的含义，具体统计方法仍以课程内容和实际分析为准。','zh'),
- para('参考：The Boxplot and its pitfalls；The issue with error bars。网址列在英文稿末尾；来源也保留在展示第9页。网站是Quiz推荐的探索资源，不是老师额外强制的项目要求。','zh','small'),
- Spacer(1,12),para('二、数据、方法与代码导读','zh','h1'),
- para('下面保留现有中文学习讲义的内容。较宽的表分成几部分，每部分重复首列，方便在iPad和纸张上阅读。结果表中的0到1小数是比例，例如0.656相当于65.6%。','zh','small')])
-for child in guide:convert(child,chinese,'zh')
-if (ROOT/'docs/zero-to-project.zh-CN.md').exists():
-    # The detailed handbook supersedes the original seven-page Chinese overview.
-    # Keep one current Chinese reading file rather than silently restore the old one.
-    import subprocess
-    subprocess.run([sys.executable,str(ROOT/'tools/make_project_handbook.py')],check=True)
-    chinese_path=OUT/'03_中文解释与复习.pdf'
-    shutil.copy2(ROOT.parent/'tmp/pdfs/student-dropout-handbook/03_中文解释与复习.pdf',chinese_path)
-else:
-    chinese_path=build('03_中文解释与复习.pdf',chinese,'zh','退学预警项目 | 中文解释与复习')
 presentation=OUT/'01_Presentation.pdf'
 shutil.copy2(ROOT/'output/pdf/Student_Dropout_Presentation.pdf',presentation)
 
@@ -238,6 +207,5 @@ timing_path.write_text(json.dumps(timing,indent=2),encoding='utf-8')
 source=ROOT/'results/pdf-reading-source.json'
 source.write_text(json.dumps(dict(english_spoken_blocks=script,spoken_words=words,
    quiz_summary_created=False,website_reasoning_in_spoken_slide=3,
-   chinese_handbook=dict(pages=41,sections=40,source='docs/zero-to-project.zh-CN.md'),
-   files=[str(p) for p in [presentation,english_path,chinese_path]]),ensure_ascii=False,indent=2),encoding='utf-8')
-print(json.dumps(dict(created=[str(p) for p in [presentation,english_path,chinese_path]],spoken_words=words),ensure_ascii=False))
+   files=[str(p) for p in [presentation,english_path]]),ensure_ascii=False,indent=2),encoding='utf-8')
+print(json.dumps(dict(created=[str(p) for p in [presentation,english_path]],spoken_words=words),ensure_ascii=False))

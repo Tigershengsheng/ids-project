@@ -14,22 +14,16 @@
   "human_rehearsal_performed": false,
   "topic_approval_received": false,
   "repository_or_submission_changed": false,
-  "notes": "First-person course-method explanations and five reasons for analysis choices; unfamiliar-method learning and initial code/text assistance remain explicit. No new statistical fit, threshold tuning or bootstrap. Main talk 600 words; no human rehearsal performed.",
+  "notes": "Professor-facing sources, notes and reading files are English. Local bilingual study resources are excluded from the public bundle. No statistical refit or retuning; numerical checks unchanged.",
   "spoken_words": 600,
-  "chinese_handbook_pages": 41,
-  "chinese_handbook_sections": 40,
-  "chinese_handbook_validation": "handbook-validation.json",
   "latest_slide_revision": {
-    "validation": "learning-account-validation.json",
-    "changed_slides": [
-      4,
-      9,
-      17
-    ],
-    "other_slides_pixel_identical": 15,
-    "reasoning_pairs": 5,
+    "validation": "english-only-validation.json",
+    "visible_slide_images_unchanged": 18,
+    "speaker_notes_language": "English",
     "main_script_words": 600,
-    "english_pdf_pages": 9,
-    "chinese_pdf_pages": 41
+    "reading_pdf_pages": [
+      18,
+      9
+    ]
   }
 }

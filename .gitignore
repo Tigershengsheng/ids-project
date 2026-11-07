@@ -15,3 +15,7 @@ __pycache__/
 .env.*
 ~$*
 .DS_Store
+
+private-study/
+output/reading-pdfs/03_*
+results/handbook-validation.json

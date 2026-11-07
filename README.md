@@ -1,6 +1,6 @@
 # Student dropout warnings
 
-**大学生退学预警：能预测多准，哪些学生容易被漏掉？**
+**How accurate are enrolment-time warnings, and who gets missed?**
 
 Current IDS group project: enrolment-time prediction of recorded dropout and an audit of group error patterns. The repository is public. Updated 7 November 2026.
 
@@ -12,8 +12,7 @@ Current IDS group project: enrolment-time prediction of recorded dropout and an 
 | Reproducible presentation source | [presentation.Rmd](presentation.Rmd) |
 | Editable PowerPoint | [Student_Dropout_Presentation.pptx](output/powerpoint/Student_Dropout_Presentation.pptx) |
 | Presentation PDF | [01_Presentation.pdf](output/reading-pdfs/01_Presentation.pdf) |
-| English speaking script and Q&A | [02_英文演讲稿.pdf](output/reading-pdfs/02_英文演讲稿.pdf) |
-| Chinese beginner handbook | [03_中文解释与复习.pdf](output/reading-pdfs/03_中文解释与复习.pdf) |
+| English speaking script and Q&A | [02_Speaker_Notes.pdf](output/reading-pdfs/02_Speaker_Notes.pdf) |
 | Working research notebook | [investigation.Rmd](investigation.Rmd), [investigation.html](investigation.html) |
 | Complete statistical implementation | [R/analysis.R](R/analysis.R) |
 | Raw UCI data and attribution | [data/data.csv](data/data.csv), [data/README.md](data/README.md) |

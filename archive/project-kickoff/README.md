@@ -20,7 +20,6 @@ The user confirmed that the four-person Lab 03 group continues for this project.
 
 - [Star Wars exercises: rendered answers](lab-04.html) — all eight optional exercises.
 - [Project exploration: rendered draft](investigation.html) — data checks and three initial plots.
-- [Chinese reading guide](study-guide.html) — where to open files and what the code does.
 - [Data source and dictionary](data/README.md).
 
 The R Markdown sources are [lab-04.Rmd](lab-04.Rmd) and

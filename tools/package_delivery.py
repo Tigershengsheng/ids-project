@@ -18,8 +18,7 @@ if record.exists():
 
 copies = {
     'output/reading-pdfs/01_Presentation.pdf': '01_Presentation.pdf',
-    'output/reading-pdfs/02_英文演讲稿.pdf': '02_英文演讲稿.pdf',
-    'output/reading-pdfs/03_中文解释与复习.pdf': '03_中文解释与复习.pdf',
+    'output/reading-pdfs/02_Speaker_Notes.pdf': '02_Speaker_Notes.pdf',
     'output/powerpoint/Student_Dropout_Presentation.pptx':
         'Student_Dropout_Presentation.pptx',
 }

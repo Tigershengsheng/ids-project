@@ -1,0 +1,17 @@
+{
+  "date": "2026-11-07",
+  "language": "English",
+  "slides": 18,
+  "slide_images_unchanged": 18,
+  "PPTX_XML_parts_checked": 53,
+  "han_characters_in_PPTX": 0,
+  "spoken_words": 600,
+  "independent_R_checks_passed": 36,
+  "protected_numerical_files_unchanged": 31,
+  "pptx_sha256": "39619e5353ed89a6fede3ba2a68f768cd3a0a89077ce361f91279f985614a0ef",
+  "pdf_pages": [
+    18,
+    9
+  ],
+  "local_private_study_materials_preserved": true
+}

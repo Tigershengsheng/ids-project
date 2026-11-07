@@ -390,15 +390,13 @@ bootstrap idea and the three fairness criteria from our course. We
 explain each choice in terms of the question it helps answer.</p>
 <table>
 <colgroup>
-<col width="33%" />
-<col width="33%" />
-<col width="33%" />
+<col width="50%" />
+<col width="50%" />
 </colgroup>
 <thead>
 <tr class="header">
 <th>Course method</th>
 <th>What we did and why</th>
-<th>中文说明</th>
 </tr>
 </thead>
 <tbody>
@@ -406,37 +404,31 @@ explain each choice in terms of the question it helps answer.</p>
 <td>Import and data types</td>
 <td>We read the semicolon-separated file, checked its dimensions and
 kept the original labels.</td>
-<td>我们先读对数据，再核对行列和标签含义。</td>
 </tr>
 <tr class="even">
 <td>Factors</td>
 <td>We treated course codes as categories because differences between
 code numbers have no numerical meaning.</td>
-<td>专业编号只是类别，不能按数字大小解释。</td>
 </tr>
 <tr class="odd">
 <td>Grouped summaries and joins</td>
 <td>We retained row IDs and split assignments so we could trace every
 rate back to the records it uses.</td>
-<td>我们保留记录编号和划分信息，方便核对每个比例。</td>
 </tr>
 <tr class="even">
 <td>Plots and labels</td>
 <td>We used boxplots for typical values and spread, and kept group sizes
 visible.</td>
-<td>我们用课堂图形比较分布，并标清各组人数。</td>
 </tr>
 <tr class="odd">
 <td>Bootstrap idea</td>
 <td>We resampled fixed test predictions within groups to describe
 uncertainty in the reported rates.</td>
-<td>我们把有放回重抽的原理用于组内指标，同时说明区间的条件。</td>
 </tr>
 <tr class="even">
 <td>Fairness criteria</td>
 <td>We compared warning rates, both error types and outcomes within both
 prediction groups.</td>
-<td>我们用三个公平标准回答不同问题，不把一个指标当作完整公平性。</td>
 </tr>
 </tbody>
 </table>
@@ -505,7 +497,6 @@ omitted by this procedure.</td>
 the stated endpoint. Removing those students would change the
 population. We therefore call them no recorded dropout at that point,
 without claiming they graduated.</p>
-<p>我们保留Enrolled，是因为研究的是规定终点有没有退学记录。删掉仍在读的学生会改变研究人群，所以我们把他们写成该时点未记录退学，而不是毕业。</p>
 </div>
 <div id="slide-4" class="section level3">
 <h3>Slide 4</h3>
@@ -513,7 +504,6 @@ without claiming they graduated.</p>
 enrolment. Later grades may predict well but answer a different
 question. We therefore keep a small set of defensible inputs and leave
 timing-uncertain fields out.</p>
-<p>我们想研究入学时预警，因此变量首先要在入学时可知。后来的成绩可能很好用，却回答了另一个问题。所以我们先守住预测时点，再考虑模型能预测多准。</p>
 </div>
 <div id="slide-5" class="section level3">
 <h3>Slide 5</h3>
@@ -521,7 +511,6 @@ timing-uncertain fields out.</p>
 explicit. It is our illustrative choice, not university policy. Once it
 selects a threshold, we keep that rule fixed so the test set can still
 provide a separate evaluation.</p>
-<p>我们用验证集70%的目标，把想多找到退学记录、又要限制误报的取舍说清楚。它是项目中的示例目标。规则确定后就不再用测试结果调整，否则测试集失去独立评价的作用。</p>
 </div>
 <div id="slide-6" class="section level3">
 <h3>Slide 6</h3>
@@ -529,7 +518,6 @@ provide a separate evaluation.</p>
 dropout already gives 67.9% accuracy, while finding none of the recorded
 dropouts. We therefore report who is found and how many warnings are
 false, with separate denominators.</p>
-<p>我们不能只按Accuracy判断预警。始终预测不退学，准确率就有67.9%，却找不到任何退学记录。因此我们同时说明找到了多少实际退学记录、发出的预警有多少正确，并分别交代分母。</p>
 </div>
 <div id="slide-7" class="section level3">
 <h3>Slide 7</h3>
@@ -537,7 +525,6 @@ false, with separate denominators.</p>
 groups have different sizes. The relevant comparison is 64/144 against
 34/141. We also keep false warnings and both prediction strata, so our
 fairness discussion covers more than one favourable statistic.</p>
-<p>两组人数不同，我们不能只比64人和34人。漏报率应在实际退学的人中计算，也就是64/144和34/141。我们同时保留误报以及预警、未预警两层结果，避免只选一个好看的指标。</p>
 </div>
 </div>
 <div id="assistance-and-responsibility" class="section level2">

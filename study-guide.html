@@ -10,9 +10,9 @@
 
 
 
-<meta name="date" content="2026-11-05" />
+<meta name="date" content="2026-11-07" />
 
-<title>退学预警项目：中文理解与代码导读</title>
+<title>Student dropout warnings: study guide</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -362,44 +362,57 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">退学预警项目：中文理解与代码导读</h1>
-<h3 class="subtitle">大学生退学预警：能预测多准，哪些学生容易被漏掉？</h3>
-<h4 class="date">2026-11-05</h4>
+<h1 class="title toc-ignore">Student dropout warnings: study guide</h1>
+<h3 class="subtitle">Research design, R implementation and
+interpretation</h3>
+<h4 class="date">7 November 2026</h4>
 
 </div>
 
 <div id="TOC">
 <ul>
-<li><a href="#%E6%88%91%E4%BB%AC%E7%A9%B6%E7%AB%9F%E5%9C%A8%E7%A0%94%E7%A9%B6%E4%BB%80%E4%B9%88" id="toc-我们究竟在研究什么">我们究竟在研究什么</a></li>
-<li><a href="#%E6%A0%87%E7%AD%BE%E6%A0%B7%E6%9C%AC%E4%B8%8E%E6%88%91%E4%BB%AC%E4%BF%9D%E7%95%99%E7%9A%84%E4%BA%BA" id="toc-标签样本与我们保留的人">标签、样本与我们保留的人</a></li>
-<li><a href="#%E5%93%AA%E4%BA%9B%E8%BE%93%E5%85%A5%E8%83%BD%E7%94%A8%E5%93%AA%E4%BA%9B%E4%B8%8D%E8%83%BD%E7%94%A8" id="toc-哪些输入能用哪些不能用">哪些输入能用，哪些不能用</a></li>
-<li><a href="#%E6%A8%A1%E5%9E%8B%E6%98%AF%E4%BB%80%E4%B9%88" id="toc-模型是什么">模型是什么</a></li>
-<li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%88%86%E4%B8%89%E4%BB%BD%E6%95%B0%E6%8D%AE" id="toc-为什么要分三份数据">为什么要分三份数据</a></li>
-<li><a href="#%E9%98%88%E5%80%BC%E5%92%8C70%E7%9B%AE%E6%A0%87%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88" id="toc-阈值和70目标到底是什么">阈值和70%目标到底是什么</a></li>
-<li><a href="#%E6%B5%8B%E8%AF%95%E7%BB%93%E6%9E%9C%E5%BA%94%E6%80%8E%E6%A0%B7%E8%AF%BB" id="toc-测试结果应怎样读">测试结果应怎样读</a></li>
-<li><a href="#%E4%B8%89%E4%B8%AA%E5%85%AC%E5%B9%B3%E6%80%A7%E6%A0%87%E5%87%86%E5%88%86%E6%AF%8D%E4%B8%8D%E8%83%BD%E6%B7%B7" id="toc-三个公平性标准分母不能混">三个公平性标准，分母不能混</a></li>
-<li><a href="#bootstrap-%E5%8C%BA%E9%97%B4%E6%98%AF%E4%BB%80%E4%B9%88%E6%84%8F%E6%80%9D" id="toc-bootstrap-区间是什么意思">Bootstrap 区间是什么意思</a></li>
-<li><a href="#%E5%A6%82%E4%BD%95%E7%94%A8%E8%87%AA%E5%B7%B1%E7%9A%84%E8%AF%9D%E8%A7%A3%E9%87%8A%E5%AE%9E%E9%99%85%E9%80%89%E6%8B%A9" id="toc-如何用自己的话解释实际选择">如何用自己的话解释实际选择</a></li>
-<li><a href="#%E4%BB%8E%E5%93%AA%E9%87%8C%E5%BC%80%E5%A7%8B%E7%9C%8B%E4%BB%A3%E7%A0%81" id="toc-从哪里开始看代码">从哪里开始看代码</a></li>
-<li><a href="#%E8%BF%99%E8%BD%AE%E5%AE%8C%E6%88%90%E5%92%8C%E4%BB%8D%E6%9C%AA%E5%AE%8C%E6%88%90%E7%9A%84%E4%BA%8B" id="toc-这轮完成和仍未完成的事">这轮完成和仍未完成的事</a></li>
+<li><a href="#the-research-question" id="toc-the-research-question">The
+research question</a></li>
+<li><a href="#outcomes-and-the-analysis-population" id="toc-outcomes-and-the-analysis-population">Outcomes and the analysis
+population</a></li>
+<li><a href="#inputs-and-prediction-time" id="toc-inputs-and-prediction-time">Inputs and prediction time</a></li>
+<li><a href="#the-probability-model" id="toc-the-probability-model">The
+probability model</a></li>
+<li><a href="#training-validation-and-test-records" id="toc-training-validation-and-test-records">Training, validation and
+test records</a></li>
+<li><a href="#the-threshold-and-illustrative-sensitivity-target" id="toc-the-threshold-and-illustrative-sensitivity-target">The threshold
+and illustrative sensitivity target</a></li>
+<li><a href="#reading-the-test-results" id="toc-reading-the-test-results">Reading the test results</a></li>
+<li><a href="#three-fairness-criteria-and-their-denominators" id="toc-three-fairness-criteria-and-their-denominators">Three fairness
+criteria and their denominators</a></li>
+<li><a href="#bootstrap-intervals-and-calibration" id="toc-bootstrap-intervals-and-calibration">Bootstrap intervals and
+calibration</a></li>
+<li><a href="#explaining-our-choices" id="toc-explaining-our-choices">Explaining our choices</a></li>
+<li><a href="#reading-and-reproducing-the-r-code" id="toc-reading-and-reproducing-the-r-code">Reading and reproducing the
+R code</a></li>
+<li><a href="#remaining-work-and-limits" id="toc-remaining-work-and-limits">Remaining work and limits</a></li>
 </ul>
 </div>
 
-<div id="我们究竟在研究什么" class="section level2">
-<h2>我们究竟在研究什么</h2>
-<p>我们评估一种入学时预警：使用入学年龄、入学成绩和专业，估计学生在正常学制结束时是否被记录为
-Dropout。接着检查同一规则的误报、漏报是否在记录中的女性、男性两组间不同。</p>
-<p>数据来自葡萄牙一所高校的历史记录，不是爱丁堡大学学生数据。原论文说，转专业或转学校也算
-Dropout。它不完全等于彻底放弃高等教育，更不等于“这个人一定需要帮助”。这个测量局限必须讲。</p>
+<div id="the-research-question" class="section level2">
+<h2>The research question</h2>
+<p>We evaluate an enrolment-time warning using age at enrolment,
+admission grade and course. We then ask whether the same rule has
+different false-warning and missed-dropout rates across recorded-gender
+groups.</p>
+<p>The historical records come from one Portuguese institution, not the
+University of Edinburgh. Recorded Dropout includes changes of course or
+institution. It is not a direct measure of leaving higher education
+altogether or of needing assistance.</p>
 </div>
-<div id="标签样本与我们保留的人" class="section level2">
-<h2>标签、样本与我们保留的人</h2>
+<div id="outcomes-and-the-analysis-population" class="section level2">
+<h2>Outcomes and the analysis population</h2>
 <table>
 <thead>
 <tr class="header">
-<th align="left">原始结果</th>
-<th align="right">人数</th>
-<th align="right">比例</th>
+<th align="left">Recorded outcome</th>
+<th align="right">Records</th>
+<th align="right">Proportion</th>
 </tr>
 </thead>
 <tbody>
@@ -420,89 +433,118 @@ Dropout。它不完全等于彻底放弃高等教育，更不等于“这个人�
 </tr>
 </tbody>
 </table>
-<p>主分析中 Dropout=1；Graduate 或
-Enrolled=0。零表示该观察终点没有记录为退学，不表示已经毕业或未来永不退学。正常学制一般三年，护理四年。</p>
-<p>我们保留所有三类人的原始标签，另做排除 Enrolled
-的补充分析。补充分析换了人群和问题，不能因为分数更好就替换主结果。</p>
+<p>The primary binary outcome is Dropout=1 and Graduate or Enrolled=0.
+Zero means no recorded Dropout at the normal course endpoint; it does
+not mean graduated or never dropping out later. The usual endpoint is
+three years, with four years for Nursing.</p>
+<p>We retain all three labels and separately report a resolved-outcome
+sensitivity analysis excluding Enrolled. That check changes the
+population and question; it does not replace the primary result because
+of a more favourable score.</p>
 </div>
-<div id="哪些输入能用哪些不能用" class="section level2">
-<h2>哪些输入能用，哪些不能用</h2>
-<p>主模型保留三个输入：年龄、入学成绩、专业。专业的数字是类别编码，不能认为编号越大就“专业程度越高”。</p>
-<p>12个学期末变量在入学时还不知道，全部排除。欠费、学费是否结清、助学金状态缺少逐人记录时间，我们保守地排除。宏观经济指标可能间接反映届次，源文件又没有对应的入学年份，因此不将它们混入这个小模型。</p>
-<p>我们最初考虑过班别，但训练数据中每个专业只有一种日间/夜间类别，放入两者出现完全重复的信息。我们在查看验证和测试评分之前保留专业、移除班别。证据保存在
-training-course-attendance.csv。</p>
-<p>完整字段时间表：results/variable-timing-audit.csv。没有空白 NA
-不代表没有“未知”编码，也不代表原始数据从未经过筛选。</p>
+<div id="inputs-and-prediction-time" class="section level2">
+<h2>Inputs and prediction time</h2>
+<p>Our primary inputs are age, admission grade and course. Numerical
+course codes represent categories, so we use a factor.</p>
+<p>The twelve semester-end fields are unavailable at enrolment and are
+excluded. Financial statuses have uncertain individual recording times
+and are excluded conservatively. Macroeconomic fields may identify
+cohort differences indirectly, but no corresponding enrolment-year field
+is available; they are omitted from this small model.</p>
+<p>In the training data, course determines attendance regime. We retain
+course without the redundant attendance term, before validation or test
+evaluation. The diagnostic is saved in
+<code>results/training-course-attendance.csv</code>.</p>
+<p>The field audit is in <code>results/variable-timing-audit.csv</code>.
+No blank cells does not mean there are no unknown category codes or
+prior source-data exclusions.</p>
 </div>
-<div id="模型是什么" class="section level2">
-<h2>模型是什么</h2>
-<p>这里的模型是一条用训练数据拟合的概率规则，模型给出零到一之间的数，再由阈值决定是否提示。</p>
-<pre class="r"><code>primary &lt;- glm(
-  dropout ~ age10 + admission10 + course,
-  data = training,
-  family = binomial()
-)
-probability &lt;- predict(primary, newdata = test, type = &quot;response&quot;)</code></pre>
-<p>glm 是 R 的广义线性模型函数；binomial 表示二分类逻辑回归。age10 和
-admission10 只是除以10改单位，不是从测试数据估计的标准化。专业已经转成
-factor。这个模型假设年龄、成绩在 log-odds
-上是线性的，专业加上固定的差异，没有交互项。这些都是简化假设。</p>
-<p>提供的课件没有独立的模型分类讲义，因此我们把逻辑回归列为补充方法，并给出
-R 官方文档。我们不能说它已经在上传课件中教过。</p>
+<div id="the-probability-model" class="section level2">
+<h2>The probability model</h2>
+<p>The model is a fitted probability rule. A threshold converts each
+estimated probability into a warning decision.</p>
+<pre class="r"><code>fit &lt;- glm(dropout ~ age10 + admission10 + course,
+           data=training, family=binomial())</code></pre>
+<p><code>glm</code> fits a generalised linear model;
+<code>binomial</code> specifies the binary logistic model. Dividing age
+and admission grade by ten changes their units; it is not
+standardisation estimated from test data. Course is categorical. Age and
+grade are linear on the log-odds scale, with additive course effects and
+no interactions. These are simplifying assumptions.</p>
+<p>Logistic regression is supplementary to the supplied material. We
+explain it with the official R documentation rather than claiming it
+appeared in an uploaded modelling lecture.</p>
 </div>
-<div id="为什么要分三份数据" class="section level2">
-<h2>为什么要分三份数据</h2>
+<div id="training-validation-and-test-records" class="section level2">
+<h2>Training, validation and test records</h2>
 <table>
 <thead>
 <tr class="header">
-<th align="left">数据</th>
-<th align="right">人数</th>
-<th align="left">用途</th>
+<th align="left">Partition</th>
+<th align="right">Records</th>
+<th align="left">Purpose</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">训练</td>
+<td align="left">Training</td>
 <td align="right">2652</td>
-<td align="left">拟合模型系数</td>
+<td align="left">Fit coefficients</td>
 </tr>
 <tr class="even">
-<td align="left">验证</td>
+<td align="left">Validation</td>
 <td align="right">883</td>
-<td align="left">选择提示阈值</td>
+<td align="left">Choose threshold</td>
 </tr>
 <tr class="odd">
-<td align="left">测试</td>
+<td align="left">Test</td>
 <td align="right">889</td>
-<td align="left">评估已经固定的规则</td>
+<td align="left">Evaluate the frozen rule</td>
 </tr>
 </tbody>
 </table>
-<p>我们按原始结果和记录性别分层随机划分。组别比例接近原始数据，不能称为真正有代表性的全国随机样本。这个数据没有届次字段，无法做按新旧年份划分的未来届次检验。</p>
-<p>测试结果没有决定主模型、输入或阈值。验证后没有把验证样本重新加进模型拟合。</p>
+<p>The random split is stratified by original outcome and recorded
+gender. It is not a national probability sample. Exact full-record
+profiles stay together within one partition. No cohort field is
+available for a chronological future-cohort test.</p>
+<p>Test outcomes do not choose the main model, inputs or threshold. The
+validation records are not subsequently added into a refitted model.</p>
 </div>
-<div id="阈值和70目标到底是什么" class="section level2">
-<h2>阈值和70%目标到底是什么</h2>
-<p>概率达到 0.31
-就提示，否则不提示。我们事先规定，在0.05到0.80的候选网格里，找验证集识别率达到70%、同时特异性最高的阈值。它不是学校制定的标准，也不是已经证实的最优政策。</p>
-<p>阈值越低，通常提示人数越多。可能找到更多真正的退学记录，也会提示更多未记录为退学的人。这是需要解释的权衡。</p>
+<div id="the-threshold-and-illustrative-sensitivity-target" class="section level2">
+<h2>The threshold and illustrative sensitivity target</h2>
+<p>The warning threshold is 0.31. On a pre-specified grid from 0.05 to
+0.80, we choose the validation threshold with highest specificity among
+those attaining at least 70% sensitivity. The target is an illustrative
+analytical choice, not an agreed university policy or an established
+operational optimum.</p>
+<p>A lower threshold generally produces more warnings. It can find more
+actual recorded dropouts while also warning more students without that
+label. This trade-off requires explicit interpretation.</p>
 </div>
-<div id="测试结果应怎样读" class="section level2">
-<h2>测试结果应怎样读</h2>
-<table>
+<div id="reading-the-test-results" class="section level2">
+<h2>Reading the test results</h2>
+<table style="width:100%;">
 <colgroup>
-<col width="31%" />
+<col width="20%" />
+<col width="2%" />
+<col width="2%" />
+<col width="2%" />
+<col width="2%" />
+<col width="2%" />
 <col width="3%" />
 <col width="3%" />
+<col width="4%" />
+<col width="5%" />
+<col width="6%" />
+<col width="3%" />
+<col width="3%" />
+<col width="6%" />
+<col width="6%" />
 <col width="3%" />
 <col width="3%" />
 <col width="3%" />
 <col width="5%" />
-<col width="5%" />
-<col width="8%" />
-<col width="11%" />
-<col width="5%" />
-<col width="11%" />
+<col width="9%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -514,10 +556,18 @@ R 官方文档。我们不能说它已经在上传课件中教过。</p>
 <th align="right">TN</th>
 <th align="right">AUC</th>
 <th align="right">Brier</th>
-<th align="right">Accuracy</th>
-<th align="right">Sensitivity</th>
-<th align="right">PPV</th>
+<th align="right">LogLoss</th>
+<th align="right">BaseRate</th>
 <th align="right">WarningRate</th>
+<th align="right">FPR</th>
+<th align="right">FNR</th>
+<th align="right">Sensitivity</th>
+<th align="right">Specificity</th>
+<th align="right">PPV</th>
+<th align="right">NPV</th>
+<th align="right">FOR</th>
+<th align="right">Accuracy</th>
+<th align="right">BalancedAccuracy</th>
 </tr>
 </thead>
 <tbody>
@@ -530,10 +580,18 @@ R 官方文档。我们不能说它已经在上传课件中教过。</p>
 <td align="right">604</td>
 <td align="right">0.500</td>
 <td align="right">0.218</td>
-<td align="right">0.679</td>
+<td align="right">0.627</td>
+<td align="right">0.321</td>
 <td align="right">0.000</td>
+<td align="right">0.000</td>
+<td align="right">1.000</td>
+<td align="right">0.000</td>
+<td align="right">1.000</td>
 <td align="right">NA</td>
-<td align="right">0.000</td>
+<td align="right">0.679</td>
+<td align="right">0.321</td>
+<td align="right">0.679</td>
+<td align="right">0.500</td>
 </tr>
 <tr class="even">
 <td align="left">Enrolment model: threshold 0.50</td>
@@ -544,10 +602,18 @@ R 官方文档。我们不能说它已经在上传课件中教过。</p>
 <td align="right">559</td>
 <td align="right">0.718</td>
 <td align="right">0.188</td>
+<td align="right">0.558</td>
+<td align="right">0.321</td>
+<td align="right">0.141</td>
+<td align="right">0.075</td>
 <td align="right">0.719</td>
 <td align="right">0.281</td>
+<td align="right">0.925</td>
 <td align="right">0.640</td>
-<td align="right">0.141</td>
+<td align="right">0.732</td>
+<td align="right">0.268</td>
+<td align="right">0.719</td>
+<td align="right">0.603</td>
 </tr>
 <tr class="odd">
 <td align="left">Enrolment model: validation rule</td>
@@ -558,113 +624,174 @@ R 官方文档。我们不能说它已经在上传课件中教过。</p>
 <td align="right">382</td>
 <td align="right">0.718</td>
 <td align="right">0.188</td>
-<td align="right">0.640</td>
-<td align="right">0.656</td>
-<td align="right">0.457</td>
+<td align="right">0.558</td>
+<td align="right">0.321</td>
 <td align="right">0.460</td>
+<td align="right">0.368</td>
+<td align="right">0.344</td>
+<td align="right">0.656</td>
+<td align="right">0.632</td>
+<td align="right">0.457</td>
+<td align="right">0.796</td>
+<td align="right">0.204</td>
+<td align="right">0.640</td>
+<td align="right">0.644</td>
+</tr>
+<tr class="even">
+<td align="left">Add recorded gender: same threshold</td>
+<td align="right">889</td>
+<td align="right">190</td>
+<td align="right">208</td>
+<td align="right">95</td>
+<td align="right">396</td>
+<td align="right">0.725</td>
+<td align="right">0.187</td>
+<td align="right">0.555</td>
+<td align="right">0.321</td>
+<td align="right">0.448</td>
+<td align="right">0.344</td>
+<td align="right">0.333</td>
+<td align="right">0.667</td>
+<td align="right">0.656</td>
+<td align="right">0.477</td>
+<td align="right">0.807</td>
+<td align="right">0.193</td>
+<td align="right">0.659</td>
+<td align="right">0.661</td>
 </tr>
 </tbody>
 </table>
-<p>选定规则在测试集：</p>
+<p>For the selected rule:</p>
 <ul>
-<li>285名被记录为退学的人中，找到187名，漏掉98名；识别率为 65.6%。</li>
-<li>604名没有该退学记录的人中，提示222名；误报率为 36.8%。</li>
-<li>一共提示409人，187人的记录为退学，所以 PPV 为 45.7%。</li>
-<li>提示了全部测试学生的
-46.0%。这个比例涉及支持资源，不能只盯着识别率。</li>
+<li>It identifies 187 of 285 actual dropout records and misses 98:
+sensitivity is 65.6%.</li>
+<li>It warns 222 of 604 records without Dropout: the false-positive rate
+is 36.8%.</li>
+<li>Of 409 warnings, 187 match a Dropout record: precision is
+45.7%.</li>
+<li>It warns 46.0% of all test records, which matters for support
+capacity.</li>
 </ul>
-<p>“误报”只是相对于记录标签的错误，不表示这个学生完全不需要支持。原始标签本身也没有告诉我们转校原因或支持需求。</p>
+<p>A false warning is an error relative to the administrative label. It
+does not establish that the student needs no support. The label does not
+reveal reasons for transfer or individual support needs.</p>
 </div>
-<div id="三个公平性标准分母不能混" class="section level2">
-<h2>三个公平性标准，分母不能混</h2>
+<div id="three-fairness-criteria-and-their-denominators" class="section level2">
+<h2>Three fairness criteria and their denominators</h2>
 <table>
 <thead>
 <tr class="header">
-<th align="left">标准</th>
-<th align="left">指标</th>
-<th align="left">女性</th>
-<th align="left">男性</th>
+<th align="left">Criterion</th>
+<th align="left">Rate</th>
+<th align="left">Female</th>
+<th align="left">Male</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="left">Independence</td>
-<td align="left">所有人中的提示比例</td>
+<td align="left">Warning rate</td>
 <td align="left">37.9%</td>
 <td align="left">60.8%</td>
 </tr>
 <tr class="even">
 <td align="left">Separation</td>
-<td align="left">未退学记录者中的误报比例 FPR</td>
+<td align="left">False-positive rate</td>
 <td align="left">32.0%</td>
 <td align="left">48.6%</td>
 </tr>
 <tr class="odd">
 <td align="left">Separation</td>
-<td align="left">退学记录者中的漏报比例 FNR</td>
+<td align="left">False-negative rate</td>
 <td align="left">44.4%</td>
 <td align="left">24.1%</td>
 </tr>
 <tr class="even">
 <td align="left">Sufficiency</td>
-<td align="left">被提示者中的退学比例 PPV</td>
+<td align="left">Precision / PPV</td>
 <td align="left">36.7%</td>
 <td align="left">56.0%</td>
 </tr>
 <tr class="odd">
 <td align="left">Sufficiency</td>
-<td align="left">未提示者中的退学比例 1-NPV</td>
+<td align="left">Dropout among unwarned / FOR</td>
 <td align="left">17.9%</td>
 <td align="left">27.6%</td>
 </tr>
 </tbody>
 </table>
-<p>女性漏报率是64/144，男性是34/141。64和34不是直接可比的“公平指标”，必须看正确的条件分母。两组全部人数分别是575、314，但漏报率的分母只包括实际退学记录者。</p>
-<p>误报率则只在没有退学记录的人中计算。男性误报率较高，女性漏报率较高，不能简单说一组在所有方面都受到同一种影响。</p>
-<p>二分类充分性要检查两个预测层。只比较
-PPV，遗漏未提示者中的实际结果，不足以完整检查 Sufficiency。NPV
-是未提示者中没有退学记录的比例；1-NPV 是其中有退学记录的比例。</p>
-<p>两组的基础退学记录比例也不同：女性 25.0%，男性
-44.9%。数值差异是要进一步调查的现象，不能直接推断性别导致退学，或模型已经构成歧视。</p>
+<p>The female false-negative rate is 64/144 and the male rate is 34/141.
+Comparing 64 with 34 alone ignores the conditional denominators. Full
+group sizes are 575 and 314, but only actual dropout records belong in
+the false-negative-rate denominators.</p>
+<p>False-positive rates instead condition on records without Dropout.
+Male records have the higher false-warning rate, while female records
+have the higher missed-dropout rate. The error patterns therefore differ
+in more than one direction.</p>
+<p>Binary Sufficiency requires both prediction strata. Precision alone
+omits outcomes among unwarned students. NPV is the non-dropout
+proportion among unwarned records; FOR=1-NPV is their recorded-dropout
+proportion.</p>
+<p>Base dropout rates also differ: 25.0% for female records and 44.9%
+for male records. Gaps require investigation; they do not establish that
+gender causes dropout or that the model is discriminatory.</p>
 </div>
-<div id="bootstrap-区间是什么意思" class="section level2">
-<h2>Bootstrap 区间是什么意思</h2>
-<p>课件中的步骤是：有放回抽样、重新计算统计量、重复很多次、取中间95%。这里固定已拟合的模型与已选择的阈值，在测试集每个记录性别组里分别重抽学生，重复
-5,000 次。</p>
-<pre class="r"><code>ids &lt;- sample(group_rows, length(group_rows), replace = TRUE)
-statistic &lt;- false_negative_rate(test[ids, ])
-# 重复后，对两组差值取 quantile(gaps, c(0.025, 0.975))</code></pre>
-<p>女性减男性漏报率差约20.3个百分点，其区间约9.5到30.7个百分点。这个区间没有包含模型重新训练、阈值选择本身的变化、不同届次之间的聚集或推广到其他学校的不确定性。因此我们称它为条件区间；不应把它读成公平证书。各指标分别有95%区间，也不等于所有区间合起来同时有95%的保证。</p>
-<p>概率校准另问一个问题：估计为30%左右的学生，实际退学比例是否也在30%左右。按概率分箱只能提供描述性检查，不能证明精确校准，更不能替代阈值后二分类的充分性检查。</p>
+<div id="bootstrap-intervals-and-calibration" class="section level2">
+<h2>Bootstrap intervals and calibration</h2>
+<p>The course bootstrap idea is to sample with replacement, recalculate
+statistics, repeat, and use the middle 95% of the distribution. Here we
+resample test records within recorded-gender groups, holding the model
+and threshold fixed, for 5,000 repetitions.</p>
+<pre class="r"><code>sample_rows &lt;- sample.int(nrow(group_data), replace=TRUE)
+bootstrap_group &lt;- group_data[sample_rows, ]
+# After repeated group-rate calculations, take percentile limits:
+quantile(gaps, c(0.025,0.975))</code></pre>
+<p>The female-minus-male false-negative-rate gap is about 20.3
+percentage points, with a conditional interval of about 9.5 to 30.7
+points. It excludes uncertainty from refitting, threshold selection,
+cohort clustering and transport to another institution. Separate
+pointwise 95% intervals do not provide a simultaneous 95% fairness
+guarantee.</p>
+<p>Calibration concerns estimated probabilities: do records given about
+30% probability have about 30% recorded dropout? Probability bins
+provide a descriptive check. They neither establish exact calibration
+nor replace binary Sufficiency at the warning threshold.</p>
 </div>
-<div id="如何用自己的话解释实际选择" class="section level2">
-<h2>如何用自己的话解释实际选择</h2>
-<p>可以从“我们关心什么，因此怎样处理，结果带来什么限制”来组织。不要给每个函数都加一段个人故事，也不要捏造小组开会时说过的话。</p>
-<p>例如：</p>
-<p>“我们希望在入学时提供提示，所以不能拿后面学期的成绩来提高分数。”</p>
-<p>“我们发现退学标签包括转校，因此把结论限定为记录里的离开状态。”</p>
-<p>“我们在训练交叉表里看到班别已由专业决定，所以移除了重复的信息。”</p>
-<p>“我们看到提高识别率会带来更多误报，因此没有把识别率当成唯一目标。”</p>
-<p>“我们没有因为模型未使用性别就认定公平，而是进一步按性别检查了错误。”</p>
-<p>这些表述都应由你们审阅后采用；讲稿不是你们已经理解或独立完成的证明。</p>
+<div id="explaining-our-choices" class="section level2">
+<h2>Explaining our choices</h2>
+<p>We organise the explanation around the question, the choice and its
+implication. Enrolment-time prediction excludes later marks. The
+administrative label limits what dropout means. Training-only
+diagnostics avoid redundant inputs. Error trade-offs motivate reporting
+several metrics. Omitting gender does not remove the need for a group
+audit.</p>
+<p>Our course/supplementary learning account and actual assistance are
+described in <code>docs/learning-process.md</code>.</p>
 </div>
-<div id="从哪里开始看代码" class="section level2">
-<h2>从哪里开始看代码</h2>
-<ol style="list-style-type: decimal">
-<li>打开 student-dropout-final.Rproj。</li>
-<li>R/analysis.R 第1部分读取和定义数据，第2部分是字段时间表。</li>
-<li>第3部分划分数据并生成训练摘要；第4部分拟合模型、选择验证阈值。</li>
-<li>第5部分评估测试集，第6部分计算bootstrap区间。</li>
-<li>第7-8部分是标签敏感性和概率检查；第9部分作图；第10部分保存共同结果。</li>
-<li>presentation.Rmd
-读取同一个结果对象，数字和图表不会靠手工复制更新。</li>
-</ol>
-<p>read_delim、mutate/transmute、filter、count、group_by、summarise、left_join、pivot_longer、factor和ggplot图层都与上传材料直接相关。glm、验证划分、AUC/Brier及多指标辅助函数属于额外解释部分。详细对应关系见
-docs/course-map.html。</p>
+<div id="reading-and-reproducing-the-r-code" class="section level2">
+<h2>Reading and reproducing the R code</h2>
+<p>Open <code>student-dropout-final.Rproj</code>.
+<code>R/analysis.R</code> imports and defines records, audits variable
+timing, creates partitions and training summaries, fits and validates
+the model, evaluates test predictions, constructs bootstrap intervals,
+and saves the sensitivity checks and figures.</p>
+<p><code>presentation.Rmd</code> reads the saved results rather than
+manually copying numerical answers. <code>verify_project.R</code>
+independently checks raw-row identities, partitions, predictions,
+threshold selection and metric denominators.</p>
+<p>The supplied material supports data import, factors, wrangling,
+joins, plotting, bootstrap ideas and the fairness criteria. Logistic
+regression, held-out evaluation, AUC/Brier and implementation helpers
+are explained as further learning. See
+<code>docs/course-map.md</code>.</p>
 </div>
-<div id="这轮完成和仍未完成的事" class="section level2">
-<h2>这轮完成和仍未完成的事</h2>
-<p>本轮生成的是分析、展示与理解材料。题目可行性的教学团队确认、小组实际审阅、自己讲出来的排练、check-in参加、GitHub新题目的协作与授权、正式报告、互评和提交均不能由这些文件替代。没有证明这个模型可以减少退学，也没有证明它适用于爱丁堡大学。</p>
+<div id="remaining-work-and-limits" class="section level2">
+<h2>Remaining work and limits</h2>
+<p>The analysis, presentation and supporting documents do not replace
+topic-feasibility confirmation, actual group review, rehearsal,
+check-ins, accepted collaboration invitations, the separate report, peer
+evaluation or formal submission. We have not established that the
+warning reduces dropout or transfers reliably to Edinburgh.</p>
 </div>
 
 

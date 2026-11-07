@@ -363,8 +363,8 @@ display: none;
 
 
 <h1 class="title toc-ignore">Presentation script and speaking notes</h1>
-<h3 class="subtitle">Student dropout warnings: English script with
-Chinese explanations</h3>
+<h3 class="subtitle">Student dropout warnings: English script, analysis
+decisions and Q&amp;A</h3>
 <h4 class="date">6 November 2026</h4>
 
 </div>
@@ -402,9 +402,9 @@ explanations you can use selectively</a></li>
 <h2>How to use these notes</h2>
 <p>Slides 1-8 are the main talk. Slide 9 gives references; slides 10
 onward are backups for questions. The English blocks below are the
-spoken script; the Chinese paragraphs and decision notes are for
-understanding, not extra speech to read aloud. Read the script with the
-actual slides and confirm a pace comfortable for each speaker.</p>
+spoken script; the supplementary decision notes are for preparation, not
+extra speech to read aloud. Read the script with the actual slides and
+confirm a pace comfortable for each speaker.</p>
 <p>Suggested allocation: Speaker 1, slides 1-2; Speaker 2, slides 3-4;
 Speaker 3, slides 5-6; Speaker 4, slides 7-8. This is a proposed
 allocation for four people, not evidence of actual contribution or
@@ -445,9 +445,11 @@ evaluate overall prediction, and finally check how errors differ between
 groups. A warning does not determine a student’s future. We therefore
 start by checking what the label means.</p>
 </div>
-<p>中文理解：主问题是预测有没有用，进一步的问题是它对不同群体是否同样可靠。我们研究的是一种可能用于支持学生的预警，不是在给个人下定论。</p>
-<p>衔接：Before building a warning, we needed to understand what the
-recorded outcome actually meant.</p>
+<p>Our primary question concerns prediction, followed by whether the
+same rule is equally reliable across groups. We frame the warning around
+possible student support, not a judgement about an individual.</p>
+<p>Transition: Before building a warning, we needed to understand what
+the recorded outcome actually meant.</p>
 </div>
 <div id="slide-2-the-outcome-definition" class="section level2">
 <h2>Slide 2: the outcome definition</h2>
@@ -461,9 +463,15 @@ In our binary analysis they have no recorded dropout at that point; they
 are not assumed to have graduated. These choices define what our
 predictions can mean.</p>
 </div>
-<p>中文理解：这个标签比“彻底放弃上大学”宽，包括转专业和转学校。学校按正常学制结束时的状态标注，通常三年，护理四年。仍在读的学生属于“该时点未记录为退学”，不能称为毕业，也不能称为永不退学。</p>
-<p>我们的分析选择：我们保留了所有三类原始记录，同时明确了二分类问题。这样避免通过删除仍在读学生来得到更好看的主结果。</p>
-<p>衔接给下一位：With that definition in place, we looked at what was
+<p>The recorded label includes changing course or institution, rather
+than only leaving higher education. The endpoint is the normal course
+duration, usually three years and four for Nursing. Enrolled means no
+recorded dropout at that endpoint; it does not mean graduated or never
+dropping out later.</p>
+<p>We retained the three original outcome labels and defined the binary
+endpoint explicitly. Removing Enrolled records would change the study
+population and the meaning of the question.</p>
+<p>Transition: With that definition in place, we looked at what was
 already known at enrolment.</p>
 <p><strong>Our figure-review explanation (not additional
 speech):</strong> We wanted the audience to see all three recorded
@@ -472,15 +480,14 @@ advice</a>, we kept the existing bars: they already started at zero and
 gave both counts and percentages. We did not change a chart that already
 supported this comparison. Its colours distinguish categories; their
 order does not rank students.</p>
-<p>中文思路：我们想让听众看到三种状态各有多少人。查过坐标轴建议后，我们保留原图，因为它本来就从零开始，也已经写了人数和比例。不需要为了表示“改过”而更换图形。</p>
+<p>We kept the zero-based bars because they already showed all three
+outcome counts and percentages clearly. The category colours distinguish
+labels; they do not rank students.</p>
 <div class="decision-note-en">
 <p>Our reasoning: We kept Enrolled because our question concerns
 recorded dropout at the stated endpoint. Removing those students would
 change the population. We therefore call them no recorded dropout at
 that point, without claiming they graduated.</p>
-</div>
-<div class="decision-note-zh">
-<p>我们的思路：我们保留Enrolled，是因为研究的是规定终点有没有退学记录。删掉仍在读的学生会改变研究人群，所以我们把他们写成该时点未记录退学，而不是毕业。</p>
 </div>
 </div>
 <div id="slide-3-what-the-entry-profiles-show" class="section level2">
@@ -493,8 +500,11 @@ sizes, so we added the counts below each outcome. We kept the boxes to
 compare typical values and spread. These observed patterns are
 associations, not causes.</p>
 </div>
-<p>中文理解：箱线图是用训练数据画的。退学记录组平均年龄较大，但三类人的年龄和成绩仍有明显重叠。图能说明分布差异，不能证明原因，更不能把低成绩当作个人必然退学的证据。</p>
-<p>我们的分析选择：我们同时展示分布和重叠，避免只放几个平均数，让听众误以为不同结果能被清楚分开。</p>
+<p>These are training-data boxplots. The distributions overlap even
+where their centres differ. The plots describe associations and cannot
+establish causes or an inevitable individual outcome.</p>
+<p>We show spread and overlap alongside typical values. A few means
+alone could suggest a cleaner separation than the records support.</p>
 <p><strong>Our figure-review explanation (not additional
 speech):</strong> We wanted a quick comparison of typical values and
 spread. Quiz 7 recommended Data to Viz, which led us to review these
@@ -506,8 +516,10 @@ not suggest equal numbers of students. We did not add thousands of raw
 dots to the main slide, and we do not claim the boxes reveal every
 distribution feature. The two panels use different, explicitly labelled
 units; we compare outcomes within each panel.</p>
-<p>中文思路：我们原本想比较各组的中间位置和分散程度。参考网站后，我们注意到箱子一样宽，看不出各组人数。所以保留课堂学过的箱线图，同时把训练集人数写在类别下面。这样听众不必猜每组有多少人，但我们仍然承认箱线图无法展示完整分布。</p>
-<p>衔接：We then needed a small model and a fair test of its
+<p>We kept boxplots to compare typical values and spread, and added the
+group counts because equal-width boxes do not show how many records each
+group contains. Boxplots still omit some distribution detail.</p>
+<p>Transition: We then needed a small model and a fair test of its
 predictions.</p>
 </div>
 <div id="slide-4-inputs-and-evaluation-design" class="section level2">
@@ -522,21 +534,25 @@ Validation records chose the threshold. Test records evaluated the
 frozen rule. Recorded gender was reserved for the main audit. A
 probability still needs a threshold before it becomes a warning.</p>
 </div>
-<p>中文理解：主模型只用入学年龄、入学成绩、专业三组信息。逻辑回归将它们转成一个零到一之间的估计概率。专业必须作为类别，不能把专业编号当大小。年龄和成绩按线性方式进入
-log-odds，这是简化假设。</p>
-<p>我们的分析判断：训练集中，班别与专业包含重复的结构信息，因此主模型只保留专业。这个决定基于训练数据，不能根据测试结果来挑选变量。</p>
-<p>数据分工：训练 2,652 人用于拟合，验证 883 人用于选阈值，测试 889
-人用于最后评价。模型之后没有重新拟合验证数据。</p>
-<p>衔接给下一位：The next choice was how much estimated risk should
+<p>Our primary inputs are age at enrolment, admission grade and course.
+Logistic regression produces estimated probabilities. Course is
+categorical; age and grade enter linearly on the log-odds scale, with
+additive course effects and no interactions. These are simplifying
+assumptions.</p>
+<p>In the training records, attendance regime was determined by course.
+We therefore retain course without the redundant attendance term. This
+decision uses training data, rather than the later validation or test
+scores.</p>
+<p>The partitions contain 2,652 training, 883 validation and 889 test
+records. Validation chooses the threshold; it is not subsequently added
+back into the fitted model.</p>
+<p>Transition: The next choice was how much estimated risk should
 trigger a warning.</p>
 <div class="decision-note-en">
 <p>Our reasoning: We want an enrolment warning, so a useful predictor
 must be known at enrolment. Later grades may predict well but answer a
 different question. We therefore keep a small set of defensible inputs
 and leave timing-uncertain fields out.</p>
-</div>
-<div class="decision-note-zh">
-<p>我们的思路：我们想研究入学时预警，因此变量首先要在入学时可知。后来的成绩可能很好用，却回答了另一个问题。所以我们先守住预测时点，再考虑模型能预测多准。</p>
 </div>
 </div>
 <div id="slide-5-the-warning-threshold" class="section level2">
@@ -549,8 +565,14 @@ dropouts, about seventy per cent. We then froze the rule. The next slide
 checks test sensitivity and precision, and the cost in false
 warnings.</p>
 </div>
-<p>中文理解：模型先给概率，阈值再把概率变成“提示/不提示”。阈值降低通常能找到更多退学记录，也会误报更多未记录退学的人。我们在验证集上选择达到70%识别率目标、同时误报尽量少的候选阈值。没有在测试集上挑阈值。</p>
-<p>我们的分析选择：70%是用来展示权衡的分析目标。没有学校告诉我们这个目标，也没有实际支持容量数据，所以不能称其为最优政策。</p>
+<p>The model produces a probability and the threshold converts it into a
+warning decision. A lower threshold generally finds more recorded
+dropouts while producing more false warnings. We select among validation
+thresholds attaining the illustrative 70% sensitivity target, maximising
+specificity; test outcomes do not choose the threshold.</p>
+<p>The 70% target makes a trade-off explicit. It was not provided as
+university policy, and we do not have actual support-capacity data with
+which to establish an optimal operational policy.</p>
 <p><strong>Our figure-review explanation (not additional
 speech):</strong> We wanted to show how three rates change as the
 numerical threshold moves. The <a href="https://www.data-to-viz.com/caveat/cut_y_axis.html">axis
@@ -560,17 +582,17 @@ reminded us to consider readers who cannot distinguish our colours. We
 gave the three curves different line patterns, so colour is no longer
 the only way to follow them. These are observed validation rates, not
 confidence bands; the selected threshold is still 0.31.</p>
-<p>中文思路：我们想看到“阈值变化时，三条比例怎样一起变化”，所以保留折线。原来其中两条都是实线；现在三条线的线型也不同。我们没有改阈值、数据或70%的选择目标，也没有把这些曲线说成置信区间。</p>
-<p>衔接：We froze that choice and then checked what happened in the
-held-out test set.</p>
+<p>We retained lines because the horizontal variable is a numerical
+threshold. Distinct line patterns supplement the colours. The curves
+describe validation rates at candidate thresholds; they are not
+confidence bands.</p>
+<p>Transition: We froze that choice and then checked what happened in
+the held-out test set.</p>
 <div class="decision-note-en">
 <p>Our reasoning: We use the seventy per cent validation target to make
 our trade-off explicit. It is our illustrative choice, not university
 policy. Once it selects a threshold, we keep that rule fixed so the test
 set can still provide a separate evaluation.</p>
-</div>
-<div class="decision-note-zh">
-<p>我们的思路：我们用验证集70%的目标，把想多找到退学记录、又要限制误报的取舍说清楚。它是项目中的示例目标。规则确定后就不再用测试结果调整，否则测试集失去独立评价的作用。</p>
 </div>
 </div>
 <div id="slide-6-the-actual-test-results" class="section level2">
@@ -585,22 +607,25 @@ Accuracy also fell. Ninety-eight dropout records were still missed. An
 overall average cannot tell us who those students were. We therefore
 checked the same errors by recorded gender.</p>
 </div>
-<p>中文理解：同样889个测试学生，0.5阈值识别80名退学记录、误报45人；0.31阈值识别187名、误报222人。新增识别107名，代价是额外177次误报。后者的预测阳性值为
-45.7%，提示比例为 46.0%。</p>
-<p>识别率 65.6% 的条件bootstrap区间为 60.3% to
-71.0%。它不是65.6%的保证，也不能证明在未来或爱丁堡同样有效。</p>
-<p>实际结果引出的判断：我们看到，为了识别更多记录，准确率可以下降。因此，单独报准确率会掩盖预警达到什么、付出了什么代价。</p>
-<p>衔接备选（主稿已包含，不额外加读）：An overall average cannot tell us
-who is missed. We next compare these errors across recorded-gender
-groups.</p>
+<p>At threshold 0.50, the same 889 test records yield 80 true warnings
+and 45 false warnings; at 0.31, they yield 187 and 222. The change
+identifies 107 additional recorded dropouts with 177 additional false
+warnings. For the chosen rule, precision is 45.7% and 46.0% of records
+receive a warning.</p>
+<p>The conditional bootstrap interval for sensitivity 65.6% is 60.3% to
+71.0%. It is not a guarantee for future cohorts or students at another
+institution.</p>
+<p>Finding more recorded dropouts can coincide with lower accuracy. We
+therefore report the gains and false-warning costs rather than treating
+accuracy as the sole objective.</p>
+<p>Alternative transition (already included in the main script): An
+overall average cannot tell us who is missed. We next compare these
+errors across recorded-gender groups.</p>
 <div class="decision-note-en">
 <p>Our reasoning: We cannot judge this warning by accuracy alone. Always
 predicting no dropout already gives 67.9% accuracy, while finding none
 of the recorded dropouts. We therefore report who is found and how many
 warnings are false, with separate denominators.</p>
-</div>
-<div class="decision-note-zh">
-<p>我们的思路：我们不能只按Accuracy判断预警。始终预测不退学，准确率就有67.9%，却找不到任何退学记录。因此我们同时说明找到了多少实际退学记录、发出的预警有多少正确，并分别交代分母。</p>
 </div>
 </div>
 <div id="slide-7-whom-the-rule-misses" class="section level2">
@@ -618,16 +643,25 @@ dropout rates were also different, twenty-five versus forty-five per
 cent. These differences need investigation before real use; they do not
 prove discrimination.</p>
 </div>
-<p>中文理解：第6页留下98个漏报，第7页先接住这个问题：其中64个是女性记录，34个是男性记录。为比较被漏掉的机会，我们接着计算各组实际退学记录中的比例，而不只比人数。女性漏报率是64/144，男性是34/141，分母都只包括各组实际记录为退学的人。女性减男性的漏报率差为约20.3个百分点，区间约9.5至30.7个百分点。</p>
-<p>三个公平性问题的第一人称说明：</p>
+<p>Of 98 missed records, 64 were female and 34 male. The corresponding
+false-negative rates use actual dropout records as denominators: 64/144
+and 34/141. The female-minus-male gap is about 20.3 percentage points,
+with a conditional interval of about 9.5 to 30.7 points.</p>
+<p>How we applied the three fairness criteria:</p>
 <ul>
-<li>我们先看两组各有多少比例收到提示，这是 Independence。</li>
-<li>我们再分别看误报和漏报，这是
-Separation。女性漏报较高，男性误报较高，错误负担并不相同。</li>
-<li>我们最后看，同样收到提示或没有收到提示时，两组实际退学比例是否相近，这是二分类
-Sufficiency；两个预测层都要检查。</li>
+<li>We compare warning rates across all records in each group for
+Independence.</li>
+<li>We compare false-positive and false-negative rates for Separation.
+Female records have the higher missed-dropout rate; male records have
+the higher false-warning rate.</li>
+<li>For binary Sufficiency, we compare actual outcomes within both
+warned and unwarned prediction strata. Checking precision alone would
+omit the second stratum.</li>
 </ul>
-<p>我们的分析选择：没有把“模型没使用性别”当成公平证明，也没有强行改变两组阈值来把表格调平。专业等信息仍可能与性别有关。组间差异还受到真实标签比例、专业构成及未测量因素影响。</p>
+<p>Leaving gender out of the primary model does not establish fairness.
+Course and other features can still be associated with gender. We do not
+adjust group thresholds merely to equalise a table; observed gaps also
+reflect base rates, composition and unmeasured factors.</p>
 <p><strong>Our figure-review explanation (not additional
 speech):</strong> We wanted to compare error rates, but a group’s total
 is not the denominator of every rate. The <a href="https://www.data-to-viz.com/caveats.html">sample-size caveat</a>
@@ -643,19 +677,19 @@ deviations or a guarantee about a future cohort. We also added circle
 and triangle markers. To compare the groups directly, we use the gap
 intervals in backup slide 12 rather than treating overlap of two
 separate intervals as a formal test.</p>
-<p>中文思路：我们原图只标两组总人数，但计算漏报率时，实际只看退学记录的人。为了不让听众误用分母，我们在每一个点旁边标了它真正用到的人数。横线也明确解释成固定模型和阈值下的95%
-bootstrap区间，而不是“学生之间的波动”。点形不同，颜色分不清时也能认出两组。</p>
-<p>衔接备选（主稿已包含，不额外加读）：These group differences lead us
-to the checks we would require before real use.</p>
+<p>Every rate is labelled with its own denominator. For false-negative
+rates these are actual dropout counts, not the full group totals. The
+bars are conditional percentile bootstrap intervals, and distinct point
+shapes provide a cue beyond colour.</p>
+<p>Alternative transition (already included in the main script): These
+group differences lead us to the checks we would require before real
+use.</p>
 <div class="decision-note-en">
 <p>Our reasoning: We compare missed-dropout rates within actual
 dropouts, because the groups have different sizes. The relevant
 comparison is 64/144 against 34/141. We also keep false warnings and
 both prediction strata, so our fairness discussion covers more than one
 favourable statistic.</p>
-</div>
-<div class="decision-note-zh">
-<p>我们的思路：两组人数不同，我们不能只比64人和34人。漏报率应在实际退学的人中计算，也就是64/144和34/141。我们同时保留误报以及预警、未预警两层结果，避免只选一个好看的指标。</p>
 </div>
 </div>
 <div id="slide-8-the-conclusion-and-next-step" class="section level2">
@@ -669,7 +703,12 @@ found predictive signal in historical administrative records. We have
 not shown that acting on warnings prevents dropout. That would require a
 separate evaluation. Thank you.</p>
 </div>
-<p>中文理解：结果支持继续研究这种预警信号，但不支持直接部署。需要确认标签含义、资源容量、后续届学生上的表现、其他学校上的表现，并让学生能解释或纠正资料。是否真正减少退学，需要另一个干预效果研究。</p>
+<p>The results support further investigation of a possible warning
+signal, rather than immediate deployment. Real use would require checks
+of label meaning, support capacity, later cohorts and other
+institutions, together with human review and correction of records.
+Whether support actually reduces dropout requires a separate
+intervention study.</p>
 </div>
 <div id="our-learning-and-implementation-process" class="section level2">
 <h2>Our learning and implementation process</h2>
@@ -684,7 +723,11 @@ then rewrote and ran the main R analysis. We checked the outputs against
 the raw records and saved predictions. The bootstrap idea came from
 class; applying it to several group rates needed extra implementation
 guidance.</p>
-<p>中文：我们把课堂里的因子、分组汇总、连接、ggplot、分面、bootstrap原理和三个公平标准用到项目中。逻辑回归、独立留出评价、阈值选择、AUC和Brier最初对我们不熟悉，所以我们借助AI解释和文档学习，再自己重新编写主要R分析并运行核对。课堂学过bootstrap的原理，不代表按组重抽并同时计算多个指标的代码不需要补学。来源核查、最初稿件和排版也保留实际工具辅助说明。</p>
+<p>We applied the course principles of data handling, plots, bootstrap
+and fairness. We used explanations and documentation to learn unfamiliar
+modelling and evaluation methods, then rewrote and checked the main R
+analysis. Source checks, initial code/text drafts and formatting also
+received assistance, as recorded in the disclosure.</p>
 <p>Our statistical interpretation remains our responsibility. ChatGPT
 also helped with initial code and text drafts, source checks and slide
 formatting. We need to explain the inputs, assumptions and denominators,
@@ -721,7 +764,11 @@ zero-based horizontal bars, consistent with the <a href="https://www.data-to-viz
 advice</a>. The bar lengths still show shares within each group, not
 pooled counts. We have made the reading order clearer without changing
 the model or claiming this explains the error gap.</p>
-<p>中文思路：备用页的区间、bootstrap分布都保留原来的真实计算。校准图只补了点形并说明没有画区间；专业构成图改了排序、补上组人数。排序用训练集各专业总人数，柱长仍是各性别组内部比例，两个量不能混淆。</p>
+<p>The backups retain the original gap intervals and bootstrap
+calculations. The calibration plot uses group shapes and states that no
+intervals are plotted. Course categories are ordered by pooled training
+counts, while bar lengths remain proportions within each gender group;
+these quantities serve different purposes.</p>
 </div>
 <div id="first-person-explanations-you-can-use-selectively" class="section level2">
 <h2>First-person explanations you can use selectively</h2>
@@ -729,15 +776,13 @@ the model or claiming this explains the error gap.</p>
 to every slide. Review them against your own understanding.</p>
 <table>
 <colgroup>
-<col width="33%" />
-<col width="33%" />
-<col width="33%" />
+<col width="50%" />
+<col width="50%" />
 </colgroup>
 <thead>
 <tr class="header">
 <th>Decision reflected in the actual work</th>
 <th>English explanation</th>
-<th>中文意思</th>
 </tr>
 </thead>
 <tbody>
@@ -745,44 +790,37 @@ to every slide. Review them against your own understanding.</p>
 <td>Fix the prediction time</td>
 <td>We first needed to decide what early meant. We chose enrolment, so
 later semester results could not enter our model.</td>
-<td>我们先明确“早期”是入学时，之后才产生的成绩不能用。</td>
 </tr>
 <tr class="even">
 <td>Check the measured outcome</td>
 <td>We checked the original paper before treating the word dropout as a
 simple measure of leaving university.</td>
-<td>我们先查原论文，再决定怎样解释退学标签。</td>
 </tr>
 <tr class="odd">
 <td>Retain Enrolled</td>
 <td>We kept students who were still enrolled and described their status
 honestly, rather than treating them as graduates.</td>
-<td>我们保留仍在读学生，准确说明状态。</td>
 </tr>
 <tr class="even">
 <td>Exclude financial timing uncertainty</td>
 <td>We could not establish when each financial status was recorded, so
 we left those fields out of the enrolment model.</td>
-<td>财务字段记录时间不明，我们没有声称它们在入学时已知。</td>
 </tr>
 <tr class="odd">
 <td>Avoid redundant inputs</td>
 <td>Our training cross-tabulation showed that course already determined
 attendance regime in this dataset.</td>
-<td>训练交叉表显示班别已包含在专业编码信息里。</td>
 </tr>
 <tr class="even">
 <td>Evaluate the actual support trade-off</td>
 <td>We looked at false warnings as well as missed records, because both
 affect the resources and people involved.</td>
-<td>我们同时看误报和漏报，因为两者都有实际代价。</td>
 </tr>
 <tr class="odd">
 <td>Avoid claiming fairness from omission</td>
 <td>We left recorded gender out of the primary predictors, then checked
 the errors by gender instead of assuming the omission solved the
 problem.</td>
-<td>不使用性别，不代表不需要按性别检查结果。</td>
 </tr>
 </tbody>
 </table>
