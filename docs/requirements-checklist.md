@@ -19,7 +19,7 @@ Authority: the exact Final Project PDF supplied by the user, `Final Projects __ 
 | Every member has an opportunity to speak, p. 6 | Suggested four-part allocation; actual speaker names and agreement need group confirmation | Proposed, not a contribution record |
 | Explain choices, reasons and findings rather than a chronological account, p. 6 | First-person notes explain decisions actually reflected in the source audit and analysis | Drafted for group review; no invented meetings or feedback |
 | Hide presentation code, but retain reproducible source, pp. 6, 10 | Global echo=FALSE; sourced R analysis and complete raw data accompany Rmd | Implemented |
-| GitHub collaboration and course-account access, pp. 3, 8-10 | Portable local project prepared; no repository changes or invitations made for this topic | Pending actual group repository setup, collaborators, commits and access |
+| GitHub collaboration and course-account access, pp. 3, 8-10 | Current R sources, data, presentation and working notebook uploaded to Tigershengsheng/ids-project on 7 November 2026; course-account and member invitations checked | Upload complete; uoeIDS and three member invitations pending acceptance |
 | Check-in discussions and feedback, pp. 5-6, 9 | Notes may be recorded after actual attendance | Pending; no tutor feedback fabricated |
 | HTML presentation submission, p. 9 | presentation.html is the formal slide format; sharing PDF is supplementary | File prepared, not submitted |
 | Approx. 1,500-word report, maximum 1,650; report HTML and repository link, pp. 7, 9 | This task covers the presentation and supporting analysis | Not produced; remains a separate deliverable |

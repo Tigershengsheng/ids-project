@@ -10,7 +10,7 @@ Status checked on 7 November 2026. This document describes repository access and
 | HarryPeng725 | Invitation pending acceptance |
 | yingcheliu0723 | Invitation pending acceptance |
 | ReiyumEe | Invitation pending acceptance |
-| uoeIDS | Access not yet granted; requested read-only invitation was rejected because GitHub personal private repositories only support read/write collaborators. A change of permission requires confirmation. |
+| uoeIDS | Read/write collaborator invitation sent on 7 November 2026; pending acceptance. |
 
 The current presentation source/HTML, investigation source/HTML, R analysis, raw data, figures and optional PDF/PowerPoint reading set are included. The separate final report remains incomplete; `report.Rmd` is still the course template, and no completed `report.html` is claimed. Official Learn/Gradescope submission and individual peer evaluation remain separate actions.
 
