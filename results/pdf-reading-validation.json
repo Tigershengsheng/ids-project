@@ -3,18 +3,18 @@
     {
       "file": "01_Presentation.pdf",
       "pages": 18,
-      "bytes": 988540,
-      "sha256": "4e7677e709963ca6262d7546b530f05949a14e90c7e7861f88bda15b220803e8",
+      "bytes": 988544,
+      "sha256": "aad9009603cc5f8530392df07f84d136d2209476a9df6a99ee90263763a49c78",
       "text_characters": [
         341,
         485,
         354,
-        802,
+        773,
         461,
         784,
         795,
         671,
-        955,
+        920,
         496,
         367,
         252,
@@ -22,33 +22,34 @@
         287,
         449,
         460,
-        999,
+        935,
         307
       ],
       "out_of_bounds": []
     },
     {
       "file": "02_英文演讲稿.pdf",
-      "pages": 8,
-      "bytes": 61895,
-      "sha256": "f25ededca0ea44996d64bd7df931d54500c5b8ecc59b71497a7c5f49318da989",
+      "pages": 9,
+      "bytes": 64569,
+      "sha256": "d74cf0c4d429a5aa71a8848d20b2b058e82b00ca5d21917483984432f2271220",
       "text_characters": [
         1338,
-        1048,
+        1058,
         1010,
         1295,
         2686,
+        1523,
         2166,
         2442,
-        1749
+        1839
       ],
       "out_of_bounds": []
     },
     {
       "file": "03_中文解释与复习.pdf",
       "pages": 41,
-      "bytes": 1091641,
-      "sha256": "d027400d810cb4ca760cbccbaa89fbe5fb2359a01ea9f4e4e81923849021fbad",
+      "bytes": 1091877,
+      "sha256": "898717e522581e3de965d9e5305bc718b771163e11a308ed41b3c8a119151ff6",
       "text_characters": [
         673,
         644,
@@ -90,12 +91,12 @@
         1009,
         784,
         782,
-        1237
+        1244
       ],
       "out_of_bounds": []
     }
   ],
   "preserved_numerical_files": 31,
   "quiz_summary_created": false,
-  "spoken_words": 597
+  "spoken_words": 600
 }

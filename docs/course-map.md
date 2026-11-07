@@ -2,7 +2,7 @@
 
 ## Additional recommended exploration: Data to Viz
 
-The user identifies Quiz Question 7 as recommending this website. Following that recommendation, the 6 November figure review applies sample-size labels, deliberate ordering, colour-independent markers and explicit interval descriptions. This connects to the visualisation and uncertainty topics below, but the resource is not presented as a compulsory project requirement. Actual URLs, changes and retained choices are recorded in data-to-viz-review.md; first-person explanations appear in the corresponding speaker notes. No additional modelling method was introduced.
+Quiz Question 7 recommended this website, which prompted our figure review. Following that recommendation, the 6 November figure review applies sample-size labels, deliberate ordering, colour-independent markers and explicit interval descriptions. This connects to the visualisation and uncertainty topics below, but the resource is not presented as a compulsory project requirement. Actual URLs, changes and retained choices are recorded in data-to-viz-review.md; first-person explanations appear in the corresponding speaker notes. No additional modelling method was introduced.
 
 Page numbers below refer to PDF pages, not inferred lecture dates. This map distinguishes material actually available in the workspace from supplementary methods. All available PDFs were text-extracted page by page; the task-relevant sections were inspected. The underlying PDFs remain in the user's course folders and are not redistributed in this project.
 

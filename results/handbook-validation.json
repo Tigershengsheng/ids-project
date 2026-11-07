@@ -248,9 +248,9 @@
       "title": "40｜哪些是课堂内容？还要核对什么？"
     }
   ],
-  "bytes": 1091641,
-  "pdf_sha256": "d027400d810cb4ca760cbccbaa89fbe5fb2359a01ea9f4e4e81923849021fbad",
-  "source_sha256": "0e406316b36898675fd21dec1b7e8661948037003735fb7eb8893dde116fc1c2",
+  "bytes": 1091877,
+  "pdf_sha256": "898717e522581e3de965d9e5305bc718b771163e11a308ed41b3c8a119151ff6",
+  "source_sha256": "4ae878187c2ee0caaa0eabcb99f5fcdd4dd6de7850f68595b9d01325a59e28e3",
   "out_of_bounds": [],
   "preserved_numerical_files": 31,
   "text_characters": [
@@ -294,7 +294,7 @@
     1009,
     784,
     782,
-    1237
+    1244
   ],
   "evidence": {
     "R/analysis.R": "ae8aa1abfb095d175c5b198cb15de4ea49194fba9d1bcfbca19b3091244e59e0",
@@ -307,7 +307,7 @@
     "results/calibration-bins.csv": "7cd48bd4381852f6f0d14043e3ada7d1b880f73bbaffd0ee4f6284845d305cec",
     "results/training-summary.csv": "7a6e89a1b7fcdcca018ed2b7ae83d168eb7698e9f0a52a65b6d164ed76cdc731",
     "docs/source-notes.md": "29ed6e23197fab1a45fb550152e5a822f3e6da8858de191e7678ab3acd3f89ee",
-    "docs/course-map.md": "635dd667c03139bc1897f8f3d0a41d08c8046ef954954faac70e424a1ea928c5"
+    "docs/course-map.md": "8344bb1f7124d8744a9cfa3cc3c662826dde109c10bc1c2aaa638d9a7975aeec"
   },
   "new_analysis_or_refitting": false,
   "checks": [
@@ -321,14 +321,8 @@
     "All 31 protected numerical files are unchanged"
   ],
   "visual_review": {
-    "date": "2026-11-06",
-    "reviewed_updated_pages": [
-      35,
-      36,
-      40,
-      41
-    ],
-    "earlier_pages": "Previously reviewed; this revision updates the narrative and preparation sections.",
-    "result": "No clipping, overlap or unresolved text seen on updated pages."
+    "date": "2026-11-07",
+    "updated_page": 41,
+    "result": "Full-size review passed; no out-of-bounds text."
   }
 }

@@ -1,5 +1,5 @@
 {
-  "completed_date": "2026-11-06",
+  "completed_date": "2026-11-07",
   "numerical_checks_passed": 36,
   "protected_files_unchanged": 31,
   "offline_slides": 18,
@@ -14,25 +14,22 @@
   "human_rehearsal_performed": false,
   "topic_approval_received": false,
   "repository_or_submission_changed": false,
-  "notes": "Current main script contains 597 words including its main transitions. Sensitivity, precision and accuracy now have explicit denominators. Slide 6 leads from 98 missed records to slide 7 group error rates. All 31 protected numerical files remain unchanged. First-person reimplementation statements are based on the user confirmation; actual AI assistance remains disclosed. No human rehearsal performed.",
-  "spoken_words": 597,
+  "notes": "First-person course-method explanations and five reasons for analysis choices; unfamiliar-method learning and initial code/text assistance remain explicit. No new statistical fit, threshold tuning or bootstrap. Main talk 600 words; no human rehearsal performed.",
+  "spoken_words": 600,
   "chinese_handbook_pages": 41,
   "chinese_handbook_sections": 40,
   "chinese_handbook_validation": "handbook-validation.json",
   "latest_slide_revision": {
-    "validation": "narrative-revision-validation.json",
-    "purpose": "Explicit metrics, coherent transitions and factual first-person learning account",
+    "validation": "learning-account-validation.json",
     "changed_slides": [
       4,
-      5,
-      6,
-      7,
       9,
       17
     ],
-    "other_slides_pixel_identical": 12,
-    "english_pdf_pages": 8,
-    "chinese_pdf_pages": 41,
-    "main_script_words": 597
+    "other_slides_pixel_identical": 15,
+    "reasoning_pairs": 5,
+    "main_script_words": 600,
+    "english_pdf_pages": 9,
+    "chinese_pdf_pages": 41
   }
 }

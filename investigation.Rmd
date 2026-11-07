@@ -103,4 +103,4 @@ source("render_project.R")
 
 The independent verification script checks raw-row identities, partition separation, validation-only threshold selection, saved predictions, metric denominators and all three group criteria. See `results/verification.txt`. The model identifies predictive patterns in historical administrative records; it has not been shown to reduce dropout or to support operational decisions safely.
 
-Our learning and assistance are described in [docs/learning-process.md](docs/learning-process.md). Unfamiliar modelling and evaluation methods were learned using AI explanations and documentation, then reimplemented and checked according to the group's account. The existing disclosure of assistance with initial drafts, source checks and presentation design is retained.
+Our learning and assistance are described in [docs/learning-process.md](docs/learning-process.md). Unfamiliar modelling and evaluation methods were learned using AI explanations and documentation, then reimplemented and checked. The existing disclosure of assistance with initial drafts, source checks and presentation design is retained.

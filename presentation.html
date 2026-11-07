@@ -258,12 +258,12 @@ Figure review: Quiz 7 recommended Data to Viz. We wanted a compact comparison of
 
 .small[Semester results and financial fields with uncertain timing were excluded.&lt;br&gt;Recorded gender is an audit variable, &lt;strong&gt;not a primary predictor&lt;/strong&gt;.]
 
-.learning-note[We used our course tools for summaries and plots. For unfamiliar modelling and validation methods, we used AI explanations and R documentation, then reimplemented and checked the R analysis.]
+.learning-note[We used course methods for the summaries and plots. For unfamiliar methods, we asked ChatGPT, checked documentation, then rewrote and tested the main R analysis.]
 
 .source[Seed 20261105; approximately 60/20/20, stratified by original outcome and recorded gender. Model fitting and validation use no test outcomes.]
 
 ???
-We used age, admission grade and course, excluding later semester results and financial fields with unclear timing. We used course tools for summaries and plots. Logistic regression and validation were less familiar, so we used AI explanations and R documentation, then reimplemented and checked the analysis. Training records fit the model. Validation records chose the threshold. Test records evaluated the frozen rule. Recorded gender was reserved for the main audit. A probability still needs a threshold before it becomes a warning.
+We used age, admission grade and course, excluding later semester results and financial fields with unclear timing. We used course tools for summaries and plots. Logistic regression and validation were new to us, so we asked ChatGPT for explanations, checked R documentation, then rewrote and checked the main analysis. Training records fit the model. Validation records chose the threshold. Test records evaluated the frozen rule. Recorded gender was reserved for the main audit. A probability still needs a threshold before it becomes a warning.
 
 ---
 
@@ -399,9 +399,9 @@ These errors explain why we would use a warning to start a conversation, with hu
 - Figure review (6 November): Data to Viz [boxplots](https://www.data-to-viz.com/caveat/boxplot.html), [error bars](https://www.data-to-viz.com/caveat/error_bar.html), [axes](https://www.data-to-viz.com/caveat/cut_y_axis.html), [ordering](https://www.data-to-viz.com/caveat/order_data.html) and [colour caveats](https://www.data-to-viz.com/caveats.html). Quiz 7 recommended exploration; these changes are our choices.
 ]
 
-.small[We applied course methods for data wrangling, visualisation, bootstrap and fairness comparisons.&lt;br&gt;
-For unfamiliar modelling methods, we used AI explanations and documentation, then reimplemented and checked the R analysis.&lt;br&gt;
-AI also assisted with source checks, slide design and initial drafts. We are responsible for our interpretation and final presentation.]
+.small[We applied our course methods to data handling, plots, bootstrap and the fairness audit.&lt;br&gt;
+For unfamiliar methods, we used ChatGPT and documentation, then rewrote and checked the main R analysis.&lt;br&gt;
+ChatGPT also supported initial code/text drafts, source checks and slide formatting. We take responsibility for the final work.]
 
 ---
 
@@ -601,10 +601,10 @@ The primary model was fixed before evaluating test performance.
 
 # Backup: how we used the course and learned further
 
-- **From our course:** we applied factors, grouped summaries, joins, ggplot layers, faceting, bootstrap ideas and the three fairness criteria.
-- **New to us:** logistic regression, held-out validation, threshold selection, AUC and Brier score needed further explanation.
-- **How we learned:** we asked AI to explain the unfamiliar methods and checked documentation. We then reimplemented the main analysis in R and checked its outputs.
-- **Implementation support:** grouped resampling code, helper functions, table formatting and slide design also received AI assistance. The numerical results were generated in R.
+- **From our course:** we used factors, grouped summaries, joins, ggplot, bootstrap ideas and the three fairness criteria.
+- **Further learning:** we asked ChatGPT about logistic regression, validation, thresholds, AUC and Brier score, and checked the documentation.
+- **Our implementation:** we rewrote and ran the main R analysis, then checked its inputs, predictions and metric calculations.
+- **Our checks:** course codes are categories; later information is excluded; test records do not choose the threshold; each rate uses its own denominator.
 
 .small[Bootstrap and fairness concepts were in our course; their specific multi-metric implementation needed extra work. Our account distinguishes these two levels.]
 

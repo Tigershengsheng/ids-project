@@ -25,9 +25,9 @@
     {
       "slide": 4,
       "speaker": "Speaker 2",
-      "words": 81,
-      "seconds_at_100wpm": 48.6,
-      "seconds_at_120wpm": 40.5
+      "words": 84,
+      "seconds_at_100wpm": 50.4,
+      "seconds_at_120wpm": 42.0
     },
     {
       "slide": 5,
@@ -58,7 +58,7 @@
       "seconds_at_120wpm": 34.0
     }
   ],
-  "total_words": 597,
-  "seconds_at_100wpm": 358.2,
-  "seconds_at_120wpm": 298.5
+  "total_words": 600,
+  "seconds_at_100wpm": 360.0,
+  "seconds_at_120wpm": 300.0
 }

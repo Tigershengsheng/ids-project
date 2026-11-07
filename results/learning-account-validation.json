@@ -1,0 +1,128 @@
+{
+  "date": "2026-11-07",
+  "changed_slides": [
+    4,
+    9,
+    17
+  ],
+  "other_slides_pixel_identical": 15,
+  "comparisons": [
+    {
+      "slide": 1,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 2,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 3,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 4,
+      "changed": true,
+      "difference_box": [
+        71,
+        697,
+        1486,
+        757
+      ]
+    },
+    {
+      "slide": 5,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 6,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 7,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 8,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 9,
+      "changed": true,
+      "difference_box": [
+        71,
+        417,
+        1351,
+        501
+      ]
+    },
+    {
+      "slide": 10,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 11,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 12,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 13,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 14,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 15,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 16,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 17,
+      "changed": true,
+      "difference_box": [
+        124,
+        146,
+        1512,
+        489
+      ]
+    },
+    {
+      "slide": 18,
+      "changed": false,
+      "difference_box": null
+    }
+  ],
+  "reasoning_pairs": 5,
+  "spoken_words": 600,
+  "pdf_pages": [
+    18,
+    9,
+    41
+  ],
+  "numerical_files_unchanged": 31,
+  "independent_R_checks_passed": 36,
+  "initial_code_and_text_assistance_preserved": true,
+  "invented_personal_history": false,
+  "pptx_sha256": "c672c7a8f082d34dabc2dc1aaaea6400688d36c95225efbeb964c46b59888f8a"
+}

@@ -366,124 +366,192 @@ display: none;
 
 <div id="TOC">
 <ul>
-<li><a href="#our-course-methods-and-learning-process" id="toc-our-course-methods-and-learning-process">Our course methods and
-learning process</a></li>
+<li><a href="#our-course-methods-and-reasons-for-the-analysis" id="toc-our-course-methods-and-reasons-for-the-analysis">Our course
+methods and reasons for the analysis</a>
+<ul>
+<li><a href="#methods-we-applied-from-the-course" id="toc-methods-we-applied-from-the-course">Methods we applied from the
+course</a></li>
+<li><a href="#methods-we-learned-further" id="toc-methods-we-learned-further">Methods we learned further</a></li>
+<li><a href="#our-reasons-for-key-choices" id="toc-our-reasons-for-key-choices">Our reasons for key
+choices</a></li>
+<li><a href="#assistance-and-responsibility" id="toc-assistance-and-responsibility">Assistance and
+responsibility</a></li>
+</ul></li>
 </ul>
 </div>
 
-<div id="our-course-methods-and-learning-process" class="section level1">
-<h1>Our course methods and learning process</h1>
-<p>We used the following distinction when preparing the analysis and
-explaining our work. Our first-person account reflects the group’s
-description of its learning and reimplementation. We retain the actual
-AI assistance with initial drafts, source checks, implementation
-explanations and slide design.</p>
+<div id="our-course-methods-and-reasons-for-the-analysis" class="section level1">
+<h1>Our course methods and reasons for the analysis</h1>
+<div id="methods-we-applied-from-the-course" class="section level2">
+<h2>Methods we applied from the course</h2>
+<p>We used R to import and inspect the data, treat coded categories as
+factors, and prepare grouped summaries and plots. We applied the
+bootstrap idea and the three fairness criteria from our course. We
+explain each choice in terms of the question it helps answer.</p>
 <table>
 <colgroup>
-<col width="25%" />
-<col width="25%" />
-<col width="25%" />
-<col width="25%" />
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th>Method</th>
-<th>Our first-person explanation</th>
+<th>Course method</th>
+<th>What we did and why</th>
 <th>中文说明</th>
-<th>Course evidence or supplement</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Data types and factors</td>
-<td>We treated course codes as categories rather than numerical
-distances.</td>
-<td>我们用课堂的因子概念处理专业编码。</td>
-<td>Data Types and Classes, pp.15-17,23-27</td>
+<td>Import and data types</td>
+<td>We read the semicolon-separated file, checked its dimensions and
+kept the original labels.</td>
+<td>我们先读对数据，再核对行列和标签含义。</td>
 </tr>
 <tr class="even">
-<td>Import and data audit</td>
-<td>We read the semicolon-separated file and checked its dimensions,
-labels and unknown encodings.</td>
-<td>我们读取原表，核对行列、标签和未知编码。</td>
-<td>Importing_Exporting Data, pp.3-16</td>
+<td>Factors</td>
+<td>We treated course codes as categories because differences between
+code numbers have no numerical meaning.</td>
+<td>专业编号只是类别，不能按数字大小解释。</td>
 </tr>
 <tr class="odd">
 <td>Grouped summaries and joins</td>
-<td>We used grouped counts, proportions and joins to keep every record
-and its split assignment traceable.</td>
-<td>我们按组计数、算比例，并连接划分信息。</td>
-<td>Wrangling and Joining materials</td>
+<td>We retained row IDs and split assignments so we could trace every
+rate back to the records it uses.</td>
+<td>我们保留记录编号和划分信息，方便核对每个比例。</td>
 </tr>
 <tr class="even">
-<td>Visualisation</td>
-<td>We used boxplots, bars, layers and labels to connect the statistical
-summary with what the audience can see.</td>
-<td>我们用课堂的图形方法解释分布和比较。</td>
-<td>Visualising data; Types; Effective Data Visualisation</td>
+<td>Plots and labels</td>
+<td>We used boxplots for typical values and spread, and kept group sizes
+visible.</td>
+<td>我们用课堂图形比较分布，并标清各组人数。</td>
 </tr>
 <tr class="odd">
-<td>Bootstrap concept</td>
-<td>We used the with-replacement resampling idea from class to describe
-uncertainty.</td>
-<td>我们用了课堂中有放回重抽和分位数区间的原理。</td>
-<td>Quantifying uncertainty, pp.21-32,39,44-53; lab-03</td>
+<td>Bootstrap idea</td>
+<td>We resampled fixed test predictions within groups to describe
+uncertainty in the reported rates.</td>
+<td>我们把有放回重抽的原理用于组内指标，同时说明区间的条件。</td>
 </tr>
 <tr class="even">
-<td>Three fairness criteria</td>
-<td>We compared coverage, errors conditional on actual outcomes, and
-outcomes conditional on both warning decisions.</td>
-<td>我们分别应用Independence、Separation和完整二分类Sufficiency。</td>
-<td>Algorithmic Bias, pp.16-19</td>
-</tr>
-<tr class="odd">
-<td>Logistic regression</td>
-<td>We were unfamiliar with this model. We used AI explanations and R
-documentation, then reimplemented and checked the analysis in R.</td>
-<td>我们起初不熟悉逻辑回归，借助AI解释与R文档学习，再重新编写与核对。</td>
-<td>Supplement: official stats::glm documentation</td>
-</tr>
-<tr class="even">
-<td>Held-out validation and thresholds</td>
-<td>We learned why training, validation and test records need different
-jobs before using a threshold.</td>
-<td>我们补学三份数据的分工及阈值选择，再在R中实现。</td>
-<td>Supplement; no separate modelling lecture supplied</td>
-</tr>
-<tr class="odd">
-<td>AUC and Brier</td>
-<td>We learned that ranking, probability error and threshold-based
-accuracy measure different things.</td>
-<td>我们补学排序、概率误差和分类准确率之间的区别。</td>
-<td>Supplement; explained in the study guide</td>
-</tr>
-<tr class="even">
-<td>Grouped bootstrap implementation</td>
-<td>We needed help translating the course bootstrap idea into grouped
-resampling of several fixed-prediction metrics.</td>
-<td>原理课堂学过，按组重抽和多指标代码是进一步学习的实现。</td>
-<td>Course principle; supplementary implementation</td>
-</tr>
-<tr class="odd">
-<td>Presentation and helpers</td>
-<td>We followed the supplied xaringan template and used AI assistance
-with formatting, source checks and initial drafts. We are responsible
-for the final explanation and verification.</td>
-<td>我们沿用老师模板，保留排版、核查来源和初稿中的AI辅助说明。</td>
-<td>Supplied template; implementation support</td>
+<td>Fairness criteria</td>
+<td>We compared warning rates, both error types and outcomes within both
+prediction groups.</td>
+<td>我们用三个公平标准回答不同问题，不把一个指标当作完整公平性。</td>
 </tr>
 </tbody>
 </table>
-<p>Our decision chain is: define the endpoint; inspect entry
-information; fit and validate; compare sensitivity, precision, accuracy
-and both error types; ask who bears those errors; interpret group
-differences and uncertainty; identify what needs checking before any
-actual use.</p>
-<p>References: the page-level course map is in course-map.md.
-Supplementary methods use official R documentation (<a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/glm.html" class="uri">https://stat.ethz.ch/R-manual/R-devel/library/stats/html/glm.html</a>)
-and the classification chapter of Fairness and Machine Learning (<a href="https://fairmlbook.org/classification.html" class="uri">https://fairmlbook.org/classification.html</a>). We do not
-treat all supplementary implementation details as if they had been
-taught in the supplied slides.</p>
+<p>The page-level course evidence is in <a href="course-map.md">course-map.md</a>.</p>
+</div>
+<div id="methods-we-learned-further" class="section level2">
+<h2>Methods we learned further</h2>
+<p>Logistic regression, separate validation/test evaluation, threshold
+selection, AUC and Brier score were less familiar to us. We asked
+ChatGPT to explain what they measure, checked the documentation, then
+rewrote and ran the main analysis in R. We checked the outputs against
+the raw records and saved predictions.</p>
+<table>
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Supplement</th>
+<th>Why we used it</th>
+<th>What we need to explain</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Logistic regression</td>
+<td>Our outcome is binary and we want estimated probabilities.</td>
+<td>Inputs, factor coding and the additive linear terms on the log-odds
+scale.</td>
+</tr>
+<tr class="even">
+<td>Training, validation and test records</td>
+<td>Fitting, choosing a threshold and evaluating it need different
+records.</td>
+<td>Which decisions use each partition, and why test outcomes do not
+choose the rule.</td>
+</tr>
+<tr class="odd">
+<td>Threshold rule</td>
+<td>A probability needs a decision rule before it becomes a
+warning.</td>
+<td>The illustrative sensitivity target and its false-warning cost.</td>
+</tr>
+<tr class="even">
+<td>AUC and Brier score</td>
+<td>Ranking and probability error add information beyond one threshold’s
+accuracy.</td>
+<td>What each score measures and what it cannot establish.</td>
+</tr>
+<tr class="odd">
+<td>Grouped bootstrap implementation</td>
+<td>Several rates have different denominators.</td>
+<td>Resampling within groups, fixed predictions and the uncertainty
+omitted by this procedure.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="our-reasons-for-key-choices" class="section level2">
+<h2>Our reasons for key choices</h2>
+<div id="slide-2" class="section level3">
+<h3>Slide 2</h3>
+<p>We kept Enrolled because our question concerns recorded dropout at
+the stated endpoint. Removing those students would change the
+population. We therefore call them no recorded dropout at that point,
+without claiming they graduated.</p>
+<p>我们保留Enrolled，是因为研究的是规定终点有没有退学记录。删掉仍在读的学生会改变研究人群，所以我们把他们写成该时点未记录退学，而不是毕业。</p>
+</div>
+<div id="slide-4" class="section level3">
+<h3>Slide 4</h3>
+<p>We want an enrolment warning, so a useful predictor must be known at
+enrolment. Later grades may predict well but answer a different
+question. We therefore keep a small set of defensible inputs and leave
+timing-uncertain fields out.</p>
+<p>我们想研究入学时预警，因此变量首先要在入学时可知。后来的成绩可能很好用，却回答了另一个问题。所以我们先守住预测时点，再考虑模型能预测多准。</p>
+</div>
+<div id="slide-5" class="section level3">
+<h3>Slide 5</h3>
+<p>We use the seventy per cent validation target to make our trade-off
+explicit. It is our illustrative choice, not university policy. Once it
+selects a threshold, we keep that rule fixed so the test set can still
+provide a separate evaluation.</p>
+<p>我们用验证集70%的目标，把想多找到退学记录、又要限制误报的取舍说清楚。它是项目中的示例目标。规则确定后就不再用测试结果调整，否则测试集失去独立评价的作用。</p>
+</div>
+<div id="slide-6" class="section level3">
+<h3>Slide 6</h3>
+<p>We cannot judge this warning by accuracy alone. Always predicting no
+dropout already gives 67.9% accuracy, while finding none of the recorded
+dropouts. We therefore report who is found and how many warnings are
+false, with separate denominators.</p>
+<p>我们不能只按Accuracy判断预警。始终预测不退学，准确率就有67.9%，却找不到任何退学记录。因此我们同时说明找到了多少实际退学记录、发出的预警有多少正确，并分别交代分母。</p>
+</div>
+<div id="slide-7" class="section level3">
+<h3>Slide 7</h3>
+<p>We compare missed-dropout rates within actual dropouts, because the
+groups have different sizes. The relevant comparison is 64/144 against
+34/141. We also keep false warnings and both prediction strata, so our
+fairness discussion covers more than one favourable statistic.</p>
+<p>两组人数不同，我们不能只比64人和34人。漏报率应在实际退学的人中计算，也就是64/144和34/141。我们同时保留误报以及预警、未预警两层结果，避免只选一个好看的指标。</p>
+</div>
+</div>
+<div id="assistance-and-responsibility" class="section level2">
+<h2>Assistance and responsibility</h2>
+<p>ChatGPT provided explanations and helped with initial code and text
+drafts, source checks and slide formatting. We rewrote and ran the main
+R analysis and checked its outputs. We are responsible for the choices,
+interpretation and final work.</p>
+<p>Supplementary references: official R <a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/glm.html">stats::glm
+documentation</a> and <a href="https://fairmlbook.org/classification.html">Fairness and Machine
+Learning: classification</a>. Bootstrap and fairness principles came
+from the course; some implementation details needed additional
+learning.</p>
+</div>
 </div>
 
 

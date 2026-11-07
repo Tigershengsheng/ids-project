@@ -25,9 +25,9 @@ Slides 1-8 are the main talk. Slide 9 gives references; slides 10 onward are bac
 
 Suggested allocation: Speaker 1, slides 1-2; Speaker 2, slides 3-4; Speaker 3, slides 5-6; Speaker 4, slides 7-8. This is a proposed allocation for four people, not evidence of actual contribution or agreement. Confirm names within the group. Timing is estimated from the current spoken word count; rehearse at a comfortable pace. The main paragraphs include the main transitions. Separate handover alternatives are preparation notes, not extra paragraphs to add to the timed talk. No human rehearsal is claimed.
 
-We distinguish the course methods we applied from methods that were new to us. We used AI explanations and documentation to learn the unfamiliar methods, then reimplemented the main analysis in R and checked the outputs. AI also assisted initial drafts, source checks and slide design. We remain responsible for understanding, interpretation and the final work.
+We used the data handling, plots, bootstrap ideas and fairness criteria from our course. For unfamiliar modelling and evaluation methods, we asked ChatGPT for explanations and checked documentation, then rewrote and ran the main R analysis. ChatGPT also assisted initial code and text drafts, source checks and slide formatting. We checked the outputs and take responsibility for the final work.
 
-The figure-review notes below record the 6 November revision prompted by the Quiz 7 recommendation, as reported by you. The listed Data to Viz pages were actually consulted for this revision. These are optional design choices, not extra marking requirements. The review paragraphs are for preparation and questions; the eight spoken blocks remain the main script.
+Quiz 7 recommended Data to Viz, which prompted the figure review described below. The listed Data to Viz pages were actually consulted for this revision. These are optional design choices, not extra marking requirements. The review paragraphs are for preparation and questions; the eight spoken blocks remain the main script.
 
 The slides were also redesigned at your request using a dark stage, larger takeaway headlines and a consistent lavender/mint group palette. We wanted the key comparison to be visible before the detail: slide 6 explicitly compares sensitivity, precision and accuracy, with their denominators and the additional 107 records identified and 177 false warnings relative to threshold 0.50. Its closing question leads directly to the group audit on slide 7. Slide 7 places the female and male missed-dropout rates above the complete audit chart. This is a design choice, not a new analysis or a tested claim about audience response. The spoken script below still follows the same eight-slide story.
 
@@ -57,6 +57,14 @@ We used `r num(r$audit$rows)` records from one Portuguese institution. We checke
 
 中文思路：我们想让听众看到三种状态各有多少人。查过坐标轴建议后，我们保留原图，因为它本来就从零开始，也已经写了人数和比例。不需要为了表示“改过”而更换图形。
 
+::: {.decision-note-en}
+Our reasoning: We kept Enrolled because our question concerns recorded dropout at the stated endpoint. Removing those students would change the population. We therefore call them no recorded dropout at that point, without claiming they graduated.
+:::
+
+::: {.decision-note-zh}
+我们的思路：我们保留Enrolled，是因为研究的是规定终点有没有退学记录。删掉仍在读的学生会改变研究人群，所以我们把他们写成该时点未记录退学，而不是毕业。
+:::
+
 ## Slide 3: what the entry profiles show
 
 ::: {.spoken data-slide="3" data-speaker="Speaker 2"}
@@ -76,16 +84,24 @@ These plots use training records only. Recorded dropouts were older on average, 
 ## Slide 4: inputs and evaluation design
 
 ::: {.spoken data-slide="4" data-speaker="Speaker 2"}
-We used age, admission grade and course, excluding later semester results and financial fields with unclear timing. We used course tools for summaries and plots. Logistic regression and validation were less familiar, so we used AI explanations and R documentation, then reimplemented and checked the analysis. Training records fit the model. Validation records chose the threshold. Test records evaluated the frozen rule. Recorded gender was reserved for the main audit. A probability still needs a threshold before it becomes a warning.
+We used age, admission grade and course, excluding later semester results and financial fields with unclear timing. We used course tools for summaries and plots. Logistic regression and validation were new to us, so we asked ChatGPT for explanations, checked R documentation, then rewrote and checked the main analysis. Training records fit the model. Validation records chose the threshold. Test records evaluated the frozen rule. Recorded gender was reserved for the main audit. A probability still needs a threshold before it becomes a warning.
 :::
 
 中文理解：主模型只用入学年龄、入学成绩、专业三组信息。逻辑回归将它们转成一个零到一之间的估计概率。专业必须作为类别，不能把专业编号当大小。年龄和成绩按线性方式进入 log-odds，这是简化假设。
 
-实际发生过的调整：最初尝试把班别也放入模型，出现完全重复的信息；检查训练交叉表后删除班别。这个检查发生在验证集和测试集评分之前。
+我们的分析判断：训练集中，班别与专业包含重复的结构信息，因此主模型只保留专业。这个决定基于训练数据，不能根据测试结果来挑选变量。
 
 数据分工：训练 `r num(r$configuration$training_n)` 人用于拟合，验证 `r num(r$configuration$validation_n)` 人用于选阈值，测试 `r num(r$configuration$test_n)` 人用于最后评价。模型之后没有重新拟合验证数据。
 
 衔接给下一位：The next choice was how much estimated risk should trigger a warning.
+
+::: {.decision-note-en}
+Our reasoning: We want an enrolment warning, so a useful predictor must be known at enrolment. Later grades may predict well but answer a different question. We therefore keep a small set of defensible inputs and leave timing-uncertain fields out.
+:::
+
+::: {.decision-note-zh}
+我们的思路：我们想研究入学时预警，因此变量首先要在入学时可知。后来的成绩可能很好用，却回答了另一个问题。所以我们先守住预测时点，再考虑模型能预测多准。
+:::
 
 ## Slide 5: the warning threshold
 
@@ -103,6 +119,14 @@ We wanted to find at least seventy per cent of dropout records in validation dat
 
 衔接：We froze that choice and then checked what happened in the held-out test set.
 
+::: {.decision-note-en}
+Our reasoning: We use the seventy per cent validation target to make our trade-off explicit. It is our illustrative choice, not university policy. Once it selects a threshold, we keep that rule fixed so the test set can still provide a separate evaluation.
+:::
+
+::: {.decision-note-zh}
+我们的思路：我们用验证集70%的目标，把想多找到退学记录、又要限制误报的取舍说清楚。它是项目中的示例目标。规则确定后就不再用测试结果调整，否则测试集失去独立评价的作用。
+:::
+
 ## Slide 6: the actual test results
 
 ::: {.spoken data-slide="6" data-speaker="Speaker 3"}
@@ -116,6 +140,14 @@ Sensitivity is the share of actual dropout records we find. Precision is the sha
 实际结果引出的判断：我们看到，为了识别更多记录，准确率可以下降。因此，单独报准确率会掩盖预警达到什么、付出了什么代价。
 
 衔接备选（主稿已包含，不额外加读）：An overall average cannot tell us who is missed. We next compare these errors across recorded-gender groups.
+
+::: {.decision-note-en}
+Our reasoning: We cannot judge this warning by accuracy alone. Always predicting no dropout already gives 67.9% accuracy, while finding none of the recorded dropouts. We therefore report who is found and how many warnings are false, with separate denominators.
+:::
+
+::: {.decision-note-zh}
+我们的思路：我们不能只按Accuracy判断预警。始终预测不退学，准确率就有67.9%，却找不到任何退学记录。因此我们同时说明找到了多少实际退学记录、发出的预警有多少正确，并分别交代分母。
+:::
 
 ## Slide 7: whom the rule misses
 
@@ -139,6 +171,14 @@ Of the ninety-eight missed records, sixty-four were female and thirty-four male.
 
 衔接备选（主稿已包含，不额外加读）：These group differences lead us to the checks we would require before real use.
 
+::: {.decision-note-en}
+Our reasoning: We compare missed-dropout rates within actual dropouts, because the groups have different sizes. The relevant comparison is 64/144 against 34/141. We also keep false warnings and both prediction strata, so our fairness discussion covers more than one favourable statistic.
+:::
+
+::: {.decision-note-zh}
+我们的思路：两组人数不同，我们不能只比64人和34人。漏报率应在实际退学的人中计算，也就是64/144和34/141。我们同时保留误报以及预警、未预警两层结果，避免只选一个好看的指标。
+:::
+
 ## Slide 8: the conclusion and next step
 
 ::: {.spoken data-slide="8" data-speaker="Speaker 4"}
@@ -151,11 +191,11 @@ These errors explain why we would use a warning to start a conversation, with hu
 
 We applied methods from our course: categorical factors, grouped summaries, joins, ggplot layers, faceting, bootstrap ideas and the three fairness criteria. We used these tools to understand the data and report comparisons with clear denominators.
 
-Logistic regression, held-out evaluation, threshold selection, AUC and Brier score were new to us. We asked AI to explain what these methods mean, why they fit this question, and what could go wrong. We checked documentation, then reimplemented the main analysis in R and checked the outputs. The idea of bootstrap came from class; its specific grouped, multi-metric implementation also needed extra explanation.
+Logistic regression, held-out evaluation, threshold selection, AUC and Brier score needed further learning. We asked ChatGPT what each method measures and why it fits our question, checked the documentation, then rewrote and ran the main R analysis. We checked the outputs against the raw records and saved predictions. The bootstrap idea came from class; applying it to several group rates needed extra implementation guidance.
 
 中文：我们把课堂里的因子、分组汇总、连接、ggplot、分面、bootstrap原理和三个公平标准用到项目中。逻辑回归、独立留出评价、阈值选择、AUC和Brier最初对我们不熟悉，所以我们借助AI解释和文档学习，再自己重新编写主要R分析并运行核对。课堂学过bootstrap的原理，不代表按组重抽并同时计算多个指标的代码不需要补学。来源核查、最初稿件和排版也保留实际工具辅助说明。
 
-Our statistical implementation and interpretation remain our responsibility. Source checks, initial drafts and presentation design also received AI assistance. A list of methods alone does not demonstrate understanding; we need to explain the inputs, assumptions and denominators.
+Our statistical interpretation remains our responsibility. ChatGPT also helped with initial code and text drafts, source checks and slide formatting. We need to explain the inputs, assumptions and denominators, as well as show that the code runs.
 
 ## Figure-review notes for backup slides
 
@@ -255,4 +295,4 @@ Review the data definitions and code, obtain the required topic-feasibility conf
 
 ### What assistance was used?
 
-ChatGPT helped with source checks, coding and drafting. R generated the results. We should disclose assistance according to course rules and explain only work we have actually reviewed and understood.
+We asked ChatGPT to explain unfamiliar methods and used its help with initial code and text drafts, source checks and slide formatting. We then rewrote and ran the main R analysis and checked the outputs. R generated the statistical results; we are responsible for our final interpretation.

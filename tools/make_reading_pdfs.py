@@ -132,6 +132,13 @@ for number in [2,3,5,7]:
     if ps:
         english.append(para(f'Slide {number}: why we presented the figure this way','en','h2'))
         text=plain(ps[0]).split(':',1)[-1].strip(); english.append(para(text,'en'))
+english+=[PageBreak(),para('Our reasons for key choices','en','h1'),
+          para('Preparation material: use the reasoning relevant to a question; do not add every paragraph to the timed talk.','en','small')]
+for number in [2,4,5,6,7]:
+    decision=sections[number].xpath('.//div[contains(concat(" ",normalize-space(@class)," ")," decision-note-en ")]')
+    assert len(decision)==1,number
+    english.append(para(f'Slide {number}: our reasoning','en','h2'))
+    english.append(para(plain(decision[0]).removeprefix('Our reasoning: '),'en'))
 english+=[PageBreak(),para('Questions to practise','en','h1')]
 
 def add_table(table,story,lang):
