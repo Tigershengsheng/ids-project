@@ -2,7 +2,7 @@
 
 **大学生退学预警：能预测多准，哪些学生容易被漏掉？**
 
-Current IDS group project: enrolment-time prediction of recorded dropout and an audit of group error patterns. The repository is private. Updated 7 November 2026.
+Current IDS group project: enrolment-time prediction of recorded dropout and an audit of group error patterns. The repository is public. Updated 7 November 2026.
 
 ## Open the current work
 
@@ -22,6 +22,14 @@ Current IDS group project: enrolment-time prediction of recorded dropout and an 
 | Access and outstanding deliverables | [repository-status.md](repository-status.md) |
 
 GitHub may display HTML source rather than run the presentation. Download the repository using **Code > Download ZIP**, extract it and open `presentation.html` in a browser, or use the PDF. For reproduction, open `student-dropout-final.Rproj` in RStudio.
+
+## Two people uploading to the same repository
+
+`Tigershengsheng` owns this repository. `yingcheliu0723` has a read/write invitation pending acceptance. Sign in as that account and [accept the repository invitation](https://github.com/Tigershengsheng/ids-project/invitations). Then both accounts can contribute their actual changes to this same project.
+
+In each person's local clone: pull the latest changes before editing, make and knit the relevant changes, then commit and push under that person's own account. The public setting lets everyone read/download; it does not give everyone permission to push. Source files and HTML outputs should be kept together.
+
+The course brief distinguishes this collaboration from official submission: one member submits the presentation/report to Gradescope and adds the rest of the group. This repository upload is not that submission.
 
 ## Research design
 
