@@ -1,0 +1,38 @@
+field,timing,role,statistical_type
+Marital status,Enrolment/background information according to the source; no individual timestamps,"Not selected: small, interpretable primary model","Categorical, including numeric codes"
+Application mode,Enrolment/background information according to the source; no individual timestamps,"Not selected: small, interpretable primary model","Categorical, including numeric codes"
+Application order,Enrolment/background information according to the source; no individual timestamps,"Not selected: small, interpretable primary model",Ordinal category
+Course,Enrolment/background information according to the source; no individual timestamps,Primary predictor,"Categorical, including numeric codes"
+Daytime/evening attendance,Enrolment/background information according to the source; no individual timestamps,Excluded: deterministic within course in training data,"Categorical, including numeric codes"
+Previous qualification,Enrolment/background information according to the source; no individual timestamps,"Not selected: small, interpretable primary model","Categorical, including numeric codes"
+Previous qualification (grade),Enrolment/background information according to the source; no individual timestamps,"Not selected: small, interpretable primary model",Numerical
+Nacionality,Enrolment/background information according to the source; no individual timestamps,"Not selected: small, interpretable primary model","Categorical, including numeric codes"
+Mother's qualification,Enrolment/background information according to the source; no individual timestamps,"Not selected: small, interpretable primary model","Categorical, including numeric codes"
+Father's qualification,Enrolment/background information according to the source; no individual timestamps,"Not selected: small, interpretable primary model","Categorical, including numeric codes"
+Mother's occupation,Enrolment/background information according to the source; no individual timestamps,"Not selected: small, interpretable primary model","Categorical, including numeric codes"
+Father's occupation,Enrolment/background information according to the source; no individual timestamps,"Not selected: small, interpretable primary model","Categorical, including numeric codes"
+Admission grade,Enrolment/background information according to the source; no individual timestamps,Primary predictor,Numerical
+Displaced,Enrolment/background information according to the source; no individual timestamps,"Not selected: small, interpretable primary model","Categorical, including numeric codes"
+Educational special needs,Enrolment/background information according to the source; no individual timestamps,"Not selected: small, interpretable primary model","Categorical, including numeric codes"
+Debtor,Exact baseline measurement time not established,Excluded: timing uncertainty,"Categorical, including numeric codes"
+Tuition fees up to date,Exact baseline measurement time not established,Excluded: timing uncertainty,"Categorical, including numeric codes"
+Gender,Enrolment/background information according to the source; no individual timestamps,Group audit; secondary model only,"Categorical, including numeric codes"
+Scholarship holder,Exact baseline measurement time not established,Excluded: timing uncertainty,"Categorical, including numeric codes"
+Age at enrollment,Enrolment/background information according to the source; no individual timestamps,Primary predictor,Numerical
+International,Enrolment/background information according to the source; no individual timestamps,"Not selected: small, interpretable primary model","Categorical, including numeric codes"
+Curricular units 1st sem (credited),End of first or second semester,Excluded: unavailable at enrolment,Numerical semester measure
+Curricular units 1st sem (enrolled),End of first or second semester,Excluded: unavailable at enrolment,Numerical semester measure
+Curricular units 1st sem (evaluations),End of first or second semester,Excluded: unavailable at enrolment,Numerical semester measure
+Curricular units 1st sem (approved),End of first or second semester,Excluded: unavailable at enrolment,Numerical semester measure
+Curricular units 1st sem (grade),End of first or second semester,Excluded: unavailable at enrolment,Numerical semester measure
+Curricular units 1st sem (without evaluations),End of first or second semester,Excluded: unavailable at enrolment,Numerical semester measure
+Curricular units 2nd sem (credited),End of first or second semester,Excluded: unavailable at enrolment,Numerical semester measure
+Curricular units 2nd sem (enrolled),End of first or second semester,Excluded: unavailable at enrolment,Numerical semester measure
+Curricular units 2nd sem (evaluations),End of first or second semester,Excluded: unavailable at enrolment,Numerical semester measure
+Curricular units 2nd sem (approved),End of first or second semester,Excluded: unavailable at enrolment,Numerical semester measure
+Curricular units 2nd sem (grade),End of first or second semester,Excluded: unavailable at enrolment,Numerical semester measure
+Curricular units 2nd sem (without evaluations),End of first or second semester,Excluded: unavailable at enrolment,Numerical semester measure
+Unemployment rate,Annual macroeconomic measure; individual cohort/year absent,Excluded: scope and cohort-proxy concern,Numerical
+Inflation rate,Annual macroeconomic measure; individual cohort/year absent,Excluded: scope and cohort-proxy concern,Numerical
+GDP,Annual macroeconomic measure; individual cohort/year absent,Excluded: scope and cohort-proxy concern,Numerical
+Target,"Normal course endpoint, usually 3 years; Nursing 4 years",Outcome; never a predictor,"Categorical, including numeric codes"

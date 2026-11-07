@@ -1,0 +1,12 @@
+{
+  "seed": 20261105,
+  "training_n": 2652,
+  "validation_n": 883,
+  "test_n": 889,
+  "primary_formula": "dropout ~ age10 + admission10 + course",
+  "threshold": 0.31,
+  "validation_sensitivity_target": 0.7,
+  "target_attained": true,
+  "test_used_for_selection": false,
+  "refit_after_validation": false
+}

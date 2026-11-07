@@ -1,0 +1,73 @@
+{
+  "review_date": "2026-11-06",
+  "no_refitting": true,
+  "no_resampling": true,
+  "training_counts": [
+    {
+      "target": "Graduate",
+      "n": 1324
+    },
+    {
+      "target": "Enrolled",
+      "n": 476
+    },
+    {
+      "target": "Dropout",
+      "n": 852
+    }
+  ],
+  "metric_denominators": [
+    {
+      "gender": "Female",
+      "metric": "WarningRate",
+      "denominator": 575
+    },
+    {
+      "gender": "Male",
+      "metric": "WarningRate",
+      "denominator": 314
+    },
+    {
+      "gender": "Female",
+      "metric": "FPR",
+      "denominator": 431
+    },
+    {
+      "gender": "Male",
+      "metric": "FPR",
+      "denominator": 173
+    },
+    {
+      "gender": "Female",
+      "metric": "FNR",
+      "denominator": 144
+    },
+    {
+      "gender": "Male",
+      "metric": "FNR",
+      "denominator": 141
+    },
+    {
+      "gender": "Female",
+      "metric": "PPV",
+      "denominator": 218
+    },
+    {
+      "gender": "Male",
+      "metric": "PPV",
+      "denominator": 191
+    },
+    {
+      "gender": "Female",
+      "metric": "FOR",
+      "denominator": 357
+    },
+    {
+      "gender": "Male",
+      "metric": "FOR",
+      "denominator": 123
+    }
+  ],
+  "course_display_order": ["Nursing", "Management", "Social service", "Journalism / communication", "Veterinary nursing", "Management (evening)", "Other courses"],
+  "inputs": ["data/data.csv", "results/split-membership.csv", "results/analysis.rds", "results/validation-thresholds.csv", "results/training-course-composition.csv"]
+}

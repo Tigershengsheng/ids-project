@@ -1,0 +1,64 @@
+{
+  "method": "Current spoken blocks, including embedded transitions; optional alternative handovers and pauses excluded; no human rehearsal performed",
+  "slides": [
+    {
+      "slide": 1,
+      "speaker": "Speaker 1",
+      "words": 61,
+      "seconds_at_100wpm": 36.6,
+      "seconds_at_120wpm": 30.5
+    },
+    {
+      "slide": 2,
+      "speaker": "Speaker 1",
+      "words": 82,
+      "seconds_at_100wpm": 49.199999999999996,
+      "seconds_at_120wpm": 41.0
+    },
+    {
+      "slide": 3,
+      "speaker": "Speaker 2",
+      "words": 61,
+      "seconds_at_100wpm": 36.6,
+      "seconds_at_120wpm": 30.5
+    },
+    {
+      "slide": 4,
+      "speaker": "Speaker 2",
+      "words": 81,
+      "seconds_at_100wpm": 48.6,
+      "seconds_at_120wpm": 40.5
+    },
+    {
+      "slide": 5,
+      "speaker": "Speaker 3",
+      "words": 59,
+      "seconds_at_100wpm": 35.4,
+      "seconds_at_120wpm": 29.5
+    },
+    {
+      "slide": 6,
+      "speaker": "Speaker 3",
+      "words": 82,
+      "seconds_at_100wpm": 49.199999999999996,
+      "seconds_at_120wpm": 41.0
+    },
+    {
+      "slide": 7,
+      "speaker": "Speaker 4",
+      "words": 103,
+      "seconds_at_100wpm": 61.8,
+      "seconds_at_120wpm": 51.5
+    },
+    {
+      "slide": 8,
+      "speaker": "Speaker 4",
+      "words": 68,
+      "seconds_at_100wpm": 40.8,
+      "seconds_at_120wpm": 34.0
+    }
+  ],
+  "total_words": 597,
+  "seconds_at_100wpm": 358.2,
+  "seconds_at_120wpm": 298.5
+}

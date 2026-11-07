@@ -6,3 +6,13 @@
 *.txt text eol=lf
 # Preserve the downloaded file byte for byte, including original line endings.
 data/SeoulBikeData.csv -text -diff
+
+# Preserve raw data and frozen source fingerprints across platforms.
+*.csv -text
+R/analysis.R -text
+docs/analysis-plan.md -text
+*.rds binary
+*.pdf binary
+*.pptx binary
+*.png binary
+results/* -text

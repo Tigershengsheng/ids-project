@@ -1,0 +1,112 @@
+{
+  "changed_pptx_parts": [
+    "ppt/slides/slide9.xml"
+  ],
+  "pdf_comparisons": [
+    {
+      "slide": 1,
+      "pixels_identical": true,
+      "difference_box": null
+    },
+    {
+      "slide": 2,
+      "pixels_identical": true,
+      "difference_box": null
+    },
+    {
+      "slide": 3,
+      "pixels_identical": true,
+      "difference_box": null
+    },
+    {
+      "slide": 4,
+      "pixels_identical": true,
+      "difference_box": null
+    },
+    {
+      "slide": 5,
+      "pixels_identical": true,
+      "difference_box": null
+    },
+    {
+      "slide": 6,
+      "pixels_identical": true,
+      "difference_box": null
+    },
+    {
+      "slide": 7,
+      "pixels_identical": true,
+      "difference_box": null
+    },
+    {
+      "slide": 8,
+      "pixels_identical": true,
+      "difference_box": null
+    },
+    {
+      "slide": 9,
+      "pixels_identical": false,
+      "difference_box": [
+        41,
+        236,
+        837,
+        284
+      ]
+    },
+    {
+      "slide": 10,
+      "pixels_identical": true,
+      "difference_box": null
+    },
+    {
+      "slide": 11,
+      "pixels_identical": true,
+      "difference_box": null
+    },
+    {
+      "slide": 12,
+      "pixels_identical": true,
+      "difference_box": null
+    },
+    {
+      "slide": 13,
+      "pixels_identical": true,
+      "difference_box": null
+    },
+    {
+      "slide": 14,
+      "pixels_identical": true,
+      "difference_box": null
+    },
+    {
+      "slide": 15,
+      "pixels_identical": true,
+      "difference_box": null
+    },
+    {
+      "slide": 16,
+      "pixels_identical": true,
+      "difference_box": null
+    },
+    {
+      "slide": 17,
+      "pixels_identical": true,
+      "difference_box": null
+    },
+    {
+      "slide": 18,
+      "pixels_identical": true,
+      "difference_box": null
+    }
+  ],
+  "slides": 18,
+  "protected_numerical_files": 31,
+  "responsibility_wording": "Sources and assistance Realinho et al. UCI dataset 697, DOI 10.24432/C5MC89. CC BY 4.0. Retrieved 5 November 2026. Realinho et al. (2022). Predicting Student Dropout and Academic Success, Data 7, 146. 10.3390/data7110146. IDS course materials: Algorithmic Bias, pp. 6, 16-19; Quantifying uncertainty, pp. 21, 39, 46-53. R documentation: binomial logistic regression with glm. Fairness definitions: Fairness and Machine Learning. Figure review (6 November): Data to Viz boxplots, error bars, axes, ordering and colour caveats. Quiz 7 recommended exploration; these changes are our choices. Group responsibilities: R code and drafting, with ChatGPT assistance. ChatGPT also supported source checks and slide design. R produced the numerical results and analytical figures. Final review, interpretation and rehearsal remain the group's responsibility. 9 / 1 8",
+  "pptx_sha256": "da68eb0d1b5e652c60f9fb481cb56233f45b676ae2fab38e2a8010caf0dd93d5",
+  "pdf_sha256": "599e705828c8abcbdfc2b3639f25573e759dc8139d953b6050826d29ebea338f",
+  "visual_review": "Slide 9 inspected in Microsoft PowerPoint and the rendered PDF; all other PPTX parts and all 17 other PDF pages are unchanged.",
+  "published_desktop": [
+    "C:\\Users\\Administrator\\Desktop\\IDS Student Dropout Project\\Student_Dropout_Presentation.pptx",
+    "C:\\Users\\Administrator\\Desktop\\IDS Student Dropout Project\\01_Presentation.pdf"
+  ]
+}

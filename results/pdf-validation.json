@@ -1,0 +1,33 @@
+{
+  "pages": 18,
+  "native_searchable_text": true,
+  "sha256": "4e7677e709963ca6262d7546b530f05949a14e90c7e7861f88bda15b220803e8",
+  "bytes": 988540,
+  "page_sizes_points": [
+    [
+      907.91998,
+      510.95999
+    ]
+  ],
+  "text_characters_by_page": [
+    341,
+    485,
+    354,
+    802,
+    461,
+    784,
+    795,
+    671,
+    955,
+    496,
+    367,
+    252,
+    210,
+    287,
+    449,
+    460,
+    999,
+    307
+  ],
+  "visual_review": "Updated slides 4, 5, 6, 7, 9 and 17 checked at full size; remaining 12 PowerPoint slides are pixel-identical to the preceding reviewed deck."
+}

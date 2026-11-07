@@ -1,43 +1,5 @@
-# Seoul Bike Sharing Demand: original data
+# Dataset attribution
 
-This is a **candidate** dataset for the project; group agreement is pending.
+data.csv is the unchanged UCI 697 CSV: Realinho et al. (2021), Predict Students' Dropout and Academic Success, DOI https://doi.org/10.24432/C5MC89, CC BY 4.0. Retrieved 5 November 2026. Exact SHA-256: 3ef126de5cefff26eb11fbb4237f1a1401cb64b488e2f1d598c23cedeb4c45ae.
 
-## Source and licence
-
-Seoul Bike Sharing Demand [Dataset]. (2020). UCI Machine Learning Repository.
-https://doi.org/10.24432/C5F62R
-
-- Landing page: https://archive.ics.uci.edu/dataset/560/seoul+bike+sharing+demand
-- Download: https://archive.ics.uci.edu/static/public/560/seoul%2Bbike%2Bsharing%2Bdemand.zip
-- Retrieved: 22 October 2026 (UK local date at download).
-- Licence: CC BY 4.0, https://creativecommons.org/licenses/by/4.0/
-- File: `SeoulBikeData.csv`, copied unchanged from the downloaded ZIP.
-- SHA-256: `373339b71a8935d69e9af0abf26a70744632119862eeb3919efb389a7b749c60`.
-
-The CSV has 8,760 rows and 14 columns. One row describes one system-wide hour,
-covering 1 December 2017 to 30 November 2018. No missing entries or duplicate
-date-hour keys were found. The file uses Latin-1 encoding and day/month/year
-dates. Renaming and parsing happen in R, without overwriting the source CSV.
-
-## Variables used in R
-
-| Short name | Original column | Meaning / units |
-| --- | --- | --- |
-| date | Date | Calendar date, day/month/year |
-| rented_bikes | Rented Bike Count | Bikes rented during the hour |
-| hour | Hour | Hour of day, 0–23 |
-| temperature_c | Temperature(°C) | Air temperature, degrees Celsius |
-| humidity_pct | Humidity(%) | Relative humidity, percent |
-| wind_speed_ms | Wind speed (m/s) | Wind speed, metres/second |
-| visibility_10m | Visibility (10m) | Visibility in units of 10 metres |
-| dew_point_c | Dew point temperature(°C) | Dew point, degrees Celsius |
-| solar_radiation | Solar Radiation (MJ/m2) | Solar radiation, MJ per square metre |
-| rainfall_mm | Rainfall(mm) | Rainfall, millimetres |
-| snowfall_cm | Snowfall (cm) | Snowfall, centimetres |
-| season | Seasons | Winter, Spring, Summer or Autumn |
-| holiday | Holiday | Holiday or No Holiday |
-| functioning_day | Functioning Day | Yes or No, as recorded |
-
-There are 295 records marked `No` for operating status, all with zero rentals.
-They remain in `bikes`. Comparisons of rentals while operating use
-`bikes_active` (8,465 rows). A closure does not measure zero underlying demand.
+4,424 student records, 36 predictors, one three-category Target. See docs/source-notes.md and results/variable-timing-audit.csv before interpreting fields or using the data for an early-warning question. No individual record is displayed in the presentation.

@@ -1,0 +1,145 @@
+{
+  "expected_changed_slides": [
+    4,
+    5,
+    6,
+    7,
+    9,
+    17
+  ],
+  "powerpoint_pixel_comparisons": [
+    {
+      "slide": 1,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 2,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 3,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 4,
+      "changed": true,
+      "difference_box": [
+        71,
+        691,
+        1428,
+        811
+      ]
+    },
+    {
+      "slide": 5,
+      "changed": true,
+      "difference_box": [
+        71,
+        95,
+        1436,
+        735
+      ]
+    },
+    {
+      "slide": 6,
+      "changed": true,
+      "difference_box": [
+        70,
+        49,
+        1531,
+        805
+      ]
+    },
+    {
+      "slide": 7,
+      "changed": true,
+      "difference_box": [
+        71,
+        94,
+        1563,
+        878
+      ]
+    },
+    {
+      "slide": 8,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 9,
+      "changed": true,
+      "difference_box": [
+        71,
+        417,
+        1351,
+        530
+      ]
+    },
+    {
+      "slide": 10,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 11,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 12,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 13,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 14,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 15,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 16,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 17,
+      "changed": true,
+      "difference_box": [
+        71,
+        56,
+        1531,
+        649
+      ]
+    },
+    {
+      "slide": 18,
+      "changed": false,
+      "difference_box": null
+    }
+  ],
+  "unchanged_slides": 12,
+  "all_main_metrics_and_denominators_present": true,
+  "all_three_fairness_criteria_retained": true,
+  "protected_numerical_files": 31,
+  "spoken_words": 597,
+  "pdf_pages": [
+    18,
+    8,
+    41
+  ],
+  "pptx_sha256": "7693a3c4299849ce8bd0d8eab4d37e7a20ba7824e91fec5ea8e80dc3ad986643",
+  "ai_learning_account_source": "User confirmed reimplementing and running/checking the main R analysis.",
+  "no_new_model_or_threshold_selection": true
+}

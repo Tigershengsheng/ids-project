@@ -1,0 +1,24 @@
+{
+  "access_date": "2026-11-05",
+  "retrieval_utc": "2026-11-05T21:18:12.354411+00:00",
+  "records": [
+    {
+      "kind": "dataset",
+      "url": "https://archive.ics.uci.edu/static/public/697/predict+students+dropout+and+academic+success.zip",
+      "csv_sha256": "3ef126de5cefff26eb11fbb4237f1a1401cb64b488e2f1d598c23cedeb4c45ae",
+      "bytes": 533230
+    },
+    {
+      "kind": "metadata",
+      "url": "https://archive.ics.uci.edu/api/dataset?id=697",
+      "bytes": 19188
+    },
+    {
+      "kind": "original_data_paper",
+      "url": "https://mdpi-res.com/d_attachment/data/data-07-00146/article_deploy/data-07-00146.pdf",
+      "doi": "10.3390/data7110146",
+      "sha256": "1be95db77df7714e2b0783811c414895150c45cee6bbd8a79d6bd61b3a2185fb",
+      "bytes": 6572720
+    }
+  ]
+}

@@ -1,216 +1,106 @@
 ---
-title: "Project kick-off: Seoul bike rentals"
-subtitle: "Candidate dataset — topic awaiting group agreement"
-date: "`r Sys.Date()`"
+title: "Student dropout warnings: analysis notebook"
 output:
   html_document:
-    toc: true
-    toc_float: true
-    theme: readable
-    highlight: tango
     self_contained: true
+    toc: true
+    toc_depth: 2
     mathjax: null
 ---
 
 ```{r setup, include=FALSE}
-library(tidyverse)
-knitr::opts_chunk$set(echo = TRUE, message = FALSE,
-  fig.width = 8, fig.height = 5, dpi = 120,
-  fig.path = "figures/bikes-", fig.align = "center")
-theme_set(theme_minimal(base_size = 13))
+source("R/setup.R")
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+r <- load_results()
 ```
 
-## Starting point
+## Research question and endpoint
 
-This is an initial exploration of a possible dataset, not an agreed project
-proposal or a final report. The group still needs to agree the topic and check
-it with the course organiser.
+Can information available at enrolment identify students later recorded as Dropout at the source's normal course endpoint? Who is more likely to be missed by the same warning rule?
 
-One possible question is: **How do hourly bike rental counts in Seoul vary
-with time of day, season and recorded weather?** The first step is descriptive:
-check the records, look at distributions and compare patterns before deciding
-on a narrower question.
+We retain Graduate and Enrolled as no recorded Dropout at that endpoint. Enrolled does not mean graduated. The source's definition also includes changing course or institution; the outcome is not a direct measure of leaving higher education or needing support. A separate Dropout-versus-Graduate sensitivity check changes the analysis population explicitly.
 
-## Data and source
+This notebook brings together the saved analysis and working decisions. The complete statistical implementation is in [R/analysis.R](R/analysis.R), the pre-specified design is in [docs/analysis-plan.md](docs/analysis-plan.md), and the source audit is in [docs/source-notes.md](docs/source-notes.md). It is not a record of check-in meetings or a completed final report.
 
-The dataset is **Seoul Bike Sharing Demand**, distributed by the
-[UCI Machine Learning Repository](https://doi.org/10.24432/C5F62R) under
-[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
-A copy of the original CSV is in `data/SeoulBikeData.csv`, so knitting this
-document does not require an internet connection. See
-[data/README.md](data/README.md) for the source, units and checksum.
+## Data inspection
 
-Each row records one hour across the system. The response is the number of
-bikes rented during that hour, not the number of unique riders. Weather,
-season, holiday and operating-status variables are also recorded.
-
-## Read and check the records
-
-```{r load-data}
-# The original file uses Latin-1 encoding and a degree symbol in its headers.
-bikes_raw <- read_csv(
-  "data/SeoulBikeData.csv",
-  locale = locale(encoding = "ISO-8859-1"),
-  col_types = "cddddddddddccc"
-)
-stopifnot(ncol(bikes_raw) == 14L, nrow(problems(bikes_raw)) == 0L)
-
-# Use short names, keeping the original units.
-names(bikes_raw) <- c(
-  "date", "rented_bikes", "hour", "temperature_c", "humidity_pct",
-  "wind_speed_ms", "visibility_10m", "dew_point_c", "solar_radiation",
-  "rainfall_mm", "snowfall_cm", "season", "holiday", "functioning_day"
-)
-
-bikes <- bikes_raw %>%
-  mutate(
-    date = as.Date(date, format = "%d/%m/%Y"),
-    season = factor(season, levels = c("Winter", "Spring", "Summer", "Autumn")),
-    holiday = factor(holiday),
-    functioning_day = factor(functioning_day)
-  )
-
-glimpse(bikes)
+```{r data-check}
+students <- read.csv("data/data.csv", sep = ";", check.names = FALSE,
+                     fileEncoding = "UTF-8-BOM")
+names(students) <- trimws(names(students))
+data.frame(records = nrow(students), variables = ncol(students),
+           explicit_missing_cells = sum(is.na(students)),
+           duplicated_rows = sum(duplicated(students)))
+knitr::kable(as.data.frame(table(students$Target)),
+             col.names = c("Recorded outcome", "Records"))
 ```
 
-```{r quality-checks}
-quality_checks <- bikes %>%
-  summarise(
-    records = n(), days = n_distinct(date),
-    first_date = min(date), last_date = max(date),
-    missing_entries = sum(is.na(pick(everything()))),
-    duplicate_date_hours = n() - n_distinct(date, hour)
-  )
-quality_checks
+The dataset is UCI 697 from one Portuguese institution. Its coded categories need interpretation: course and recorded gender are not numerical distances. The timing and unknown-code audit is saved in `results/variable-timing-audit.csv` and `results/coded-unknown-audit.csv`. Blank-cell checks alone do not establish data quality.
 
-bikes %>% summarise(across(everything(), ~ sum(is.na(.x))))
+## Entry inputs and exploratory figures
 
-stopifnot(
-  nrow(bikes) == 8760L, n_distinct(bikes$date) == 365L,
-  sum(is.na(bikes)) == 0L, !anyDuplicated(bikes[c("date", "hour")]),
-  all(bikes$hour %in% 0:23),
-  all(bikes$rented_bikes >= 0),
-  all(bikes$rented_bikes == floor(bikes$rented_bikes)),
-  all(bikes$humidity_pct >= 0 & bikes$humidity_pct <= 100),
-  all(bikes$rainfall_mm >= 0 & bikes$snowfall_cm >= 0)
-)
+We use enrolment age, admission grade and course as a factor. Later-semester results are unavailable at the intended prediction time. Financial variables with unclear recording time are excluded conservatively. Recorded gender is reserved for the main audit, with a separate gender-inclusive comparison model.
+
+The exploratory figures use training records. We show group sizes and overlapping distributions rather than treating a group pattern as an individual outcome.
+
+```{r entry-figure, echo=FALSE, out.width="95%"}
+knitr::include_graphics("figures/entry-profiles.png")
 ```
 
-There are `r nrow(bikes)` hourly records covering 1 December 2017 to
-30 November 2018. No missing entries or duplicate date-hour combinations
-were found. The dates are read as day/month/year: reading `01/12/2017` as
-12 January would put the records in the wrong order.
+## Fit, validate, then test
 
-### Zero rentals and operating status
+The fixed seed is 20261105. Training fits the model, validation chooses the threshold, and test records evaluate the frozen rule. Identical full-record profiles stay together within a partition. The validation objective of at least 70% sensitivity is an illustrative project choice, not university policy. We do not select a threshold on the test results.
 
-```{r operating-status}
-bikes %>%
-  group_by(functioning_day) %>%
-  summarise(hours = n(), zero_rental_hours = sum(rented_bikes == 0),
-            mean_rentals = mean(rented_bikes), .groups = "drop")
-
-bikes_active <- bikes %>% filter(functioning_day == "Yes")
+```{r partition-counts}
+splits <- read.csv("results/split-counts.csv")
+knitr::kable(splits)
 ```
 
-All `r sum(bikes$functioning_day == "No")` non-operating hours have zero
-rentals, while none of the `r nrow(bikes_active)` operating hours do. A
-recorded zero is not a missing value, and zero rentals during a closure do
-not measure how many people wanted to rent a bike. The original records
-are retained in `bikes`. The following comparisons use `bikes_active` and
-describe rentals while the system was operating.
-
-## Distribution of rental counts
-
-```{r rental-distribution}
-ggplot(bikes_active, aes(x = rented_bikes)) +
-  geom_histogram(binwidth = 200, boundary = 0,
-                 fill = "#30509C", color = "white") +
-  labs(title = "Hourly rentals while the system was operating",
-       subtitle = "Bins span 200 rentals; non-operating hours are excluded",
-       x = "Bikes rented in one hour", y = "Number of hours")
-
-bikes_active %>% summarise(
-  mean_rentals = mean(rented_bikes), median_rentals = median(rented_bikes),
-  minimum = min(rented_bikes), maximum = max(rented_bikes)
-)
+```{r threshold-figure, echo=FALSE, out.width="95%"}
+knitr::include_graphics("figures/validation-threshold.png")
 ```
 
-The distribution is right-skewed. A few busy hours have much higher counts
-than most hours, so the mean and median give different summaries.
+## Test performance and error costs
 
-## Time of day and season
+Accuracy, sensitivity and precision have different denominators. The always-no-warning baseline illustrates why accuracy alone is insufficient for this question. Lowering the threshold can identify more recorded dropouts while also creating more false warnings.
 
-```{r hourly-pattern, fig.height=6}
-hourly_pattern <- bikes_active %>%
-  group_by(season, hour) %>%
-  summarise(hours = n(), mean_rentals = mean(rented_bikes), .groups = "drop")
-
-ggplot(hourly_pattern, aes(x = hour, y = mean_rentals)) +
-  geom_line(color = "#30509C", linewidth = 0.8) +
-  geom_point(color = "#30509C", size = 1.5) +
-  facet_wrap(~ season, ncol = 2) +
-  scale_x_continuous(breaks = c(0, 6, 12, 18, 23)) +
-  scale_y_continuous(limits = c(0, NA)) +
-  labs(title = "Hourly rental patterns differ across seasons",
-       subtitle = "Each point averages operating hours at that hour of day",
-       x = "Hour of day (0-23)", y = "Mean hourly rental count")
-
-season_summary <- bikes_active %>%
-  group_by(season) %>%
-  summarise(hours = n(), mean_rentals = mean(rented_bikes),
-            median_rentals = median(rented_bikes), .groups = "drop")
-season_summary
+```{r test-results}
+knitr::kable(read.csv("results/test-metrics.csv"), digits = 3)
+knitr::kable(read.csv("results/test-metric-intervals.csv"), digits = 3)
 ```
 
-Winter has the lowest mean hourly count, about
-`r round(season_summary$mean_rentals[season_summary$season == "Winter"])`
-rentals, compared with about
-`r round(season_summary$mean_rentals[season_summary$season == "Summer"])`
-in summer. Across operating hours overall, 18:00 has the highest mean.
-There is also a morning rise. These timings are consistent with commuting,
-but the data do not tell us why people travelled. Season, weather and daily
-routines may all contribute to the pattern.
+## Group error patterns and fairness criteria
 
-## Temperature and recorded rentals
+We compare warning rates for Independence, both false-positive and false-negative rates for Separation, and outcomes within both warned and unwarned groups for binary Sufficiency. We report denominators and uncertainty. Rate differences do not by themselves establish discrimination; a non-significant difference would not prove equality.
 
-```{r temperature-pattern, fig.height=6}
-ggplot(bikes_active, aes(x = temperature_c, y = rented_bikes)) +
-  geom_point(alpha = 0.12, size = 1, color = "#30509C") +
-  facet_wrap(~ season, ncol = 2) +
-  labs(title = "Temperature and hourly rentals within each season",
-       subtitle = "Each point is one operating hour; panels use the same scales",
-       x = "Air temperature (degrees C)", y = "Bikes rented in one hour")
+```{r fairness-results}
+knitr::kable(read.csv("results/fairness-group-metrics.csv"), digits = 3)
+knitr::kable(read.csv("results/fairness-gaps.csv"), digits = 3)
 ```
 
-Warmer hours often have more recorded rentals, especially when comparing
-winter with the warmer seasons, but counts vary widely at similar
-temperatures. This is observational data. Temperature is related to season
-and time of day, so the plot does not show that raising temperature causes
-more rentals. The busiest hours also do not necessarily occur at the
-highest temperatures.
+```{r fairness-figure, echo=FALSE, out.width="95%"}
+knitr::include_graphics("figures/group-fairness.png")
+```
 
-## Questions for the next group discussion
+The bootstrap fixes the fitted model and selected threshold while resampling test records within recorded-gender groups. It does not include refitting, clustering by cohort, transport to another institution, or the effect of acting on a warning.
 
-- Is this a dataset the whole group wants to investigate? Check the choice
-  with the course organiser before treating it as final.
-- Would comparing hourly patterns on holidays and other days make a more
-  focused question? Check the number of days in each group first.
-- Do temperature patterns remain when comparing the same season and hour?
-- How should closures be reported alongside the analysis of operating hours?
+## Checks, limitations and reproducibility
 
-These records cover one city and one year. They are adjacent observations
-over time, not independent random samples of people. No causal claim or
-significance test is made here, and the patterns should not be presented as
-representative of every city or year.
+The separate sensitivity checks address including gender and restricting the endpoint comparison. They do not retrospectively redefine the primary question or establish a new validated model.
 
-## Work completed and AI use
+```{r sensitivity-checks}
+knitr::kable(read.csv("results/fairness-gender-inclusive.csv"), digits = 3)
+knitr::kable(read.csv("results/enrolled-definition-sensitivity.csv"), digits = 3)
+```
 
-The raw data have been saved, checked and plotted. The four-person group
-has been confirmed. The candidate topic still needs group agreement;
-repository access is recorded separately in repository-status.md.
-Final report and presentation files remain course templates for later work.
+To recompute the statistical analysis explicitly, run the following from the project directory. It is shown without execution here so reading or knitting this notebook does not silently replace frozen results.
 
-ChatGPT helped prepare this initial exploration, the R code and the written
-descriptions. The code was executed, and the counts and numerical summaries
-were checked in R. The group should review the code and conclusions before
-using this candidate for the project.
+```{r recompute, eval=FALSE}
+source("R/analysis.R")
+source("verify_project.R")
+source("render_project.R")
+```
+
+The independent verification script checks raw-row identities, partition separation, validation-only threshold selection, saved predictions, metric denominators and all three group criteria. See `results/verification.txt`. The model identifies predictive patterns in historical administrative records; it has not been shown to reduce dropout or to support operational decisions safely.
+
+Our learning and assistance are described in [docs/learning-process.md](docs/learning-process.md). Unfamiliar modelling and evaluation methods were learned using AI explanations and documentation, then reimplemented and checked according to the group's account. The existing disclosure of assistance with initial drafts, source checks and presentation design is retained.

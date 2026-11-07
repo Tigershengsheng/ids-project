@@ -1,0 +1,991 @@
+{
+  "seed": 20261105,
+  "bootstrap_reps": 5000,
+  "audit": {
+    "rows": 4424,
+    "columns": 37,
+    "predictors": 36,
+    "missing_cells": 0,
+    "exact_duplicate_rows": 0,
+    "courses": 17,
+    "international": 110,
+    "age_range": [17, 70],
+    "source_paper_predictor_count": 35,
+    "downloaded_predictor_count": 36
+  },
+  "outcomes": [
+    {
+      "target": "Graduate",
+      "n": 2209,
+      "proportion": 0.49932188065
+    },
+    {
+      "target": "Enrolled",
+      "n": 794,
+      "proportion": 0.1794755877
+    },
+    {
+      "target": "Dropout",
+      "n": 1421,
+      "proportion": 0.32120253165
+    }
+  ],
+  "split_counts": [
+    {
+      "split": "Test",
+      "gender": "Female",
+      "target": "Graduate",
+      "n": 333
+    },
+    {
+      "split": "Test",
+      "gender": "Female",
+      "target": "Enrolled",
+      "n": 98
+    },
+    {
+      "split": "Test",
+      "gender": "Female",
+      "target": "Dropout",
+      "n": 144
+    },
+    {
+      "split": "Test",
+      "gender": "Male",
+      "target": "Graduate",
+      "n": 111
+    },
+    {
+      "split": "Test",
+      "gender": "Male",
+      "target": "Enrolled",
+      "n": 62
+    },
+    {
+      "split": "Test",
+      "gender": "Male",
+      "target": "Dropout",
+      "n": 141
+    },
+    {
+      "split": "Training",
+      "gender": "Female",
+      "target": "Graduate",
+      "n": 996
+    },
+    {
+      "split": "Training",
+      "gender": "Female",
+      "target": "Enrolled",
+      "n": 292
+    },
+    {
+      "split": "Training",
+      "gender": "Female",
+      "target": "Dropout",
+      "n": 432
+    },
+    {
+      "split": "Training",
+      "gender": "Male",
+      "target": "Graduate",
+      "n": 328
+    },
+    {
+      "split": "Training",
+      "gender": "Male",
+      "target": "Enrolled",
+      "n": 184
+    },
+    {
+      "split": "Training",
+      "gender": "Male",
+      "target": "Dropout",
+      "n": 420
+    },
+    {
+      "split": "Validation",
+      "gender": "Female",
+      "target": "Graduate",
+      "n": 332
+    },
+    {
+      "split": "Validation",
+      "gender": "Female",
+      "target": "Enrolled",
+      "n": 97
+    },
+    {
+      "split": "Validation",
+      "gender": "Female",
+      "target": "Dropout",
+      "n": 144
+    },
+    {
+      "split": "Validation",
+      "gender": "Male",
+      "target": "Graduate",
+      "n": 109
+    },
+    {
+      "split": "Validation",
+      "gender": "Male",
+      "target": "Enrolled",
+      "n": 61
+    },
+    {
+      "split": "Validation",
+      "gender": "Male",
+      "target": "Dropout",
+      "n": 140
+    }
+  ],
+  "configuration": {
+    "seed": 20261105,
+    "training_n": 2652,
+    "validation_n": 883,
+    "test_n": 889,
+    "primary_formula": "dropout ~ age10 + admission10 + course",
+    "threshold": 0.31,
+    "validation_sensitivity_target": 0.7,
+    "target_attained": true,
+    "test_used_for_selection": false,
+    "refit_after_validation": false
+  },
+  "training_summary": [
+    {
+      "target": "Graduate",
+      "n": 1324,
+      "mean_age": 21.8391238671,
+      "median_age": 19,
+      "sd_age": 6.6628522752,
+      "median_admission": 127.1,
+      "iqr_admission": 16.725
+    },
+    {
+      "target": "Enrolled",
+      "n": 476,
+      "mean_age": 22.1638655462,
+      "median_age": 20,
+      "sd_age": 6.3533196441,
+      "median_admission": 124.05,
+      "iqr_admission": 16.8
+    },
+    {
+      "target": "Dropout",
+      "n": 852,
+      "mean_age": 25.8169014085,
+      "median_age": 22,
+      "sd_age": 8.7484386131,
+      "median_admission": 122.9,
+      "iqr_admission": 18
+    }
+  ],
+  "training_group_rates": [
+    {
+      "gender": "Female",
+      "n": 1720,
+      "dropouts": 432,
+      "rate": 0.2511627907
+    },
+    {
+      "gender": "Male",
+      "n": 932,
+      "dropouts": 420,
+      "rate": 0.45064377682
+    }
+  ],
+  "threshold": 0.31,
+  "threshold_row": [
+    {
+      "threshold": 0.31,
+      "BaseRate": 0.32163080408,
+      "WarningRate": 0.47225368063,
+      "FPR": 0.36227045075,
+      "FNR": 0.29577464789,
+      "Sensitivity": 0.70422535211,
+      "Specificity": 0.63772954925,
+      "PPV": 0.47961630695,
+      "NPV": 0.81974248927,
+      "FOR": 0.18025751073,
+      "Accuracy": 0.65911664779,
+      "BalancedAccuracy": 0.67097745068
+    }
+  ],
+  "metrics": [
+    {
+      "Rule": "Always no warning",
+      "n": 889,
+      "TP": 0,
+      "FP": 0,
+      "FN": 285,
+      "TN": 604,
+      "AUC": 0.5,
+      "Brier": 0.21781069672,
+      "LogLoss": 0.62731064011,
+      "BaseRate": 0.32058492688,
+      "WarningRate": 0,
+      "FPR": 0,
+      "FNR": 1,
+      "Sensitivity": 0,
+      "Specificity": 1,
+      "PPV": null,
+      "NPV": 0.67941507312,
+      "FOR": 0.32058492688,
+      "Accuracy": 0.67941507312,
+      "BalancedAccuracy": 0.5
+    },
+    {
+      "Rule": "Enrolment model: threshold 0.50",
+      "n": 889,
+      "TP": 80,
+      "FP": 45,
+      "FN": 205,
+      "TN": 559,
+      "AUC": 0.71842105263,
+      "Brier": 0.18815760209,
+      "LogLoss": 0.55841217986,
+      "BaseRate": 0.32058492688,
+      "WarningRate": 0.14060742407,
+      "FPR": 0.074503311258,
+      "FNR": 0.71929824561,
+      "Sensitivity": 0.28070175439,
+      "Specificity": 0.92549668874,
+      "PPV": 0.64,
+      "NPV": 0.73167539267,
+      "FOR": 0.26832460733,
+      "Accuracy": 0.71878515186,
+      "BalancedAccuracy": 0.60309922156
+    },
+    {
+      "Rule": "Enrolment model: validation rule",
+      "n": 889,
+      "TP": 187,
+      "FP": 222,
+      "FN": 98,
+      "TN": 382,
+      "AUC": 0.71842105263,
+      "Brier": 0.18815760209,
+      "LogLoss": 0.55841217986,
+      "BaseRate": 0.32058492688,
+      "WarningRate": 0.46006749156,
+      "FPR": 0.36754966887,
+      "FNR": 0.34385964912,
+      "Sensitivity": 0.65614035088,
+      "Specificity": 0.63245033113,
+      "PPV": 0.45721271394,
+      "NPV": 0.79583333333,
+      "FOR": 0.20416666667,
+      "Accuracy": 0.64004499438,
+      "BalancedAccuracy": 0.644295341
+    },
+    {
+      "Rule": "Add recorded gender: same threshold",
+      "n": 889,
+      "TP": 190,
+      "FP": 208,
+      "FN": 95,
+      "TN": 396,
+      "AUC": 0.72521203671,
+      "Brier": 0.18686203357,
+      "LogLoss": 0.55470592402,
+      "BaseRate": 0.32058492688,
+      "WarningRate": 0.44769403825,
+      "FPR": 0.34437086093,
+      "FNR": 0.33333333333,
+      "Sensitivity": 0.66666666667,
+      "Specificity": 0.65562913907,
+      "PPV": 0.47738693467,
+      "NPV": 0.80651731161,
+      "FOR": 0.19348268839,
+      "Accuracy": 0.65916760405,
+      "BalancedAccuracy": 0.66114790287
+    }
+  ],
+  "group_metrics": [
+    {
+      "gender": "Female",
+      "n": 575,
+      "TP": 80,
+      "FP": 138,
+      "FN": 64,
+      "TN": 293,
+      "BaseRate": 0.25043478261,
+      "WarningRate": 0.37913043478,
+      "FPR": 0.32018561485,
+      "FNR": 0.44444444444,
+      "Sensitivity": 0.55555555556,
+      "Specificity": 0.67981438515,
+      "PPV": 0.36697247706,
+      "NPV": 0.82072829132,
+      "FOR": 0.17927170868,
+      "Accuracy": 0.64869565217,
+      "BalancedAccuracy": 0.61768497035
+    },
+    {
+      "gender": "Male",
+      "n": 314,
+      "TP": 107,
+      "FP": 84,
+      "FN": 34,
+      "TN": 89,
+      "BaseRate": 0.44904458599,
+      "WarningRate": 0.60828025478,
+      "FPR": 0.48554913295,
+      "FNR": 0.24113475177,
+      "Sensitivity": 0.75886524823,
+      "Specificity": 0.51445086705,
+      "PPV": 0.56020942408,
+      "NPV": 0.72357723577,
+      "FOR": 0.27642276423,
+      "Accuracy": 0.62420382166,
+      "BalancedAccuracy": 0.63665805764
+    }
+  ],
+  "group_intervals": [
+    {
+      "gender": "Female",
+      "metric": "BaseRate",
+      "estimate": 0.25043478261,
+      "lower": 0.21565217391,
+      "upper": 0.28695652174
+    },
+    {
+      "gender": "Female",
+      "metric": "WarningRate",
+      "estimate": 0.37913043478,
+      "lower": 0.33913043478,
+      "upper": 0.41739130435
+    },
+    {
+      "gender": "Female",
+      "metric": "FPR",
+      "estimate": 0.32018561485,
+      "lower": 0.27738927739,
+      "upper": 0.36384990667
+    },
+    {
+      "gender": "Female",
+      "metric": "FNR",
+      "estimate": 0.44444444444,
+      "lower": 0.36363636364,
+      "upper": 0.52469464145
+    },
+    {
+      "gender": "Female",
+      "metric": "Sensitivity",
+      "estimate": 0.55555555556,
+      "lower": 0.47530535855,
+      "upper": 0.63636363636
+    },
+    {
+      "gender": "Female",
+      "metric": "Specificity",
+      "estimate": 0.67981438515,
+      "lower": 0.63615009333,
+      "upper": 0.72261072261
+    },
+    {
+      "gender": "Female",
+      "metric": "PPV",
+      "estimate": 0.36697247706,
+      "lower": 0.30263157895,
+      "upper": 0.42990654206
+    },
+    {
+      "gender": "Female",
+      "metric": "NPV",
+      "estimate": 0.82072829132,
+      "lower": 0.78108068127,
+      "upper": 0.86033519553
+    },
+    {
+      "gender": "Female",
+      "metric": "FOR",
+      "estimate": 0.17927170868,
+      "lower": 0.13966480447,
+      "upper": 0.21891931873
+    },
+    {
+      "gender": "Female",
+      "metric": "Accuracy",
+      "estimate": 0.64869565217,
+      "lower": 0.61043478261,
+      "upper": 0.68695652174
+    },
+    {
+      "gender": "Female",
+      "metric": "BalancedAccuracy",
+      "estimate": 0.61768497035,
+      "lower": 0.57110055309,
+      "upper": 0.66290154929
+    },
+    {
+      "gender": "Male",
+      "metric": "BaseRate",
+      "estimate": 0.44904458599,
+      "lower": 0.3949044586,
+      "upper": 0.50318471338
+    },
+    {
+      "gender": "Male",
+      "metric": "WarningRate",
+      "estimate": 0.60828025478,
+      "lower": 0.55095541401,
+      "upper": 0.65923566879
+    },
+    {
+      "gender": "Male",
+      "metric": "FPR",
+      "estimate": 0.48554913295,
+      "lower": 0.41088666902,
+      "upper": 0.5600052356
+    },
+    {
+      "gender": "Male",
+      "metric": "FNR",
+      "estimate": 0.24113475177,
+      "lower": 0.17460051135,
+      "upper": 0.3129264683
+    },
+    {
+      "gender": "Male",
+      "metric": "Sensitivity",
+      "estimate": 0.75886524823,
+      "lower": 0.6870735317,
+      "upper": 0.82539948865
+    },
+    {
+      "gender": "Male",
+      "metric": "Specificity",
+      "estimate": 0.51445086705,
+      "lower": 0.4399947644,
+      "upper": 0.58911333098
+    },
+    {
+      "gender": "Male",
+      "metric": "PPV",
+      "estimate": 0.56020942408,
+      "lower": 0.48958333333,
+      "upper": 0.62886597938
+    },
+    {
+      "gender": "Male",
+      "metric": "NPV",
+      "estimate": 0.72357723577,
+      "lower": 0.64227642276,
+      "upper": 0.8
+    },
+    {
+      "gender": "Male",
+      "metric": "FOR",
+      "estimate": 0.27642276423,
+      "lower": 0.2,
+      "upper": 0.35772357724
+    },
+    {
+      "gender": "Male",
+      "metric": "Accuracy",
+      "estimate": 0.62420382166,
+      "lower": 0.57006369427,
+      "upper": 0.67515923567
+    },
+    {
+      "gender": "Male",
+      "metric": "BalancedAccuracy",
+      "estimate": 0.63665805764,
+      "lower": 0.58436568567,
+      "upper": 0.68691123504
+    }
+  ],
+  "gaps": [
+    {
+      "metric": "BaseRate",
+      "estimate": 0.19860980338,
+      "lower": 0.13429950152,
+      "upper": 0.26493062863,
+      "definition": "Male minus Female; fixed model and validation threshold"
+    },
+    {
+      "metric": "WarningRate",
+      "estimate": 0.22914981999,
+      "lower": 0.15934962614,
+      "upper": 0.29607989477,
+      "definition": "Male minus Female; fixed model and validation threshold"
+    },
+    {
+      "metric": "FPR",
+      "estimate": 0.1653635181,
+      "lower": 0.077285029769,
+      "upper": 0.25189642364,
+      "definition": "Male minus Female; fixed model and validation threshold"
+    },
+    {
+      "metric": "FNR",
+      "estimate": -0.20330969267,
+      "lower": -0.30749283485,
+      "upper": -0.095316001931,
+      "definition": "Male minus Female; fixed model and validation threshold"
+    },
+    {
+      "metric": "Sensitivity",
+      "estimate": 0.20330969267,
+      "lower": 0.095316001931,
+      "upper": 0.30749283485,
+      "definition": "Male minus Female; fixed model and validation threshold"
+    },
+    {
+      "metric": "Specificity",
+      "estimate": -0.1653635181,
+      "lower": -0.25189642364,
+      "upper": -0.077285029769,
+      "definition": "Male minus Female; fixed model and validation threshold"
+    },
+    {
+      "metric": "PPV",
+      "estimate": 0.19323694702,
+      "lower": 0.097531143576,
+      "upper": 0.29024089814,
+      "definition": "Male minus Female; fixed model and validation threshold"
+    },
+    {
+      "metric": "NPV",
+      "estimate": -0.097151055544,
+      "lower": -0.18728084959,
+      "upper": -0.013177459,
+      "definition": "Male minus Female; fixed model and validation threshold"
+    },
+    {
+      "metric": "FOR",
+      "estimate": 0.097151055544,
+      "lower": 0.013177459,
+      "upper": 0.18728084959,
+      "definition": "Male minus Female; fixed model and validation threshold"
+    },
+    {
+      "metric": "Accuracy",
+      "estimate": -0.024491830518,
+      "lower": -0.091421905289,
+      "upper": 0.041851149266,
+      "definition": "Male minus Female; fixed model and validation threshold"
+    },
+    {
+      "metric": "BalancedAccuracy",
+      "estimate": 0.018973087286,
+      "lower": -0.050826715475,
+      "upper": 0.087069380594,
+      "definition": "Male minus Female; fixed model and validation threshold"
+    }
+  ],
+  "overall_intervals": [
+    {
+      "metric": "AUC",
+      "estimate": 0.71842105263,
+      "lower": 0.68220040837,
+      "upper": 0.7538228259
+    },
+    {
+      "metric": "Brier",
+      "estimate": 0.18815760209,
+      "lower": 0.17532196016,
+      "upper": 0.20087170159
+    },
+    {
+      "metric": "Sensitivity",
+      "estimate": 0.65614035088,
+      "lower": 0.60264900662,
+      "upper": 0.70955882353
+    },
+    {
+      "metric": "Accuracy",
+      "estimate": 0.64004499438,
+      "lower": 0.60854893138,
+      "upper": 0.67154105737
+    }
+  ],
+  "sensitivity": [
+    {
+      "Rule": "Primary fit evaluated on Dropout/Graduate only",
+      "n": 729,
+      "TP": 187,
+      "FP": 137,
+      "FN": 98,
+      "TN": 307,
+      "AUC": 0.75586770982,
+      "Brier": 0.19971339483,
+      "LogLoss": 0.58392563915,
+      "BaseRate": 0.39094650206,
+      "WarningRate": 0.44444444444,
+      "FPR": 0.30855855856,
+      "FNR": 0.34385964912,
+      "Sensitivity": 0.65614035088,
+      "Specificity": 0.69144144144,
+      "PPV": 0.57716049383,
+      "NPV": 0.75802469136,
+      "FOR": 0.24197530864,
+      "Accuracy": 0.67764060357,
+      "BalancedAccuracy": 0.67379089616
+    },
+    {
+      "Rule": "Refit on Dropout/Graduate training rows; same threshold",
+      "n": 729,
+      "TP": 233,
+      "FP": 209,
+      "FN": 52,
+      "TN": 235,
+      "AUC": 0.75848348348,
+      "Brier": 0.19121634625,
+      "LogLoss": 0.56625487032,
+      "BaseRate": 0.39094650206,
+      "WarningRate": 0.60631001372,
+      "FPR": 0.47072072072,
+      "FNR": 0.18245614035,
+      "Sensitivity": 0.81754385965,
+      "Specificity": 0.52927927928,
+      "PPV": 0.52714932127,
+      "NPV": 0.81881533101,
+      "FOR": 0.18118466899,
+      "Accuracy": 0.64197530864,
+      "BalancedAccuracy": 0.67341156946
+    }
+  ],
+  "calibration": [
+    {
+      "gender": "Female",
+      "band": "[0,0.2]",
+      "n": 197,
+      "mean_score": 0.14416484666,
+      "observed": 0.1116751269
+    },
+    {
+      "gender": "Female",
+      "band": "(0.2,0.4]",
+      "n": 272,
+      "mean_score": 0.2963331571,
+      "observed": 0.25367647059
+    },
+    {
+      "gender": "Female",
+      "band": "(0.4,0.6]",
+      "n": 80,
+      "mean_score": 0.47915482894,
+      "observed": 0.45
+    },
+    {
+      "gender": "Female",
+      "band": "(0.6,0.8]",
+      "n": 23,
+      "mean_score": 0.68298824103,
+      "observed": 0.65217391304
+    },
+    {
+      "gender": "Female",
+      "band": "(0.8,1]",
+      "n": 3,
+      "mean_score": 0.87787849128,
+      "observed": 0.66666666667
+    },
+    {
+      "gender": "Male",
+      "band": "[0,0.2]",
+      "n": 38,
+      "mean_score": 0.15391368089,
+      "observed": 0.23684210526
+    },
+    {
+      "gender": "Male",
+      "band": "(0.2,0.4]",
+      "n": 142,
+      "mean_score": 0.29526717287,
+      "observed": 0.35211267606
+    },
+    {
+      "gender": "Male",
+      "band": "(0.4,0.6]",
+      "n": 88,
+      "mean_score": 0.48207745227,
+      "observed": 0.53409090909
+    },
+    {
+      "gender": "Male",
+      "band": "(0.6,0.8]",
+      "n": 36,
+      "mean_score": 0.70039088724,
+      "observed": 0.72222222222
+    },
+    {
+      "gender": "Male",
+      "band": "(0.8,1]",
+      "n": 10,
+      "mean_score": 0.85113064749,
+      "observed": 0.9
+    }
+  ],
+  "gender_comparison": [
+    {
+      "gender": "Female",
+      "n": 575,
+      "TP": 62,
+      "FP": 84,
+      "FN": 82,
+      "TN": 347,
+      "BaseRate": 0.25043478261,
+      "WarningRate": 0.25391304348,
+      "FPR": 0.19489559165,
+      "FNR": 0.56944444444,
+      "Sensitivity": 0.43055555556,
+      "Specificity": 0.80510440835,
+      "PPV": 0.42465753425,
+      "NPV": 0.80885780886,
+      "FOR": 0.19114219114,
+      "Accuracy": 0.71130434783,
+      "BalancedAccuracy": 0.61782998195
+    },
+    {
+      "gender": "Male",
+      "n": 314,
+      "TP": 128,
+      "FP": 124,
+      "FN": 13,
+      "TN": 49,
+      "BaseRate": 0.44904458599,
+      "WarningRate": 0.8025477707,
+      "FPR": 0.71676300578,
+      "FNR": 0.09219858156,
+      "Sensitivity": 0.90780141844,
+      "Specificity": 0.28323699422,
+      "PPV": 0.50793650794,
+      "NPV": 0.79032258065,
+      "FOR": 0.20967741935,
+      "Accuracy": 0.56369426752,
+      "BalancedAccuracy": 0.59551920633
+    }
+  ],
+  "field_audit": [
+    {
+      "field": "Marital status",
+      "timing": "Enrolment/background information according to the source; no individual timestamps",
+      "role": "Not selected: small, interpretable primary model",
+      "statistical_type": "Categorical, including numeric codes"
+    },
+    {
+      "field": "Application mode",
+      "timing": "Enrolment/background information according to the source; no individual timestamps",
+      "role": "Not selected: small, interpretable primary model",
+      "statistical_type": "Categorical, including numeric codes"
+    },
+    {
+      "field": "Application order",
+      "timing": "Enrolment/background information according to the source; no individual timestamps",
+      "role": "Not selected: small, interpretable primary model",
+      "statistical_type": "Ordinal category"
+    },
+    {
+      "field": "Course",
+      "timing": "Enrolment/background information according to the source; no individual timestamps",
+      "role": "Primary predictor",
+      "statistical_type": "Categorical, including numeric codes"
+    },
+    {
+      "field": "Daytime/evening attendance",
+      "timing": "Enrolment/background information according to the source; no individual timestamps",
+      "role": "Excluded: deterministic within course in training data",
+      "statistical_type": "Categorical, including numeric codes"
+    },
+    {
+      "field": "Previous qualification",
+      "timing": "Enrolment/background information according to the source; no individual timestamps",
+      "role": "Not selected: small, interpretable primary model",
+      "statistical_type": "Categorical, including numeric codes"
+    },
+    {
+      "field": "Previous qualification (grade)",
+      "timing": "Enrolment/background information according to the source; no individual timestamps",
+      "role": "Not selected: small, interpretable primary model",
+      "statistical_type": "Numerical"
+    },
+    {
+      "field": "Nacionality",
+      "timing": "Enrolment/background information according to the source; no individual timestamps",
+      "role": "Not selected: small, interpretable primary model",
+      "statistical_type": "Categorical, including numeric codes"
+    },
+    {
+      "field": "Mother's qualification",
+      "timing": "Enrolment/background information according to the source; no individual timestamps",
+      "role": "Not selected: small, interpretable primary model",
+      "statistical_type": "Categorical, including numeric codes"
+    },
+    {
+      "field": "Father's qualification",
+      "timing": "Enrolment/background information according to the source; no individual timestamps",
+      "role": "Not selected: small, interpretable primary model",
+      "statistical_type": "Categorical, including numeric codes"
+    },
+    {
+      "field": "Mother's occupation",
+      "timing": "Enrolment/background information according to the source; no individual timestamps",
+      "role": "Not selected: small, interpretable primary model",
+      "statistical_type": "Categorical, including numeric codes"
+    },
+    {
+      "field": "Father's occupation",
+      "timing": "Enrolment/background information according to the source; no individual timestamps",
+      "role": "Not selected: small, interpretable primary model",
+      "statistical_type": "Categorical, including numeric codes"
+    },
+    {
+      "field": "Admission grade",
+      "timing": "Enrolment/background information according to the source; no individual timestamps",
+      "role": "Primary predictor",
+      "statistical_type": "Numerical"
+    },
+    {
+      "field": "Displaced",
+      "timing": "Enrolment/background information according to the source; no individual timestamps",
+      "role": "Not selected: small, interpretable primary model",
+      "statistical_type": "Categorical, including numeric codes"
+    },
+    {
+      "field": "Educational special needs",
+      "timing": "Enrolment/background information according to the source; no individual timestamps",
+      "role": "Not selected: small, interpretable primary model",
+      "statistical_type": "Categorical, including numeric codes"
+    },
+    {
+      "field": "Debtor",
+      "timing": "Exact baseline measurement time not established",
+      "role": "Excluded: timing uncertainty",
+      "statistical_type": "Categorical, including numeric codes"
+    },
+    {
+      "field": "Tuition fees up to date",
+      "timing": "Exact baseline measurement time not established",
+      "role": "Excluded: timing uncertainty",
+      "statistical_type": "Categorical, including numeric codes"
+    },
+    {
+      "field": "Gender",
+      "timing": "Enrolment/background information according to the source; no individual timestamps",
+      "role": "Group audit; secondary model only",
+      "statistical_type": "Categorical, including numeric codes"
+    },
+    {
+      "field": "Scholarship holder",
+      "timing": "Exact baseline measurement time not established",
+      "role": "Excluded: timing uncertainty",
+      "statistical_type": "Categorical, including numeric codes"
+    },
+    {
+      "field": "Age at enrollment",
+      "timing": "Enrolment/background information according to the source; no individual timestamps",
+      "role": "Primary predictor",
+      "statistical_type": "Numerical"
+    },
+    {
+      "field": "International",
+      "timing": "Enrolment/background information according to the source; no individual timestamps",
+      "role": "Not selected: small, interpretable primary model",
+      "statistical_type": "Categorical, including numeric codes"
+    },
+    {
+      "field": "Curricular units 1st sem (credited)",
+      "timing": "End of first or second semester",
+      "role": "Excluded: unavailable at enrolment",
+      "statistical_type": "Numerical semester measure"
+    },
+    {
+      "field": "Curricular units 1st sem (enrolled)",
+      "timing": "End of first or second semester",
+      "role": "Excluded: unavailable at enrolment",
+      "statistical_type": "Numerical semester measure"
+    },
+    {
+      "field": "Curricular units 1st sem (evaluations)",
+      "timing": "End of first or second semester",
+      "role": "Excluded: unavailable at enrolment",
+      "statistical_type": "Numerical semester measure"
+    },
+    {
+      "field": "Curricular units 1st sem (approved)",
+      "timing": "End of first or second semester",
+      "role": "Excluded: unavailable at enrolment",
+      "statistical_type": "Numerical semester measure"
+    },
+    {
+      "field": "Curricular units 1st sem (grade)",
+      "timing": "End of first or second semester",
+      "role": "Excluded: unavailable at enrolment",
+      "statistical_type": "Numerical semester measure"
+    },
+    {
+      "field": "Curricular units 1st sem (without evaluations)",
+      "timing": "End of first or second semester",
+      "role": "Excluded: unavailable at enrolment",
+      "statistical_type": "Numerical semester measure"
+    },
+    {
+      "field": "Curricular units 2nd sem (credited)",
+      "timing": "End of first or second semester",
+      "role": "Excluded: unavailable at enrolment",
+      "statistical_type": "Numerical semester measure"
+    },
+    {
+      "field": "Curricular units 2nd sem (enrolled)",
+      "timing": "End of first or second semester",
+      "role": "Excluded: unavailable at enrolment",
+      "statistical_type": "Numerical semester measure"
+    },
+    {
+      "field": "Curricular units 2nd sem (evaluations)",
+      "timing": "End of first or second semester",
+      "role": "Excluded: unavailable at enrolment",
+      "statistical_type": "Numerical semester measure"
+    },
+    {
+      "field": "Curricular units 2nd sem (approved)",
+      "timing": "End of first or second semester",
+      "role": "Excluded: unavailable at enrolment",
+      "statistical_type": "Numerical semester measure"
+    },
+    {
+      "field": "Curricular units 2nd sem (grade)",
+      "timing": "End of first or second semester",
+      "role": "Excluded: unavailable at enrolment",
+      "statistical_type": "Numerical semester measure"
+    },
+    {
+      "field": "Curricular units 2nd sem (without evaluations)",
+      "timing": "End of first or second semester",
+      "role": "Excluded: unavailable at enrolment",
+      "statistical_type": "Numerical semester measure"
+    },
+    {
+      "field": "Unemployment rate",
+      "timing": "Annual macroeconomic measure; individual cohort/year absent",
+      "role": "Excluded: scope and cohort-proxy concern",
+      "statistical_type": "Numerical"
+    },
+    {
+      "field": "Inflation rate",
+      "timing": "Annual macroeconomic measure; individual cohort/year absent",
+      "role": "Excluded: scope and cohort-proxy concern",
+      "statistical_type": "Numerical"
+    },
+    {
+      "field": "GDP",
+      "timing": "Annual macroeconomic measure; individual cohort/year absent",
+      "role": "Excluded: scope and cohort-proxy concern",
+      "statistical_type": "Numerical"
+    },
+    {
+      "field": "Target",
+      "timing": "Normal course endpoint, usually 3 years; Nursing 4 years",
+      "role": "Outcome; never a predictor",
+      "statistical_type": "Categorical, including numeric codes"
+    }
+  ],
+  "data_sha256": "3ef126de5cefff26eb11fbb4237f1a1401cb64b488e2f1d598c23cedeb4c45ae",
+  "analysis_sha256": "ae8aa1abfb095d175c5b198cb15de4ea49194fba9d1bcfbca19b3091244e59e0",
+  "plan_sha256": "afc28a333cfe97b9023281a9cce775732bb5f53f8970c1bb81d139eab57bd7e1"
+}

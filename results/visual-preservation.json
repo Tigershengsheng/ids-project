@@ -1,0 +1,161 @@
+{
+  "date": "2026-11-06",
+  "unchanged_files": 31,
+  "files": [
+    {
+      "path": "results\\analysis-summary.json",
+      "before_sha256": "973d2d7e869112b7fe4dff1807465e0ed8ee9f4a45d2b7d0e89fbf7435dba3ef",
+      "after_sha256": "973d2d7e869112b7fe4dff1807465e0ed8ee9f4a45d2b7d0e89fbf7435dba3ef"
+    },
+    {
+      "path": "results\\analysis.rds",
+      "before_sha256": "72cb94dadc52c7439f16ec1ea7324301b0070e01f4f7f08721506202b704ba22",
+      "after_sha256": "72cb94dadc52c7439f16ec1ea7324301b0070e01f4f7f08721506202b704ba22"
+    },
+    {
+      "path": "results\\bootstrap-gaps.csv",
+      "before_sha256": "dce76d2948edfed0c5648a8e5c996a4101eda6caa2629bb38645844bb51145b2",
+      "after_sha256": "dce76d2948edfed0c5648a8e5c996a4101eda6caa2629bb38645844bb51145b2"
+    },
+    {
+      "path": "results\\calibration-bins.csv",
+      "before_sha256": "7cd48bd4381852f6f0d14043e3ada7d1b880f73bbaffd0ee4f6284845d305cec",
+      "after_sha256": "7cd48bd4381852f6f0d14043e3ada7d1b880f73bbaffd0ee4f6284845d305cec"
+    },
+    {
+      "path": "results\\coded-unknown-audit.csv",
+      "before_sha256": "5118cb59a8b8b80eee4340ac6ae469d22617699e555edffac39dea8e37028527",
+      "after_sha256": "5118cb59a8b8b80eee4340ac6ae469d22617699e555edffac39dea8e37028527"
+    },
+    {
+      "path": "results\\enrolled-definition-sensitivity.csv",
+      "before_sha256": "7ccb378b3bf8be4733364694e2a392eed76f24965102b292fd27a8b1e025b423",
+      "after_sha256": "7ccb378b3bf8be4733364694e2a392eed76f24965102b292fd27a8b1e025b423"
+    },
+    {
+      "path": "results\\fairness-gaps.csv",
+      "before_sha256": "556b7bcb8a6e3a3f65ea1da6e8c46812c85685dbecef5a58e1e9389f17a5a76f",
+      "after_sha256": "556b7bcb8a6e3a3f65ea1da6e8c46812c85685dbecef5a58e1e9389f17a5a76f"
+    },
+    {
+      "path": "results\\fairness-gender-inclusive.csv",
+      "before_sha256": "47310c4f77f4eae9cdce6e4b32f045a3a7a65a26f3c2fabc8e7d9e7dd4977e95",
+      "after_sha256": "47310c4f77f4eae9cdce6e4b32f045a3a7a65a26f3c2fabc8e7d9e7dd4977e95"
+    },
+    {
+      "path": "results\\fairness-group-intervals.csv",
+      "before_sha256": "f97ae66295bcec4c3282aee5a090befe52a1d480cd27acb43c717f17b96b2ca7",
+      "after_sha256": "f97ae66295bcec4c3282aee5a090befe52a1d480cd27acb43c717f17b96b2ca7"
+    },
+    {
+      "path": "results\\fairness-group-metrics.csv",
+      "before_sha256": "988b50c68780a24dd755219c97eef3827c0ff914bc99f411b61468944ca4bee5",
+      "after_sha256": "988b50c68780a24dd755219c97eef3827c0ff914bc99f411b61468944ca4bee5"
+    },
+    {
+      "path": "results\\fairness-threshold-05.csv",
+      "before_sha256": "cfdda596813891bd21db60a8836bc03ceefc006f7fd2dca6e72edb20cf09c906",
+      "after_sha256": "cfdda596813891bd21db60a8836bc03ceefc006f7fd2dca6e72edb20cf09c906"
+    },
+    {
+      "path": "results\\fitted-models.rds",
+      "before_sha256": "9ae5d9ecc3f505ad251f1cbcab4d071b1a0abfc33b8820df9725ccf40d434135",
+      "after_sha256": "9ae5d9ecc3f505ad251f1cbcab4d071b1a0abfc33b8820df9725ccf40d434135"
+    },
+    {
+      "path": "results\\frozen-configuration.json",
+      "before_sha256": "a545f21c2b8b951059aab77a2a311cbc32f0d9f8f196df4361f0002ace461ced",
+      "after_sha256": "a545f21c2b8b951059aab77a2a311cbc32f0d9f8f196df4361f0002ace461ced"
+    },
+    {
+      "path": "results\\outcome-counts.csv",
+      "before_sha256": "999f94b558718e98bcb22a87dc9ab0cc3aae217189c20568c16be95452ab222e",
+      "after_sha256": "999f94b558718e98bcb22a87dc9ab0cc3aae217189c20568c16be95452ab222e"
+    },
+    {
+      "path": "results\\primary-coefficients.csv",
+      "before_sha256": "48ce9de374e91b8f6d93fb3e65c03f37b2ccda4148893b67cd534d40833069d2",
+      "after_sha256": "48ce9de374e91b8f6d93fb3e65c03f37b2ccda4148893b67cd534d40833069d2"
+    },
+    {
+      "path": "results\\session-info.txt",
+      "before_sha256": "adcc3d2f0b5d44d5febaeb75312b8e1c20b36e8a6c9a234278df75be4e7c64d5",
+      "after_sha256": "adcc3d2f0b5d44d5febaeb75312b8e1c20b36e8a6c9a234278df75be4e7c64d5"
+    },
+    {
+      "path": "results\\split-counts.csv",
+      "before_sha256": "0bda304ff58460a89a377f1704ec759c9698951e6fcd44895b4dece2cda32be2",
+      "after_sha256": "0bda304ff58460a89a377f1704ec759c9698951e6fcd44895b4dece2cda32be2"
+    },
+    {
+      "path": "results\\split-membership.csv",
+      "before_sha256": "232c7dde9e0e038ddc105f55a41ce0b7cbf6ba4cd9d135087d0a0051d4a0edb3",
+      "after_sha256": "232c7dde9e0e038ddc105f55a41ce0b7cbf6ba4cd9d135087d0a0051d4a0edb3"
+    },
+    {
+      "path": "results\\test-metric-intervals.csv",
+      "before_sha256": "73ef987e3380b7d50ddb25bb4dddad34016b577dd5acef3e71df72e6eccebc05",
+      "after_sha256": "73ef987e3380b7d50ddb25bb4dddad34016b577dd5acef3e71df72e6eccebc05"
+    },
+    {
+      "path": "results\\test-metrics.csv",
+      "before_sha256": "47723eca1510fe5a5327b6b5a6f01fc62bb3065bb4abc9e92da7ef6800de77a7",
+      "after_sha256": "47723eca1510fe5a5327b6b5a6f01fc62bb3065bb4abc9e92da7ef6800de77a7"
+    },
+    {
+      "path": "results\\test-predictions.csv",
+      "before_sha256": "b24c5fb44c9e4d76b6994e5107c0b7420b68adb5c28b9d7144801e01260d4b2b",
+      "after_sha256": "b24c5fb44c9e4d76b6994e5107c0b7420b68adb5c28b9d7144801e01260d4b2b"
+    },
+    {
+      "path": "results\\training-course-attendance.csv",
+      "before_sha256": "5b6cd751386d1b1aecfeb8cb3bd173b95d1b7de6c7a38a91a73c123058b95d6b",
+      "after_sha256": "5b6cd751386d1b1aecfeb8cb3bd173b95d1b7de6c7a38a91a73c123058b95d6b"
+    },
+    {
+      "path": "results\\training-course-composition.csv",
+      "before_sha256": "de3a4b4b9c4fef88842e01cae90e705dd299390cd66c03c098f1b3561c8b41bb",
+      "after_sha256": "de3a4b4b9c4fef88842e01cae90e705dd299390cd66c03c098f1b3561c8b41bb"
+    },
+    {
+      "path": "results\\training-course-gender-rates.csv",
+      "before_sha256": "5332880a4dd3130bd1a97713176d00d1f5b0a55fd2267c98a69e30567ec1844f",
+      "after_sha256": "5332880a4dd3130bd1a97713176d00d1f5b0a55fd2267c98a69e30567ec1844f"
+    },
+    {
+      "path": "results\\training-gender-rates.csv",
+      "before_sha256": "54eca8a0c8c13d02844444b9b60cfe0ff5a5d11cf3d30d461fa76c90b11ebdde",
+      "after_sha256": "54eca8a0c8c13d02844444b9b60cfe0ff5a5d11cf3d30d461fa76c90b11ebdde"
+    },
+    {
+      "path": "results\\training-summary.csv",
+      "before_sha256": "7a6e89a1b7fcdcca018ed2b7ae83d168eb7698e9f0a52a65b6d164ed76cdc731",
+      "after_sha256": "7a6e89a1b7fcdcca018ed2b7ae83d168eb7698e9f0a52a65b6d164ed76cdc731"
+    },
+    {
+      "path": "results\\validation-thresholds.csv",
+      "before_sha256": "5e32bae9fc38673b0c687ff0ab60526e15b9cc833bf9d9acc66e985df2df5501",
+      "after_sha256": "5e32bae9fc38673b0c687ff0ab60526e15b9cc833bf9d9acc66e985df2df5501"
+    },
+    {
+      "path": "results\\variable-timing-audit.csv",
+      "before_sha256": "5af6156c1a2078f2166285274c970af46d12caf215f4d1ead461629ed2df6a63",
+      "after_sha256": "5af6156c1a2078f2166285274c970af46d12caf215f4d1ead461629ed2df6a63"
+    },
+    {
+      "path": "data\\data.csv",
+      "before_sha256": "3ef126de5cefff26eb11fbb4237f1a1401cb64b488e2f1d598c23cedeb4c45ae",
+      "after_sha256": "3ef126de5cefff26eb11fbb4237f1a1401cb64b488e2f1d598c23cedeb4c45ae"
+    },
+    {
+      "path": "R\\analysis.R",
+      "before_sha256": "ae8aa1abfb095d175c5b198cb15de4ea49194fba9d1bcfbca19b3091244e59e0",
+      "after_sha256": "ae8aa1abfb095d175c5b198cb15de4ea49194fba9d1bcfbca19b3091244e59e0"
+    },
+    {
+      "path": "docs\\analysis-plan.md",
+      "before_sha256": "afc28a333cfe97b9023281a9cce775732bb5f53f8970c1bb81d139eab57bd7e1",
+      "after_sha256": "afc28a333cfe97b9023281a9cce775732bb5f53f8970c1bb81d139eab57bd7e1"
+    }
+  ]
+}

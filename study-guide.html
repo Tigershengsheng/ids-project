@@ -10,8 +10,9 @@
 
 
 
+<meta name="date" content="2026-11-05" />
 
-<title>study-guide</title>
+<title>退学预警项目：中文理解与代码导读</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -361,185 +362,309 @@ display: none;
 
 
 
+<h1 class="title toc-ignore">退学预警项目：中文理解与代码导读</h1>
+<h3 class="subtitle">大学生退学预警：能预测多准，哪些学生容易被漏掉？</h3>
+<h4 class="date">2026-11-05</h4>
 
 </div>
 
 <div id="TOC">
 <ul>
-<li><a href="#lab-04%E5%85%88%E6%89%93%E5%BC%80%E6%88%90%E5%93%81%E5%86%8D%E8%AF%BB%E4%BB%A3%E7%A0%81" id="toc-lab-04先打开成品再读代码">Lab 04：先打开成品，再读代码</a>
-<ul>
-<li><a href="#%E5%85%88%E7%9C%8B%E5%93%AA%E4%BB%BD%E6%96%87%E4%BB%B6" id="toc-先看哪份文件">先看哪份文件</a></li>
-<li><a href="#%E8%BF%99%E5%91%A8%E5%88%B0%E5%BA%95%E8%A6%81%E5%81%9A%E4%BB%80%E4%B9%88" id="toc-这周到底要做什么">这周到底要做什么</a></li>
-<li><a href="#%E4%B8%A4%E4%BB%BD%E8%AF%BE%E4%BB%B6%E6%80%8E%E6%A0%B7%E7%94%A8%E5%88%B0%E8%BF%99%E9%87%8C" id="toc-两份课件怎样用到这里">两份课件怎样用到这里</a></li>
-<li><a href="#%E5%85%88%E8%AE%B0%E4%BD%8F%E8%BF%99%E4%B8%80%E4%B8%AA%E5%8C%BA%E5%88%ABaes-%E9%87%8C%E5%A4%96" id="toc-先记住这一个区别aes-里外">先记住这一个区别：aes 里外</a></li>
-<li><a href="#%E9%81%93%E7%BB%83%E4%B9%A0%E5%90%84%E7%BB%83%E4%BB%80%E4%B9%88" id="toc-道练习各练什么">8 道练习各练什么</a></li>
-<li><a href="#%E7%BC%BA%E5%A4%B1%E5%80%BC%E9%9B%B6noneunknown" id="toc-缺失值零noneunknown">缺失值、零、none、unknown</a></li>
-<li><a href="#%E7%AC%AC-8-%E9%A2%98%E4%B8%BA%E4%BB%80%E4%B9%88%E7%94%A8-log10" id="toc-第-8-题为什么用-log10">第 8 题为什么用 log10</a></li>
-<li><a href="#%E9%A6%96%E5%B0%94%E6%95%B0%E6%8D%AE%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8D%95%E7%8B%AC%E5%A4%84%E7%90%86%E9%9B%B6%E7%A7%9F%E8%B5%81" id="toc-首尔数据为什么单独处理零租赁">首尔数据为什么单独处理零租赁</a></li>
-<li><a href="#%E5%90%8E%E9%9D%A2%E4%BD%A0%E8%87%AA%E5%B7%B1%E5%B0%9D%E8%AF%95" id="toc-后面你自己尝试">后面你自己尝试</a></li>
-<li><a href="#%E4%BB%8D%E9%9C%80%E4%BD%A0%E4%BB%AC%E5%B0%8F%E7%BB%84%E5%A4%84%E7%90%86" id="toc-仍需你们小组处理">仍需你们小组处理</a></li>
-</ul></li>
+<li><a href="#%E6%88%91%E4%BB%AC%E7%A9%B6%E7%AB%9F%E5%9C%A8%E7%A0%94%E7%A9%B6%E4%BB%80%E4%B9%88" id="toc-我们究竟在研究什么">我们究竟在研究什么</a></li>
+<li><a href="#%E6%A0%87%E7%AD%BE%E6%A0%B7%E6%9C%AC%E4%B8%8E%E6%88%91%E4%BB%AC%E4%BF%9D%E7%95%99%E7%9A%84%E4%BA%BA" id="toc-标签样本与我们保留的人">标签、样本与我们保留的人</a></li>
+<li><a href="#%E5%93%AA%E4%BA%9B%E8%BE%93%E5%85%A5%E8%83%BD%E7%94%A8%E5%93%AA%E4%BA%9B%E4%B8%8D%E8%83%BD%E7%94%A8" id="toc-哪些输入能用哪些不能用">哪些输入能用，哪些不能用</a></li>
+<li><a href="#%E6%A8%A1%E5%9E%8B%E6%98%AF%E4%BB%80%E4%B9%88" id="toc-模型是什么">模型是什么</a></li>
+<li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%88%86%E4%B8%89%E4%BB%BD%E6%95%B0%E6%8D%AE" id="toc-为什么要分三份数据">为什么要分三份数据</a></li>
+<li><a href="#%E9%98%88%E5%80%BC%E5%92%8C70%E7%9B%AE%E6%A0%87%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88" id="toc-阈值和70目标到底是什么">阈值和70%目标到底是什么</a></li>
+<li><a href="#%E6%B5%8B%E8%AF%95%E7%BB%93%E6%9E%9C%E5%BA%94%E6%80%8E%E6%A0%B7%E8%AF%BB" id="toc-测试结果应怎样读">测试结果应怎样读</a></li>
+<li><a href="#%E4%B8%89%E4%B8%AA%E5%85%AC%E5%B9%B3%E6%80%A7%E6%A0%87%E5%87%86%E5%88%86%E6%AF%8D%E4%B8%8D%E8%83%BD%E6%B7%B7" id="toc-三个公平性标准分母不能混">三个公平性标准，分母不能混</a></li>
+<li><a href="#bootstrap-%E5%8C%BA%E9%97%B4%E6%98%AF%E4%BB%80%E4%B9%88%E6%84%8F%E6%80%9D" id="toc-bootstrap-区间是什么意思">Bootstrap 区间是什么意思</a></li>
+<li><a href="#%E5%A6%82%E4%BD%95%E7%94%A8%E8%87%AA%E5%B7%B1%E7%9A%84%E8%AF%9D%E8%A7%A3%E9%87%8A%E5%AE%9E%E9%99%85%E9%80%89%E6%8B%A9" id="toc-如何用自己的话解释实际选择">如何用自己的话解释实际选择</a></li>
+<li><a href="#%E4%BB%8E%E5%93%AA%E9%87%8C%E5%BC%80%E5%A7%8B%E7%9C%8B%E4%BB%A3%E7%A0%81" id="toc-从哪里开始看代码">从哪里开始看代码</a></li>
+<li><a href="#%E8%BF%99%E8%BD%AE%E5%AE%8C%E6%88%90%E5%92%8C%E4%BB%8D%E6%9C%AA%E5%AE%8C%E6%88%90%E7%9A%84%E4%BA%8B" id="toc-这轮完成和仍未完成的事">这轮完成和仍未完成的事</a></li>
 </ul>
 </div>
 
-<div id="lab-04先打开成品再读代码" class="section level1">
-<h1>Lab 04：先打开成品，再读代码</h1>
-<div id="先看哪份文件" class="section level2">
-<h2>先看哪份文件</h2>
-<p>双击本文件夹里的 <code>lab-04.html</code>，就能在浏览器看完整的 Star
-Wars 8 道练习：代码、图和英文解释都在一起。</p>
-<p><code>investigation.html</code>
-是期末小组项目的<strong>候选数据探索稿</strong>。这里先用首尔
-自行车租赁数据演示；你们四人还要讨论是否采用，并和老师核对选题。</p>
-<p>要在 RStudio 改代码，先双击 <code>ids-project.Rproj</code>
-打开这个项目， 再在 Files 面板打开 <code>lab-04.Rmd</code> 或
-<code>investigation.Rmd</code>。 修改 Rmd 后点 Knit，HTML
-才会更新。网页里的输出不能直接当作源代码修改。</p>
-<p><code>report.Rmd</code> 和 <code>presentation.Rmd</code>
-是课程给的期末报告和演示模板，
-本周不需要把整个期末项目交完，所以里面保留了原模板。</p>
+<div id="我们究竟在研究什么" class="section level2">
+<h2>我们究竟在研究什么</h2>
+<p>我们评估一种入学时预警：使用入学年龄、入学成绩和专业，估计学生在正常学制结束时是否被记录为
+Dropout。接着检查同一规则的误报、漏报是否在记录中的女性、男性两组间不同。</p>
+<p>数据来自葡萄牙一所高校的历史记录，不是爱丁堡大学学生数据。原论文说，转专业或转学校也算
+Dropout。它不完全等于彻底放弃高等教育，更不等于“这个人一定需要帮助”。这个测量局限必须讲。</p>
 </div>
-<div id="这周到底要做什么" class="section level2">
-<h2>这周到底要做什么</h2>
-<p>根据你提供的 Lab 04 第 1–2 页，必做部分是：确定组员、准备 GitHub
-项目仓库、开始探索项目数据。第 3–6 页的 Star Wars 练习是可选练习。
-这里也把它们做完，方便你后面练习画图。</p>
-<p>“选数据集”就是选<strong>期末小组项目想研究的一套数据</strong>，不是在
-R 里挑一列， 也不是重新选择 Star Wars
-练习的数据。例如首尔自行车的每一行是一个小时，
-有租赁量、温度、小时、季节等信息，可以问“不同季节一天里的租赁高峰有什么区别”。</p>
-<p>选题还要你们四人同意。这里已经做出可看的初稿，不代表已经替全组决定。</p>
-</div>
-<div id="两份课件怎样用到这里" class="section level2">
-<h2>两份课件怎样用到这里</h2>
-<ul>
-<li><code>Doing Data Science.pdf</code> 第 4–6
-页区分问题类型和检查数据是否适合问题：
-这里先做描述和探索，不提前给出因果结论。</li>
-<li>第 14–17 页讲观察性研究和混杂因素（confounding）：
-天气、季节、时段可能一起变化，“越暖租得越多”不能直接解释成升温导致更多租赁。</li>
-<li>第 33–34 页讲 Simpson’s paradox（辛普森悖论）：
-合并数据看到的关系，分组后可能改变。按季节分面，是提醒我们检查分组，而不是证明本数据一定有悖论。</li>
-<li><code>Visualising data.pdf</code> 第 9–10 页用 Anscombe 数据说明：
-平均数等摘要相近，图形仍可能很不同，所以既检查数字，也画图。</li>
-<li>第 18–19 页讲 ggplot2
-的层：<code>ggplot() + geom_...() + labs()</code>。 第 26、31–32
-页讲颜色映射、图例和继续调整图表。</li>
-</ul>
-<p>页码是 PDF
-阅读器显示的页序。这里没有把课件上的例子当作自己的数据分析结果。</p>
-</div>
-<div id="先记住这一个区别aes-里外" class="section level2">
-<h2>先记住这一个区别：aes 里外</h2>
-<pre class="r"><code>ggplot(starwars_df, aes(x = height, y = mass)) +
-  geom_point(color = &quot;pink&quot;)</code></pre>
-<p>例如 Luke 和 Leia 的点全是粉色：颜色是固定设置，写在
-<code>aes()</code> 外面。</p>
-<pre class="r"><code>ggplot(starwars_df, aes(x = height, y = mass, color = gender)) +
-  geom_point()</code></pre>
-<p>这次颜色跟着每个角色的 <code>gender</code> 改变，R 还会自动给图例。
-这叫 mapping（映射）。<code>aes(size = birth_year)</code>
-同理：不同数值映射成不同点大小。</p>
-<p>注意：整理表格时常用 <code>%&gt;%</code>；给 ggplot 加图层用
-<code>+</code>。</p>
-</div>
-<div id="道练习各练什么" class="section level2">
-<h2>8 道练习各练什么</h2>
+<div id="标签样本与我们保留的人" class="section level2">
+<h2>标签、样本与我们保留的人</h2>
 <table>
 <thead>
 <tr class="header">
-<th>题号</th>
-<th>做什么</th>
-<th>最需要理解的地方</th>
+<th align="left">原始结果</th>
+<th align="right">人数</th>
+<th align="right">比例</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>1</td>
-<td><code>glimpse()</code> 看数据结构</td>
-<td>一行是什么、每列是什么类型</td>
+<td align="left">Graduate</td>
+<td align="right">2209</td>
+<td align="right">0.499</td>
 </tr>
 <tr class="even">
-<td>2</td>
-<td>所有点设成粉色</td>
-<td>固定颜色放在 <code>aes()</code> 外</td>
+<td align="left">Enrolled</td>
+<td align="right">794</td>
+<td align="right">0.179</td>
 </tr>
 <tr class="odd">
-<td>3</td>
-<td>标题、坐标轴、大小图例</td>
-<td><code>labs(size = &quot;...&quot;)</code> 改的是大小图例标题</td>
-</tr>
-<tr class="even">
-<td>4</td>
-<td>身高直方图</td>
-<td><code>binwidth = 20</code> 表示每个区间宽 20 cm</td>
-</tr>
-<tr class="odd">
-<td>5</td>
-<td>身高与 sex 的箱线图加散点</td>
-<td>中位数、分布范围、每组人数都要看</td>
-</tr>
-<tr class="even">
-<td>6</td>
-<td>sex 的条形图</td>
-<td>比较每个类别有多少角色</td>
-</tr>
-<tr class="odd">
-<td>7</td>
-<td>sex 与 gender 的堆叠条形图</td>
-<td>两列有关联，不代表两列完全一样</td>
-</tr>
-<tr class="even">
-<td>8</td>
-<td>身高、体重、sex、gender 的散点图</td>
-<td>x、y、颜色、形状分别表达四列</td>
+<td align="left">Dropout</td>
+<td align="right">1421</td>
+<td align="right">0.321</td>
 </tr>
 </tbody>
 </table>
-<p>题 5 把原始点也画出来，是因为有的组只有一个角色，
-单看箱线图容易误以为每组的信息都一样多。</p>
+<p>主分析中 Dropout=1；Graduate 或
+Enrolled=0。零表示该观察终点没有记录为退学，不表示已经毕业或未来永不退学。正常学制一般三年，护理四年。</p>
+<p>我们保留所有三类人的原始标签，另做排除 Enrolled
+的补充分析。补充分析换了人群和问题，不能因为分数更好就替换主结果。</p>
 </div>
-<div id="缺失值零noneunknown" class="section level2">
-<h2>缺失值、零、none、unknown</h2>
-<p><code>NA</code> 表示没有记录；<code>0</code>
-是有记录的数值零。它们不能互换。</p>
-<p><code>drop_na(height, mass)</code> 只排除身高或体重缺失的行，不会因为
-角色缺失“出生年份”就把它从只看身高体重的图里删掉。</p>
-<p>题 2–3 需要身高、体重、出生年份，能用 36 行；题 8
-只要求身高体重完整， 能用 59 行。各题的缺失规则写在答案里。</p>
-<p>Star Wars 的 <code>none</code>
-是数据里本来就有的类别；<code>unknown</code> 是我们给
-原来的分类缺失值加的显示标签。这两个组没有合并。</p>
+<div id="哪些输入能用哪些不能用" class="section level2">
+<h2>哪些输入能用，哪些不能用</h2>
+<p>主模型保留三个输入：年龄、入学成绩、专业。专业的数字是类别编码，不能认为编号越大就“专业程度越高”。</p>
+<p>12个学期末变量在入学时还不知道，全部排除。欠费、学费是否结清、助学金状态缺少逐人记录时间，我们保守地排除。宏观经济指标可能间接反映届次，源文件又没有对应的入学年份，因此不将它们混入这个小模型。</p>
+<p>我们最初考虑过班别，但训练数据中每个专业只有一种日间/夜间类别，放入两者出现完全重复的信息。我们在查看验证和测试评分之前保留专业、移除班别。证据保存在
+training-course-attendance.csv。</p>
+<p>完整字段时间表：results/variable-timing-audit.csv。没有空白 NA
+不代表没有“未知”编码，也不代表原始数据从未经过筛选。</p>
 </div>
-<div id="第-8-题为什么用-log10" class="section level2">
-<h2>第 8 题为什么用 log10</h2>
-<p>Jabba 的体重是 1,358 kg，会把其他角色压在图底部。
-对数坐标保留这条记录，同时让其他点容易看清。</p>
-<p>纵轴从 10 到 100、从 100 到 1000，都是乘 10，距离相同。
-因此相等的纵向距离表示相同的倍数，不是相同的公斤差。
-如果觉得这里陌生，可以先读完普通坐标的第 3 题再回来对照。</p>
+<div id="模型是什么" class="section level2">
+<h2>模型是什么</h2>
+<p>这里的模型是一条用训练数据拟合的概率规则，模型给出零到一之间的数，再由阈值决定是否提示。</p>
+<pre class="r"><code>primary &lt;- glm(
+  dropout ~ age10 + admission10 + course,
+  data = training,
+  family = binomial()
+)
+probability &lt;- predict(primary, newdata = test, type = &quot;response&quot;)</code></pre>
+<p>glm 是 R 的广义线性模型函数；binomial 表示二分类逻辑回归。age10 和
+admission10 只是除以10改单位，不是从测试数据估计的标准化。专业已经转成
+factor。这个模型假设年龄、成绩在 log-odds
+上是线性的，专业加上固定的差异，没有交互项。这些都是简化假设。</p>
+<p>提供的课件没有独立的模型分类讲义，因此我们把逻辑回归列为补充方法，并给出
+R 官方文档。我们不能说它已经在上传课件中教过。</p>
 </div>
-<div id="首尔数据为什么单独处理零租赁" class="section level2">
-<h2>首尔数据为什么单独处理零租赁</h2>
-<p>假设一个小时租了 0 辆：
-可能真的没人租，也可能系统没开。两种含义不能混在一起。</p>
-<p>这份数据里，295 个未运营小时全是零租赁。原表完整保留在
-<code>bikes</code>， 而画运营期租赁图时使用
-<code>bikes_active</code>，里面有 8,465 个小时。
-这里描述的是实际租赁记录，不是所有人的潜在出行需求。</p>
+<div id="为什么要分三份数据" class="section level2">
+<h2>为什么要分三份数据</h2>
+<table>
+<thead>
+<tr class="header">
+<th align="left">数据</th>
+<th align="right">人数</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">训练</td>
+<td align="right">2652</td>
+<td align="left">拟合模型系数</td>
+</tr>
+<tr class="even">
+<td align="left">验证</td>
+<td align="right">883</td>
+<td align="left">选择提示阈值</td>
+</tr>
+<tr class="odd">
+<td align="left">测试</td>
+<td align="right">889</td>
+<td align="left">评估已经固定的规则</td>
+</tr>
+</tbody>
+</table>
+<p>我们按原始结果和记录性别分层随机划分。组别比例接近原始数据，不能称为真正有代表性的全国随机样本。这个数据没有届次字段，无法做按新旧年份划分的未来届次检验。</p>
+<p>测试结果没有决定主模型、输入或阈值。验证后没有把验证样本重新加进模型拟合。</p>
 </div>
-<div id="后面你自己尝试" class="section level2">
-<h2>后面你自己尝试</h2>
-<p>先改第 2 题的颜色，再把第 4 题的 binwidth 从 20 改成 10，
-观察图怎样变化。最后只看题目，尝试自己写第 6 题。 每次改完点
-Knit，对照图与代码，不必一次看懂所有段落。</p>
+<div id="阈值和70目标到底是什么" class="section level2">
+<h2>阈值和70%目标到底是什么</h2>
+<p>概率达到 0.31
+就提示，否则不提示。我们事先规定，在0.05到0.80的候选网格里，找验证集识别率达到70%、同时特异性最高的阈值。它不是学校制定的标准，也不是已经证实的最优政策。</p>
+<p>阈值越低，通常提示人数越多。可能找到更多真正的退学记录，也会提示更多未记录为退学的人。这是需要解释的权衡。</p>
 </div>
-<div id="仍需你们小组处理" class="section level2">
-<h2>仍需你们小组处理</h2>
-<p>确认候选数据是否采用、接受 GitHub 邀请、核对 Learn 当前的项目安排。
-模板 README 和旧课程网页的第一次 check-in
-周次不一致，所以这里没有替你确认日期。</p>
+<div id="测试结果应怎样读" class="section level2">
+<h2>测试结果应怎样读</h2>
+<table>
+<colgroup>
+<col width="31%" />
+<col width="3%" />
+<col width="3%" />
+<col width="3%" />
+<col width="3%" />
+<col width="3%" />
+<col width="5%" />
+<col width="5%" />
+<col width="8%" />
+<col width="11%" />
+<col width="5%" />
+<col width="11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Rule</th>
+<th align="right">n</th>
+<th align="right">TP</th>
+<th align="right">FP</th>
+<th align="right">FN</th>
+<th align="right">TN</th>
+<th align="right">AUC</th>
+<th align="right">Brier</th>
+<th align="right">Accuracy</th>
+<th align="right">Sensitivity</th>
+<th align="right">PPV</th>
+<th align="right">WarningRate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Always no warning</td>
+<td align="right">889</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">285</td>
+<td align="right">604</td>
+<td align="right">0.500</td>
+<td align="right">0.218</td>
+<td align="right">0.679</td>
+<td align="right">0.000</td>
+<td align="right">NA</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="even">
+<td align="left">Enrolment model: threshold 0.50</td>
+<td align="right">889</td>
+<td align="right">80</td>
+<td align="right">45</td>
+<td align="right">205</td>
+<td align="right">559</td>
+<td align="right">0.718</td>
+<td align="right">0.188</td>
+<td align="right">0.719</td>
+<td align="right">0.281</td>
+<td align="right">0.640</td>
+<td align="right">0.141</td>
+</tr>
+<tr class="odd">
+<td align="left">Enrolment model: validation rule</td>
+<td align="right">889</td>
+<td align="right">187</td>
+<td align="right">222</td>
+<td align="right">98</td>
+<td align="right">382</td>
+<td align="right">0.718</td>
+<td align="right">0.188</td>
+<td align="right">0.640</td>
+<td align="right">0.656</td>
+<td align="right">0.457</td>
+<td align="right">0.460</td>
+</tr>
+</tbody>
+</table>
+<p>选定规则在测试集：</p>
+<ul>
+<li>285名被记录为退学的人中，找到187名，漏掉98名；识别率为 65.6%。</li>
+<li>604名没有该退学记录的人中，提示222名；误报率为 36.8%。</li>
+<li>一共提示409人，187人的记录为退学，所以 PPV 为 45.7%。</li>
+<li>提示了全部测试学生的
+46.0%。这个比例涉及支持资源，不能只盯着识别率。</li>
+</ul>
+<p>“误报”只是相对于记录标签的错误，不表示这个学生完全不需要支持。原始标签本身也没有告诉我们转校原因或支持需求。</p>
 </div>
+<div id="三个公平性标准分母不能混" class="section level2">
+<h2>三个公平性标准，分母不能混</h2>
+<table>
+<thead>
+<tr class="header">
+<th align="left">标准</th>
+<th align="left">指标</th>
+<th align="left">女性</th>
+<th align="left">男性</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Independence</td>
+<td align="left">所有人中的提示比例</td>
+<td align="left">37.9%</td>
+<td align="left">60.8%</td>
+</tr>
+<tr class="even">
+<td align="left">Separation</td>
+<td align="left">未退学记录者中的误报比例 FPR</td>
+<td align="left">32.0%</td>
+<td align="left">48.6%</td>
+</tr>
+<tr class="odd">
+<td align="left">Separation</td>
+<td align="left">退学记录者中的漏报比例 FNR</td>
+<td align="left">44.4%</td>
+<td align="left">24.1%</td>
+</tr>
+<tr class="even">
+<td align="left">Sufficiency</td>
+<td align="left">被提示者中的退学比例 PPV</td>
+<td align="left">36.7%</td>
+<td align="left">56.0%</td>
+</tr>
+<tr class="odd">
+<td align="left">Sufficiency</td>
+<td align="left">未提示者中的退学比例 1-NPV</td>
+<td align="left">17.9%</td>
+<td align="left">27.6%</td>
+</tr>
+</tbody>
+</table>
+<p>女性漏报率是64/144，男性是34/141。64和34不是直接可比的“公平指标”，必须看正确的条件分母。两组全部人数分别是575、314，但漏报率的分母只包括实际退学记录者。</p>
+<p>误报率则只在没有退学记录的人中计算。男性误报率较高，女性漏报率较高，不能简单说一组在所有方面都受到同一种影响。</p>
+<p>二分类充分性要检查两个预测层。只比较
+PPV，遗漏未提示者中的实际结果，不足以完整检查 Sufficiency。NPV
+是未提示者中没有退学记录的比例；1-NPV 是其中有退学记录的比例。</p>
+<p>两组的基础退学记录比例也不同：女性 25.0%，男性
+44.9%。数值差异是要进一步调查的现象，不能直接推断性别导致退学，或模型已经构成歧视。</p>
+</div>
+<div id="bootstrap-区间是什么意思" class="section level2">
+<h2>Bootstrap 区间是什么意思</h2>
+<p>课件中的步骤是：有放回抽样、重新计算统计量、重复很多次、取中间95%。这里固定已拟合的模型与已选择的阈值，在测试集每个记录性别组里分别重抽学生，重复
+5,000 次。</p>
+<pre class="r"><code>ids &lt;- sample(group_rows, length(group_rows), replace = TRUE)
+statistic &lt;- false_negative_rate(test[ids, ])
+# 重复后，对两组差值取 quantile(gaps, c(0.025, 0.975))</code></pre>
+<p>女性减男性漏报率差约20.3个百分点，其区间约9.5到30.7个百分点。这个区间没有包含模型重新训练、阈值选择本身的变化、不同届次之间的聚集或推广到其他学校的不确定性。因此我们称它为条件区间；不应把它读成公平证书。各指标分别有95%区间，也不等于所有区间合起来同时有95%的保证。</p>
+<p>概率校准另问一个问题：估计为30%左右的学生，实际退学比例是否也在30%左右。按概率分箱只能提供描述性检查，不能证明精确校准，更不能替代阈值后二分类的充分性检查。</p>
+</div>
+<div id="如何用自己的话解释实际选择" class="section level2">
+<h2>如何用自己的话解释实际选择</h2>
+<p>可以从“我们关心什么，因此怎样处理，结果带来什么限制”来组织。不要给每个函数都加一段个人故事，也不要捏造小组开会时说过的话。</p>
+<p>例如：</p>
+<p>“我们希望在入学时提供提示，所以不能拿后面学期的成绩来提高分数。”</p>
+<p>“我们发现退学标签包括转校，因此把结论限定为记录里的离开状态。”</p>
+<p>“我们在训练交叉表里看到班别已由专业决定，所以移除了重复的信息。”</p>
+<p>“我们看到提高识别率会带来更多误报，因此没有把识别率当成唯一目标。”</p>
+<p>“我们没有因为模型未使用性别就认定公平，而是进一步按性别检查了错误。”</p>
+<p>这些表述都应由你们审阅后采用；讲稿不是你们已经理解或独立完成的证明。</p>
+</div>
+<div id="从哪里开始看代码" class="section level2">
+<h2>从哪里开始看代码</h2>
+<ol style="list-style-type: decimal">
+<li>打开 student-dropout-final.Rproj。</li>
+<li>R/analysis.R 第1部分读取和定义数据，第2部分是字段时间表。</li>
+<li>第3部分划分数据并生成训练摘要；第4部分拟合模型、选择验证阈值。</li>
+<li>第5部分评估测试集，第6部分计算bootstrap区间。</li>
+<li>第7-8部分是标签敏感性和概率检查；第9部分作图；第10部分保存共同结果。</li>
+<li>presentation.Rmd
+读取同一个结果对象，数字和图表不会靠手工复制更新。</li>
+</ol>
+<p>read_delim、mutate/transmute、filter、count、group_by、summarise、left_join、pivot_longer、factor和ggplot图层都与上传材料直接相关。glm、验证划分、AUC/Brier及多指标辅助函数属于额外解释部分。详细对应关系见
+docs/course-map.html。</p>
+</div>
+<div id="这轮完成和仍未完成的事" class="section level2">
+<h2>这轮完成和仍未完成的事</h2>
+<p>本轮生成的是分析、展示与理解材料。题目可行性的教学团队确认、小组实际审阅、自己讲出来的排练、check-in参加、GitHub新题目的协作与授权、正式报告、互评和提交均不能由这些文件替代。没有证明这个模型可以减少退学，也没有证明它适用于爱丁堡大学。</p>
 </div>
 
 

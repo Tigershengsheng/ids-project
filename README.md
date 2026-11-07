@@ -1,89 +1,56 @@
-# IDS project: kick-off workspace
+# Student dropout warnings
 
-**Status:** Lab 04 code, plots and initial exploration prepared and checked. Seoul Bike Sharing Demand is a
-candidate for discussion; it has not yet been agreed as the group's final topic.
+**大学生退学预警：能预测多准，哪些学生容易被漏掉？**
 
-Private project repository: https://github.com/Tigershengsheng/ids-project
+Current IDS group project: enrolment-time prediction of recorded dropout and an audit of group error patterns. The repository is private. Updated 7 November 2026.
 
-## Group
+## Open the current work
 
-| Member | GitHub |
+| Purpose | File |
 | --- | --- |
-| Tiger | Tigershengsheng |
-| Harry | HarryPeng725 |
-| yingcheLiu | yingcheliu0723 |
-| Reiyume | ReiyumEe |
+| Presentation in the course's HTML format | [presentation.html](presentation.html) |
+| Reproducible presentation source | [presentation.Rmd](presentation.Rmd) |
+| Editable PowerPoint | [Student_Dropout_Presentation.pptx](output/powerpoint/Student_Dropout_Presentation.pptx) |
+| Presentation PDF | [01_Presentation.pdf](output/reading-pdfs/01_Presentation.pdf) |
+| English speaking script and Q&A | [02_英文演讲稿.pdf](output/reading-pdfs/02_英文演讲稿.pdf) |
+| Chinese beginner handbook | [03_中文解释与复习.pdf](output/reading-pdfs/03_中文解释与复习.pdf) |
+| Working research notebook | [investigation.Rmd](investigation.Rmd), [investigation.html](investigation.html) |
+| Complete statistical implementation | [R/analysis.R](R/analysis.R) |
+| Raw UCI data and attribution | [data/data.csv](data/data.csv), [data/README.md](data/README.md) |
+| Decisions, course links and learning process | [analysis plan](docs/analysis-plan.md), [course map](docs/course-map.md), [learning process](docs/learning-process.md) |
+| Numerical checks | [verify_project.R](verify_project.R), [36-check results](results/verification.txt) |
+| Access and outstanding deliverables | [repository-status.md](repository-status.md) |
 
-The user confirmed that the four-person Lab 03 group continues for this project.
+GitHub may display HTML source rather than run the presentation. Download the repository using **Code > Download ZIP**, extract it and open `presentation.html` in a browser, or use the PDF. For reproduction, open `student-dropout-final.Rproj` in RStudio.
 
-## Open these first
+## Research design
 
-- [Star Wars exercises: rendered answers](lab-04.html) — all eight optional exercises.
-- [Project exploration: rendered draft](investigation.html) — data checks and three initial plots.
-- [Chinese reading guide](study-guide.html) — where to open files and what the code does.
-- [Data source and dictionary](data/README.md).
+The source contains 4,424 student records from one Portuguese institution. Dropout is the recorded administrative outcome at the normal course endpoint, including changes of course or institution. Graduate and Enrolled are retained as no recorded Dropout at that endpoint; Enrolled is not described as graduated. A separate resolved-outcome check is reported.
 
-The R Markdown sources are [lab-04.Rmd](lab-04.Rmd) and
-[investigation.Rmd](investigation.Rmd). The files
-[report.Rmd](report.Rmd) and [presentation.Rmd](presentation.Rmd) are the
-**original course templates for later work**, not completed final submissions.
+The primary model uses enrolment age, admission grade and course as a factor. Later-semester and timing-uncertain information is excluded. Training fits the model, validation selects a shared threshold using an illustrative sensitivity target, and the held-out test set evaluates the frozen rule. Recorded gender is used for auditing, with a separately reported comparison model.
 
-## Reproduce
+The main presentation links sensitivity, precision, accuracy, false warnings and missed records to Independence, Separation and binary Sufficiency. Denominators and conditional bootstrap uncertainty are reported. The results do not establish discrimination, external validity or an intervention that reduces dropout.
 
-Open `ids-project.Rproj` in RStudio. Install these packages if needed:
+## Reproduce in RStudio
 
-```r
-install.packages(c("tidyverse", "knitr", "rmarkdown"))
-```
+1. Download/clone the repository and open `student-dropout-final.Rproj`.
+2. If packages are missing, run `source("R/install.R")` once.
+3. Run `source("render_project.R")` to render the presentation and companion documents. Saved results are reused only when their data/source/design fingerprints match.
+4. Knit `investigation.Rmd` for the working notebook.
+5. Run `source("verify_project.R")` for the independent numerical checks.
 
-Use Knit on either completed R Markdown file, or run:
+The statistical analysis and analytical figures use R. Package versions are recorded in `results/session-info.txt`; Pandoc is supplied by RStudio. No Windows package library or saved workspace is committed. Export helpers under `tools/` prepare PDF/PowerPoint versions; the formal R/HTML presentation does not require those optional export tools.
 
-```r
-source("render_lab04.R")
-source("check_lab04.R")
-```
+## Group and submission status
 
-The CSV is included, so re-running the analysis does not download data.
-[session-info.txt](session-info.txt) records the R and package versions.
-[verification.txt](verification.txt) records the final checks.
+The presentation and supporting analysis are prepared. **The separate final report is not completed:** the existing root `report.Rmd` is a course template, and `report.html` has not been supplied. Uploading these files to GitHub is not a Gradescope submission. Topic feasibility confirmation, actual check-in notes, live rehearsal, peer evaluation and official submission must be completed and recorded by the group.
 
-## Lab 04 requirements
+The group listed in the kick-off workspace is Tiger (`Tigershengsheng`), Harry (`HarryPeng725`), yingcheLiu (`yingcheliu0723`) and Reiyume (`ReiyumEe`). This upload does not establish equal contributions, accepted invitations or rehearsal. See the current access status below.
 
-- [x] Confirm the four-person group.
-- [x] Clone the course project template.
-- [x] Create a local version-controlled RStudio project.
-- [x] Create the private project repository and invite the three teammates and uoeIDS.
-- [x] Save and inspect a candidate dataset.
-- [x] Complete the optional Star Wars exercises.
-- [x] Knit both completed worksheets and inspect the figures.
-- [ ] Confirm the candidate topic with all members and the course organiser.
-- [ ] Verify that each member has accepted the project repository invitation.
-- [ ] Check current project dates on Learn.
+Earlier Lab 04 files and Seoul Bike candidate material are retained for continuity. Previous versions of replaced documents are in `archive/project-kickoff/` and in Git history; they are not the current research topic. Earlier check-in meetings have not been invented or reconstructed.
 
-Repository setup and invitation results are recorded in
-[repository-status.md](repository-status.md). An invitation being sent does
-not mean that the recipient has accepted it.
+## Sources and assistance
 
-## Course context
+Data: Realinho et al., UCI 697, [DOI 10.24432/C5MC89](https://doi.org/10.24432/C5MC89), CC BY 4.0. Original descriptor: [Realinho et al. (2022), Data 7, 146](https://doi.org/10.3390/data7110146). Full source notes and variable timing decisions are included under `docs/`.
 
-The supplied Lab 04 worksheet calls for a project kick-off and initial data
-exploration. Its eight Star Wars exercises are optional. It does not ask for
-the completed end-of-term report or presentation this week.
-
-The project template and linked course website give different weeks for the
-first check-in. Use the current Learn announcement or ask the organiser;
-no deadline is treated as confirmed in this workspace.
-
-Course references:
-[project instructions](https://uoe-ids.netlify.app/assessments/project/) and
-[original template](https://github.com/uoeIDS/project_template).
-
-## Analysis notes
-
-- Original data are unchanged. Short column names and dates are prepared in R.
-- Non-operating hours are kept in the full data and reported separately.
-- The bike plots describe operating hours in one city and one year.
-- Star Wars missing numerical values are handled separately for each plot.
-- Initial associations are described without claiming causation.
-- ChatGPT helped prepare the code and draft descriptions; the code and
-  numerical summaries were checked in R. Group review is still needed.
+We used course methods for data handling, plots, bootstrap ideas and fairness comparisons. For unfamiliar modelling/evaluation methods, we used AI explanations and documentation, then reimplemented and checked the analysis according to the group's account. AI also assisted with initial drafts, source checks and slide design. The detailed learning account is in `docs/learning-process.md`; R generated all statistical results.

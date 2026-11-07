@@ -1,0 +1,12 @@
+metric,estimate,lower,upper,definition
+BaseRate,0.19860980337856549,0.13429950152312384,0.2649306286347271,Male minus Female; fixed model and validation threshold
+WarningRate,0.22914981999446132,0.15934962614234283,0.29607989476599267,Male minus Female; fixed model and validation threshold
+FPR,0.1653635180987889,0.07728502976943244,0.2518964236383911,Male minus Female; fixed model and validation threshold
+FNR,-0.2033096926713948,-0.3074928348496548,-0.09531600193146889,Male minus Female; fixed model and validation threshold
+Sensitivity,0.20330969267139476,0.09531600193146879,0.3074928348496548,Male minus Female; fixed model and validation threshold
+Specificity,-0.1653635180987889,-0.2518964236383911,-0.07728502976943244,Male minus Female; fixed model and validation threshold
+PPV,0.1932369470195494,0.09753114357608161,0.2902408981448303,Male minus Female; fixed model and validation threshold
+NPV,-0.09715105554416881,-0.18728084959266575,-0.013177458999911134,Male minus Female; fixed model and validation threshold
+FOR,0.09715105554416889,0.013177458999911027,0.18728084959266567,Male minus Female; fixed model and validation threshold
+Accuracy,-0.02449183051786208,-0.09142190528939356,0.04185114926613114,Male minus Female; fixed model and validation threshold
+BalancedAccuracy,0.01897308728630287,-0.050826715474612275,0.08706938059432172,Male minus Female; fixed model and validation threshold
