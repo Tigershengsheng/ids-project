@@ -4,9 +4,9 @@
     {
       "slide": 1,
       "speaker": "Speaker 1",
-      "words": 61,
-      "seconds_at_100wpm": 36.6,
-      "seconds_at_120wpm": 30.5
+      "words": 56,
+      "seconds_at_100wpm": 33.6,
+      "seconds_at_120wpm": 28.0
     },
     {
       "slide": 2,
@@ -18,9 +18,9 @@
     {
       "slide": 3,
       "speaker": "Speaker 2",
-      "words": 61,
-      "seconds_at_100wpm": 36.6,
-      "seconds_at_120wpm": 30.5
+      "words": 63,
+      "seconds_at_100wpm": 37.8,
+      "seconds_at_120wpm": 31.5
     },
     {
       "slide": 4,
@@ -39,26 +39,26 @@
     {
       "slide": 6,
       "speaker": "Speaker 3",
-      "words": 82,
-      "seconds_at_100wpm": 49.199999999999996,
-      "seconds_at_120wpm": 41.0
+      "words": 85,
+      "seconds_at_100wpm": 51.0,
+      "seconds_at_120wpm": 42.5
     },
     {
       "slide": 7,
       "speaker": "Speaker 4",
-      "words": 103,
-      "seconds_at_100wpm": 61.8,
-      "seconds_at_120wpm": 51.5
+      "words": 95,
+      "seconds_at_100wpm": 57.0,
+      "seconds_at_120wpm": 47.5
     },
     {
       "slide": 8,
       "speaker": "Speaker 4",
-      "words": 68,
-      "seconds_at_100wpm": 40.8,
-      "seconds_at_120wpm": 34.0
+      "words": 72,
+      "seconds_at_100wpm": 43.199999999999996,
+      "seconds_at_120wpm": 36.0
     }
   ],
-  "total_words": 600,
-  "seconds_at_100wpm": 360.0,
-  "seconds_at_120wpm": 300.0
+  "total_words": 596,
+  "seconds_at_100wpm": 357.59999999999997,
+  "seconds_at_120wpm": 298.0
 }

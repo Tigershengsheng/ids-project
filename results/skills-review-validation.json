@@ -1,0 +1,195 @@
+{
+  "date": "2026-11-08",
+  "main_slides": 8,
+  "total_slides": 18,
+  "protected_numerical_files_unchanged": 31,
+  "spoken_blocks_synchronised": 8,
+  "spoken_words": 596,
+  "minutes_at_100wpm_before_pauses": 5.959999999999999,
+  "human_rehearsal_performed": false,
+  "pdf_pages": {
+    "presentation": 18,
+    "notes": 10
+  },
+  "pdf_comparisons": [
+    {
+      "slide": 1,
+      "changed": true,
+      "difference_box": [
+        923,
+        637,
+        1202,
+        669
+      ]
+    },
+    {
+      "slide": 2,
+      "changed": true,
+      "difference_box": [
+        57,
+        75,
+        451,
+        169
+      ]
+    },
+    {
+      "slide": 3,
+      "changed": true,
+      "difference_box": [
+        58,
+        74,
+        636,
+        559
+      ]
+    },
+    {
+      "slide": 4,
+      "changed": true,
+      "difference_box": [
+        57,
+        75,
+        605,
+        120
+      ]
+    },
+    {
+      "slide": 5,
+      "changed": true,
+      "difference_box": [
+        57,
+        75,
+        900,
+        120
+      ]
+    },
+    {
+      "slide": 6,
+      "changed": true,
+      "difference_box": [
+        71,
+        74,
+        967,
+        577
+      ]
+    },
+    {
+      "slide": 7,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 8,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 9,
+      "changed": true,
+      "difference_box": [
+        57,
+        264,
+        1174,
+        415
+      ]
+    },
+    {
+      "slide": 10,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 11,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 12,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 13,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 14,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 15,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 16,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 17,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 18,
+      "changed": false,
+      "difference_box": null
+    }
+  ],
+  "reading_geometry": [
+    {
+      "page": 1,
+      "outside": 0
+    },
+    {
+      "page": 2,
+      "outside": 0
+    },
+    {
+      "page": 3,
+      "outside": 0
+    },
+    {
+      "page": 4,
+      "outside": 0
+    },
+    {
+      "page": 5,
+      "outside": 0
+    },
+    {
+      "page": 6,
+      "outside": 0
+    },
+    {
+      "page": 7,
+      "outside": 0
+    },
+    {
+      "page": 8,
+      "outside": 0
+    },
+    {
+      "page": 9,
+      "outside": 0
+    },
+    {
+      "page": 10,
+      "outside": 0
+    }
+  ],
+  "new_model_or_threshold_selected": false,
+  "professor_facing_text_english_only": true,
+  "powerpoint_application": {
+    "source": "D:\\data science\\tmp\\skill-review-20261108\\final\\Student_Dropout_Presentation_Reviewed.pptx",
+    "preview": "D:\\data science\\tmp\\skill-review-20261108\\powerpoint-preview",
+    "rendered_in": "Microsoft PowerPoint",
+    "slides": 18
+  },
+  "visual_review": "Changed slides inspected in the rendered HTML/PDF and Microsoft PowerPoint; the whole deck scanned. The revised English script and Q&A pages were inspected for fit and readability.",
+  "powerpoint_sha256": "a0a3518d4e5a7f528acd253d9104b062b2967f9e7507d871adb6bbdb0f6b9c5d",
+  "presentation_pdf_sha256": "e33ad02f831605431ce2cfb3a5632bd2db27cbb46999a7f8c4606f71e8e88d58",
+  "script_pdf_sha256": "f6dd979812dc74171261b4cde76dec8887aaa9cbdf9dca32b8af41886742e2fc"
+}

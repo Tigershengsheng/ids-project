@@ -14,16 +14,13 @@
   "human_rehearsal_performed": false,
   "topic_approval_received": false,
   "repository_or_submission_changed": false,
-  "notes": "Professor-facing sources, notes and reading files are English. Local bilingual study resources are excluded from the public bundle. No statistical refit or retuning; numerical checks unchanged.",
-  "spoken_words": 600,
+  "notes": "The current revision synchronises the eight spoken blocks, clarifies baseline accuracy and group-rate denominators, and preserves all 31 protected numerical files. No human rehearsal has been performed.",
+  "spoken_words": 596,
   "latest_slide_revision": {
-    "validation": "english-only-validation.json",
-    "visible_slide_images_unchanged": 18,
-    "speaker_notes_language": "English",
-    "main_script_words": 600,
-    "reading_pdf_pages": [
-      18,
-      9
-    ]
+    "date": "2026-11-08",
+    "validation": "skills-review-validation.json",
+    "main_script_words": 596,
+    "english_pdf_pages": 10,
+    "new_statistical_analysis": false
   }
 }

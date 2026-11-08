@@ -191,7 +191,9 @@ for child in qa[0]:
     if child.tag!='h2':convert(child,english,'en')
 english.extend([Spacer(1,10),para('Figure-design references','en','h2'),
  para('Data to Viz: The Boxplot and its pitfalls - https://www.data-to-viz.com/caveat/boxplot.html','en','small'),
- para('Data to Viz: The issue with error bars - https://www.data-to-viz.com/caveat/error_bar.html','en','small')])
+ para('Data to Viz: The issue with error bars - https://www.data-to-viz.com/caveat/error_bar.html','en','small'),
+ para('Review workflow: Kassis et al. (2026), Scientific Agent Skills. https://doi.org/10.48550/arXiv.2609.00065','en','small'),
+ para('Writing review: Sciwrite (Lorena A. Barba), https://github.com/labarba/sciwrite; Anti-defensive Writing, https://github.com/Kiterlin/anti-defensive-writing','en','small')])
 english_path=build('02_Speaker_Notes.pdf',english,'en','Student dropout warnings | English script')
 
 presentation=OUT/'01_Presentation.pdf'
@@ -201,6 +203,8 @@ timing_path=ROOT/'results/script-timing.json'
 timing=json.loads(timing_path.read_text())
 timing['method']='Current spoken blocks, including embedded transitions; optional alternative handovers and pauses excluded; no human rehearsal performed'
 timing['total_words']=words
+timing['seconds_at_100wpm']=words*.6
+timing['seconds_at_120wpm']=words*.5
 for row in timing['slides']:
     row['words']=count(script[row['slide']]); row['seconds_at_100wpm']=row['words']*.6; row['seconds_at_120wpm']=row['words']*.5
 timing_path.write_text(json.dumps(timing,indent=2),encoding='utf-8')

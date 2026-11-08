@@ -1,17 +1,17 @@
 # Slide logic and speaking plan
 
-The current main talk is 600 words: about 6.00 minutes at 100 words/minute, before pauses. Its main links are already included; do not add the alternative handovers again. Human rehearsal is still required.
+The current main talk is 596 words: about 5.96 minutes at 100 words/minute, before pauses. Its main links are already included; do not add the alternative handovers again. Human rehearsal is still required.
 
 | Slide | Core information | Why the next slide follows | Speaker | Words; seconds at 100 wpm |
 |---|---|---|---|---|
-| 1. Research question | From enrolment information to prediction and the distribution of errors. | Define what a dropout record means. | Speaker 1 | 61; 37 |
+| 1. Research question | From enrolment information to prediction and the distribution of errors. | Define what a dropout record means. | Speaker 1 | 56; 34 |
 | 2. Define the outcome | 4,424 records; the normal course endpoint; Enrolled retained; transfers included. | Inspect the available entry information. | Speaker 1 | 82; 49 |
-| 3. Training-only EDA | Age and grade distributions overlap; sample sizes remain visible. | Overlap motivates a model and an independent test. | Speaker 2 | 61; 37 |
+| 3. Training-only EDA | Age and grade distributions overlap; sample sizes remain visible. | Overlap motivates a model and an independent test. | Speaker 2 | 63; 38 |
 | 4. Fit, choose, test | Three entry predictors; timing exclusions; course methods and AI-supported supplementary learning. | A probability needs a warning threshold. | Speaker 2 | 84; 50 |
 | 5. Validation decision | 0.31 finds 200/284 validation dropouts; a fixed illustrative 70% target. | Check sensitivity, precision and costs on unseen test records. | Speaker 3 | 59; 35 |
-| 6. Overall test performance | Sensitivity 65.6%, precision 45.7%, accuracy 64.0%, denominators, baseline, +107 finds and +177 false warnings. | 98 records are still missed: overall averages do not show which groups bear errors. | Speaker 3 | 82; 49 |
-| 7. Group audit | 64/144 female and 34/141 male dropouts missed; five rates cover all three fairness criteria. | Observed error differences inform requirements before real use. | Speaker 4 | 103; 62 |
-| 8. Conclusion | Human review, label meaning, support capacity and later-cohort validation; no intervention-effect claim. | Close; use references and backups for questions. | Speaker 4 | 68; 41 |
+| 6. Overall test performance | Sensitivity 65.6%, precision 45.7%, accuracy 64.0%, denominators, baseline, +107 finds and +177 false warnings. | 98 records are still missed: overall averages do not show which groups bear errors. | Speaker 3 | 85; 51 |
+| 7. Group audit | 64/144 female and 34/141 male dropouts missed; five rates cover all three fairness criteria. | Observed error differences inform requirements before real use. | Speaker 4 | 95; 57 |
+| 8. Conclusion | Human review, label meaning, support capacity and later-cohort validation; no intervention-effect claim. | Close; use references and backups for questions. | Speaker 4 | 72; 43 |
 
 ## Learning and evidence boundaries
 

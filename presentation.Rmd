@@ -3,7 +3,7 @@ title: "Student dropout warnings"
 subtitle: "How accurate are they, and who gets missed?"
 author: "Strong Tiger"
 institute: "University of Edinburgh"
-date: "6 November 2026"
+date: "8 November 2026"
 output:
   xaringan::moon_reader:
     css: ["default", "slides.css"]
@@ -17,7 +17,6 @@ output:
       highlightLines: true
       countIncrementalSlides: false
 ---
-
 ```{r setup, include=FALSE}
 source("R/setup.R")
 knitr::opts_chunk$set(echo=FALSE,message=FALSE,warning=FALSE)
@@ -41,16 +40,15 @@ class: title-slide
 <h1>Student dropout<br><span class="gradient-word">warnings.</span></h1>
 <div class="cover-subtitle">How accurate are they,<br>and who gets missed?</div>
 </div>
-<div class="cover-bottom"><div><div class="cover-team">University of Edinburgh</div>Predictive signal. Unequal errors. A question of support.</div><div>UCI 697 &nbsp; / &nbsp; ONE PORTUGUESE INSTITUTION<br>Analysis 05 NOV 2026 &nbsp; / &nbsp; Visual review 06 NOV 2026</div></div>
+<div class="cover-bottom"><div><div class="cover-team">University of Edinburgh</div>Predictive signal. Unequal errors. A question of support.</div><div>UCI 697 &nbsp; / &nbsp; ONE PORTUGUESE INSTITUTION<br>Analysis 05 NOV 2026 &nbsp; / &nbsp; Revision 08 NOV 2026</div></div>
 
 ???
-Our question is whether information known at enrolment can identify later recorded dropout, and who the same warning rule misses. We are interested in student support. We first define the outcome, then evaluate overall prediction, and finally check how errors differ between groups. A warning does not determine a student's future. We therefore start by checking what the label means.
+Our question is whether information known at enrolment can identify later recorded dropout, and who the same warning rule misses. We are interested in student support. We first define the outcome, then evaluate overall prediction, and finally check how errors differ between groups. We start with the label, because it determines what a warning can mean.
 
 ---
-
 <div class="kicker">01 &nbsp; / &nbsp; DEFINE THE OUTCOME</div>
 
-# A dropout record is<br>not the whole story.
+# What counts as<br>recorded dropout?
 
 <div class="evidence-grid"><div><div class="hero-number">`r num(r$audit$rows)`</div><div class="hero-label">student records.<br>Three outcomes kept visible.</div><div class="fine-rule"></div><div class="quote-line">A course or institution change also counts as <strong>Dropout</strong>.</div></div><div>
 
@@ -65,32 +63,30 @@ slide_plot("figures/recorded-outcomes.png","315px","Counts of Graduate, Enrolled
 .source[Realinho et al. (2022), pp. 1-4. Enrolments 2008/09-2018/19; endpoint usually 3 years, 4 for Nursing. No causal or Edinburgh-wide claim.]
 
 ???
-We checked the original data paper because the word dropout can mean different things. Here it includes changing course or institution. We kept all three original labels. For our primary binary question, Enrolled is not a dropout at the recorded endpoint, but it is not a graduate either. These records come from one historical institution, not from Edinburgh.
+We used `r num(r$audit$rows)` records from one Portuguese institution. We checked the original paper because dropout can mean different things. Here it includes changing course or institution, so it does not always mean leaving higher education. The outcomes were recorded at the normal end of the course, usually three years. We retained students still enrolled. In our binary analysis they have no recorded dropout at that point; they are not assumed to have graduated. These choices define what our predictions can mean.
 
 ---
-
 <div class="kicker">02 &nbsp; / &nbsp; LOOK BEFORE MODELLING</div>
 
-# Overlap is part of the finding.
+# Entry profiles overlap
 
 ```{r entry-plot, results='asis'}
 slide_plot("figures/entry-profiles.png","360px","Training-set boxplots of enrolment age and admission grade by recorded outcome")
 ```
 
-.takeaway[Older on average in the recorded-dropout group.<br>Substantial overlap in admission grades. <strong>No individual outcome is determined.</strong>]
+.takeaway[Higher median age in the recorded-dropout group.<br>Substantial overlap in admission grades. <strong>No individual outcome is determined.</strong>]
 
 .source[Training only, n = `r num(r$configuration$training_n)`; associations, not causes.<br>Quiz 7 recommended Data to Viz; this prompted our figure review. [Boxplot advice](https://www.data-to-viz.com/caveat/boxplot.html).]
 
 ???
-These plots use training records only. Recorded dropouts were older on average, but ages and admission grades still overlapped. Quiz 7 pointed us to Data to Viz. Its boxplot advice reminded us to show group sizes, so we added the counts below each outcome. We kept the boxes to compare typical values and spread. These observed patterns are associations, not causes.
+These plots use training records only. The dropout group had a higher median age, but ages and admission grades still overlapped. Quiz 7 pointed us to Data to Viz. Its boxplot advice reminded us to show group sizes, so we added the counts below each outcome. We kept the boxes to compare typical values and spread. These observed patterns are associations, not causes.
 
 Figure review: Quiz 7 recommended Data to Viz. We wanted a compact comparison of the centres and spread. Its boxplot page reminded us that equal-width boxes hide group sizes, so we added the training count below each outcome. We retained boxplots for this comparison; they do not reveal the full distribution. Each panel has its own labelled units. This is our design choice, not an additional course requirement.
 
 ---
-
 <div class="kicker">03 &nbsp; / &nbsp; A SEPARATE JOB FOR EACH DATASET</div>
 
-# Fit. Choose. Then test.
+# Training, validation and test
 
 <div class="capsule-row"><div class="capsule">Age</div><div class="capsule">Admission grade</div><div class="capsule">Course</div><div class="capsule">Logistic regression → probability</div></div>
 
@@ -110,10 +106,9 @@ Figure review: Quiz 7 recommended Data to Viz. We wanted a compact comparison of
 We used age, admission grade and course, excluding later semester results and financial fields with unclear timing. We used course tools for summaries and plots. Logistic regression and validation were new to us, so we asked ChatGPT for explanations, checked R documentation, then rewrote and checked the main analysis. Training records fit the model. Validation records chose the threshold. Test records evaluated the frozen rule. Recorded gender was reserved for the main audit. A probability still needs a threshold before it becomes a warning.
 
 ---
-
 <div class="kicker">04 &nbsp; / &nbsp; THE VALIDATION DECISION</div>
 
-# A validation target becomes a testable rule
+# Choosing the warning threshold
 
 <div class="split-plot"><div><div class="hero-number">`r num(r$threshold,2)`</div><div class="hero-label">One common threshold.<br><br>Highest specificity while identifying at least <strong>70%</strong> of validation dropouts.<br><br>Validation sensitivity:<br><strong>`r num(validation_found)` / `r num(validation_dropouts)` = `r pct(r$threshold_row$Sensitivity)`</strong></div></div><div>
 
@@ -131,12 +126,11 @@ We wanted to find at least seventy per cent of dropout records in validation dat
 Figure review: We kept lines because the horizontal axis is a numerical threshold and the purpose is to compare how rates change. After checking Data to Viz's colour caveats, we gave all three curves different line patterns as well as colours. The curves remain descriptive validation rates, not confidence bands; the full 0-100% rate scale is retained.
 
 ---
-
 class: tradeoff detailed-metrics
 
 <div class="kicker">05 &nbsp; / &nbsp; OVERALL TEST PERFORMANCE</div>
 
-# Sensitivity rises. Precision falls.
+# Sensitivity and precision
 
 <div class="metric-line">
 <div><div class="metric-value accent">`r pct(m$Sensitivity)`</div><div class="metric-name">Sensitivity / recall</div><div class="metric-detail">`r num(m$TP)` / `r num(m$TP+m$FN)` dropout records found</div></div>
@@ -156,15 +150,14 @@ cat(knitr::kable(tab,format="html"))
 
 <div class="error-summary">0.50 to 0.31: <strong>+`r num(m$TP-default$TP)`</strong> dropout records found; <strong>+`r num(m$FP-default$FP)`</strong> false warnings. <strong>`r num(m$FN)`</strong> dropout records still missed.</div>
 
-<div class="bridge-line">An overall average hides who is missed. We next compare these errors across recorded-gender groups.</div>
+<div class="bridge-line">Always no warning: <strong>`r pct(r$metrics$Accuracy[1])` accuracy</strong>, but no dropouts found. Who does our rule miss?</div>
 
 .source[Test n = `r num(m$n)`; `r num(m$FP)` false warnings; `r num(m$TP+m$FP)` / `r num(m$n)` (`r pct(m$WarningRate)`) flagged. Sensitivity 95% conditional bootstrap interval: `r interval_pct(subset(r$overall_intervals,metric=="Sensitivity")$lower,subset(r$overall_intervals,metric=="Sensitivity")$upper)`. A false warning is relative to the recorded label.]
 
 ???
-Sensitivity is the share of actual dropout records we find. Precision is the share of warnings that match a dropout record. Lowering the threshold raised test sensitivity from twenty-eight to sixty-six per cent, but reduced precision from sixty-four to forty-six per cent. We found 107 more dropout records and produced 177 more false warnings. Accuracy also fell. Ninety-eight dropout records were still missed. An overall average cannot tell us who those students were. We therefore checked the same errors by recorded gender.
+Sensitivity tells us how many dropout records we find; precision tells us how many warnings match a dropout. Lowering the threshold found 107 more dropout records, but produced 177 more false warnings. Our chosen rule found 187 of 285 dropouts: about sixty-six per cent. Only 187 of its 409 warnings matched dropout: about forty-six per cent. Always giving no warning scores higher on accuracy, but finds no dropouts. That is why accuracy alone does not answer our question. We next ask who our rule misses.
 
 ---
-
 class: fairness
 
 <div class="kicker">06 &nbsp; / &nbsp; WHO GETS MISSED?</div>
@@ -188,12 +181,11 @@ slide_plot("figures/group-fairness.png","335px","Female circles and male triangl
 .source[Points: observed rates. n: denominator for each point. Bars: pointwise 95% percentile bootstrap intervals, conditional on the fixed model and threshold; 5,000 resamples within each group. These are not standard deviations.]
 
 ???
-Of the ninety-eight missed records, sixty-four were female and thirty-four male. We compare rates within actual dropouts: sixty-four out of 144 female records, and thirty-four out of 141 male records. That is forty-four versus twenty-four per cent, a gap of twenty percentage points. Its conditional bootstrap interval is roughly ten to thirty-one points. Male students had the higher false-warning rate. The five rows check coverage, both error types, and outcomes among both warned and unwarned students: independence, separation and sufficiency. Recorded dropout rates were also different, twenty-five versus forty-five per cent. These differences need investigation before real use; they do not prove discrimination.
+We focus first on missed dropouts, because a missed warning could mean a missed offer of support. The rule missed 64 of 144 female dropout records and 34 of 141 male records: forty-four versus twenty-four per cent. The gap was about twenty percentage points, with a conditional interval of roughly ten to thirty-one points. Male students had a higher false-warning rate. The other rows check who receives warnings and recorded outcomes within both prediction groups. These are independence, separation and sufficiency. Different recorded dropout rates complicate those comparisons; the gaps alone do not establish discrimination.
 
 Figure review: We wanted to compare rates without hiding how few or how many records supported them. Data to Viz's sample-size and error-bar guidance prompted us to label each point's denominator, rather than only each group's total. We kept dots and intervals because we are comparing binary rates and their uncertainty, not the spread of a continuous variable. Circles and triangles distinguish the groups without relying on colour. We explain the interval method explicitly and use the gap intervals in backup slide 12 for direct group comparisons.
 
 ---
-
 class: closing
 
 <div class="kicker">07 &nbsp; / &nbsp; BEFORE REAL USE</div>
@@ -212,10 +204,9 @@ class: closing
 .source[One institution, historical cohorts, no cohort/year field for a chronological test. The model assumes a common additive relationship; random hold-out evaluation is not prospective validation.]
 
 ???
-These errors explain why we would use a warning to start a conversation, with human review and a way to correct records. Before real use, we would check departure reasons, support capacity and performance on later cohorts at the intended institution. Our analysis found predictive signal in historical administrative records. We have not shown that acting on warnings prevents dropout. That would require a separate evaluation. Thank you.
+Our enrolment model found about two-thirds of recorded dropouts, with many false warnings and different error rates across groups. Before real use, we would check departure reasons, support capacity and performance on later cohorts at the intended institution. Any warning should lead to human review, with a way to correct records. We have not tested whether acting on warnings prevents dropout. That needs a separate evaluation of the support offered. Thank you.
 
 ---
-
 # Sources and assistance
 
 .references[
@@ -223,7 +214,8 @@ These errors explain why we would use a warning to start a conversation, with hu
 - Realinho et al. (2022). **Predicting Student Dropout and Academic Success**, *Data* 7, 146. [10.3390/data7110146](https://doi.org/10.3390/data7110146).
 - IDS course materials: **Algorithmic Bias**, pp. 6, 16-19; **Quantifying uncertainty**, pp. 21, 39, 46-53.
 - R documentation: [binomial logistic regression with glm](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/glm.html). Fairness definitions: [Fairness and Machine Learning](https://fairmlbook.org/classification.html).
-- Figure review (6 November): Data to Viz [boxplots](https://www.data-to-viz.com/caveat/boxplot.html), [error bars](https://www.data-to-viz.com/caveat/error_bar.html), [axes](https://www.data-to-viz.com/caveat/cut_y_axis.html), [ordering](https://www.data-to-viz.com/caveat/order_data.html) and [colour caveats](https://www.data-to-viz.com/caveats.html). Quiz 7 recommended exploration; these changes are our choices.
+- Figure review: [Data to Viz](https://www.data-to-viz.com/caveats.html), prompted by Quiz 7; page-specific advice is recorded in the notes.
+- Review tools: Sciwrite (Barba); Anti-defensive Writing; Kassis et al. (2026), [Scientific Agent Skills](https://doi.org/10.48550/arXiv.2609.00065).
 ]
 
 .small[We applied our course methods to data handling, plots, bootstrap and the fairness audit.<br>
@@ -231,7 +223,6 @@ For unfamiliar methods, we used ChatGPT and documentation, then rewrote and chec
 ChatGPT also supported initial code/text drafts, source checks and slide formatting. We take responsibility for the final work.]
 
 ---
-
 # Backup: the three fairness questions
 
 ```{r criterion-table, results='asis'}
@@ -246,7 +237,6 @@ cat(knitr::kable(tab,format="html"))
 .small[Recorded dropout prevalence: Female **`r pct(f$BaseRate)`**, Male **`r pct(male$BaseRate)`**. These criteria ask different questions. Equality is not assumed, and a numerical gap is not a causal finding about discrimination.]
 
 ---
-
 # Backup: counts and denominators
 
 ```{r confusion-table, results='asis'}
@@ -264,7 +254,6 @@ PPV = TP / (TP + FP). NPV = TN / (TN + FN).
 ]
 
 ---
-
 # Backup: uncertainty in the group gaps
 
 ```{r gap-plot, results='asis'}
@@ -274,7 +263,6 @@ slide_plot("figures/fairness-gaps.png","370px","Male-minus-female metric gaps wi
 .source[Resample held-out records within each recorded-gender group, recompute each metric, take the middle 95% of 5,000 gap estimates. No refitting, cohort-cluster correction or multiple-comparison adjustment.]
 
 ---
-
 # Backup: the bootstrap we used
 
 ```{r bootstrap-plot, results='asis'}
@@ -284,7 +272,6 @@ slide_plot("figures/bootstrap-fnr-gap.png","350px","Bootstrap distribution of th
 .source[Gold lines are the 2.5th and 97.5th percentiles. Conditional on the fitted model and validation choice; the interval does not prove transportability or causal fairness.]
 
 ---
-
 # Backup: probabilities and binary labels
 
 ```{r calibration-plot, results='asis'}
@@ -294,7 +281,6 @@ slide_plot("figures/probability-calibration.png","355px","Descriptive calibratio
 .source[Colour and shape identify recorded gender; point size indicates n. Common 0.2-wide bands; n < 30 points omitted (retained in CSV). No intervals shown. This descriptive check establishes neither group calibration nor binary sufficiency.]
 
 ---
-
 # Backup: sensitivity to the model inputs
 
 ```{r gender-sensitivity-table, results='asis'}
@@ -313,7 +299,6 @@ The primary model was fixed before evaluating test performance.
 .small[Including gender changes the error pattern; it is not an automatic fairness correction. The slight AUC improvement does not decide which allocation of errors is acceptable.]
 
 ---
-
 # Backup: keeping the Enrolled group visible
 
 ```{r enrolled-sensitivity-table, results='asis'}
@@ -328,7 +313,6 @@ cat(knitr::kable(tab,format="html"))
 .small[The last two rows evaluate only Dropout versus Graduate (`r num(r$sensitivity$n[1])` test records) at the same numerical threshold. They change the population and question. Better-looking numbers cannot replace the all-student endpoint analysis.]
 
 ---
-
 # Backup: how we used the course and learned further
 
 - **From our course:** we used factors, grouped summaries, joins, ggplot, bootstrap ideas and the three fairness criteria.
@@ -341,7 +325,6 @@ cat(knitr::kable(tab,format="html"))
 .source[Course links and supplementary references: docs/course-map and docs/learning-process. We remain responsible for understanding the methods, explaining the code and checking the final work.]
 
 ---
-
 # Backup: course composition and group differences
 
 ```{r course-composition, results='asis'}

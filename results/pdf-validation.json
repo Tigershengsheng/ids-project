@@ -1,27 +1,8 @@
 {
+  "date": "2026-11-08",
   "pages": 18,
+  "sha256": "e33ad02f831605431ce2cfb3a5632bd2db27cbb46999a7f8c4606f71e8e88d58",
+  "bytes": 986870,
   "native_searchable_text": true,
-  "sha256": "aad9009603cc5f8530392df07f84d136d2209476a9df6a99ee90263763a49c78",
-  "bytes": 988544,
-  "text_characters_by_page": [
-    341,
-    485,
-    354,
-    773,
-    461,
-    784,
-    795,
-    671,
-    920,
-    496,
-    367,
-    252,
-    210,
-    287,
-    449,
-    460,
-    935,
-    307
-  ],
-  "review": "Changed slides 4, 9 and 17 visually reviewed in PowerPoint; other 15 PowerPoint slide images unchanged."
+  "visual_review": "Changed slides inspected in the rendered HTML/PDF and Microsoft PowerPoint; the whole deck scanned. The revised English script and Q&A pages were inspected for fit and readability."
 }

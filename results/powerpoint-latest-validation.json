@@ -1,7 +1,7 @@
 {
   "schemaVersion": "presentation-finalization.v1",
-  "finalSha256": "39619e5353ed89a6fede3ba2a68f768cd3a0a89077ce361f91279f985614a0ef",
-  "byteCount": 216021,
+  "finalSha256": "a0a3518d4e5a7f528acd253d9104b062b2967f9e7507d871adb6bbdb0f6b9c5d",
+  "byteCount": 215202,
   "packageIntegrity": {
     "chart_count": 0,
     "claim_boundary": "Structural package checks only; no slide text, notes, formulas, chart values, or native PowerPoint execution were inspected.",
@@ -19,7 +19,7 @@
     "finding_count": 0,
     "findings": [],
     "font_policy": {
-      "checked_text_script_count": 451,
+      "checked_text_script_count": 447,
       "native_font_rendering_verified": false,
       "observed_font_families": [
         "Arial",
@@ -28,8 +28,8 @@
       ],
       "observed_font_use_counts": {
         "Arial": 137,
-        "Segoe UI": 274,
-        "Segoe UI Semibold": 40
+        "Segoe UI": 269,
+        "Segoe UI Semibold": 41
       },
       "passed": true,
       "performed": true
@@ -39,7 +39,7 @@
       13.3333,
       7.5
     ],
-    "warning_count": 5,
+    "warning_count": 3,
     "warnings": [
       {
         "kind": "object_outside_slide_boundary",
@@ -60,28 +60,12 @@
         "object_id": "2",
         "object_kind": "sp",
         "slide": 7
-      },
-      {
-        "kind": "substantial_text_frame_overlap",
-        "left_object_id": "44",
-        "overlap_height_in": 0.2902,
-        "overlap_width_in": 0.0749,
-        "right_object_id": "45",
-        "slide": 9
-      },
-      {
-        "kind": "substantial_text_frame_overlap",
-        "left_object_id": "45",
-        "overlap_height_in": 0.2902,
-        "overlap_width_in": 0.0749,
-        "right_object_id": "46",
-        "slide": 9
       }
     ],
     "exitCode": 0,
     "findingCount": 0,
     "fontPolicy": {
-      "checked_text_script_count": 451,
+      "checked_text_script_count": 447,
       "native_font_rendering_verified": false,
       "observed_font_families": [
         "Arial",
@@ -90,24 +74,24 @@
       ],
       "observed_font_use_counts": {
         "Arial": 137,
-        "Segoe UI": 274,
-        "Segoe UI Semibold": 40
+        "Segoe UI": 269,
+        "Segoe UI Semibold": 41
       },
       "passed": true,
       "performed": true
     }
   },
   "fontSelection": {
-    "basis": "design",
+    "basis": "reference",
     "approvedFamilies": [
       "Segoe UI",
       "Segoe UI Semibold",
       "Arial"
     ],
     "scriptFonts": {},
-    "referenceSha256": null,
-    "referenceFontsVerifiedInEncodedText": false,
-    "checked_text_script_count": 451,
+    "referenceSha256": "39619e5353ed89a6fede3ba2a68f768cd3a0a89077ce361f91279f985614a0ef",
+    "referenceFontsVerifiedInEncodedText": true,
+    "checked_text_script_count": 447,
     "native_font_rendering_verified": false,
     "observed_font_families": [
       "Arial",
@@ -116,8 +100,8 @@
     ],
     "observed_font_use_counts": {
       "Arial": 137,
-      "Segoe UI": 274,
-      "Segoe UI Semibold": 40
+      "Segoe UI": 269,
+      "Segoe UI Semibold": 41
     },
     "passed": true,
     "performed": true
@@ -126,7 +110,7 @@
     "performed": true,
     "passed": true,
     "slideCount": 18,
-    "sha256": "39619e5353ed89a6fede3ba2a68f768cd3a0a89077ce361f91279f985614a0ef",
+    "sha256": "a0a3518d4e5a7f528acd253d9104b062b2967f9e7507d871adb6bbdb0f6b9c5d",
     "runtimeNodeModules": "C:/Users/Administrator/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules",
     "nodeExecutable": "C:\\Users\\Administrator\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe"
   },
@@ -226,7 +210,7 @@
     "native_chart_count": 0,
     "native_powerpoint_verified": false,
     "passed": true,
-    "presentation_sha256": "39619e5353ed89a6fede3ba2a68f768cd3a0a89077ce361f91279f985614a0ef",
+    "presentation_sha256": "a0a3518d4e5a7f528acd253d9104b062b2967f9e7507d871adb6bbdb0f6b9c5d",
     "schema_version": "presentation-native-chart-titles.v1",
     "slide_count": 18,
     "source_text_emitted": false,
@@ -260,8 +244,8 @@
   "nativeChartValidation": {
     "detectedOwnerSlides": [],
     "detectedChartCount": 0,
-    "targetApplication": "portable",
-    "sourceChartOwnersExplicitlyDeclared": true,
+    "targetApplication": null,
+    "sourceChartOwnersExplicitlyDeclared": false,
     "validatorRan": false,
     "passed": true
   }

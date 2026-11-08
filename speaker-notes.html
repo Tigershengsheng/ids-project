@@ -10,7 +10,7 @@
 
 
 
-<meta name="date" content="2026-11-06" />
+<meta name="date" content="2026-11-08" />
 
 <title>Presentation script and speaking notes</title>
 
@@ -365,7 +365,7 @@ display: none;
 <h1 class="title toc-ignore">Presentation script and speaking notes</h1>
 <h3 class="subtitle">Student dropout warnings: English script, analysis
 decisions and Q&amp;A</h3>
-<h4 class="date">6 November 2026</h4>
+<h4 class="date">8 November 2026</h4>
 
 </div>
 
@@ -395,6 +395,7 @@ backup slides</a></li>
 <li><a href="#first-person-explanations-you-can-use-selectively" id="toc-first-person-explanations-you-can-use-selectively">First-person
 explanations you can use selectively</a></li>
 <li><a href="#questions-to-practise" id="toc-questions-to-practise">Questions to practise</a></li>
+<li><a href="#review-tools-and-sources" id="toc-review-tools-and-sources">Review tools and sources</a></li>
 </ul>
 </div>
 
@@ -424,16 +425,6 @@ described below. The listed Data to Viz pages were actually consulted
 for this revision. These are optional design choices, not extra marking
 requirements. The review paragraphs are for preparation and questions;
 the eight spoken blocks remain the main script.</p>
-<p>The slides were also redesigned at your request using a dark stage,
-larger takeaway headlines and a consistent lavender/mint group palette.
-We wanted the key comparison to be visible before the detail: slide 6
-explicitly compares sensitivity, precision and accuracy, with their
-denominators and the additional 107 records identified and 177 false
-warnings relative to threshold 0.50. Its closing question leads directly
-to the group audit on slide 7. Slide 7 places the female and male
-missed-dropout rates above the complete audit chart. This is a design
-choice, not a new analysis or a tested claim about audience response.
-The spoken script below still follows the same eight-slide story.</p>
 </div>
 <div id="slide-1-the-question" class="section level2">
 <h2>Slide 1: the question</h2>
@@ -442,8 +433,8 @@ The spoken script below still follows the same eight-slide story.</p>
 later recorded dropout, and who the same warning rule misses. We are
 interested in student support. We first define the outcome, then
 evaluate overall prediction, and finally check how errors differ between
-groups. A warning does not determine a student’s future. We therefore
-start by checking what the label means.</p>
+groups. We start with the label, because it determines what a warning
+can mean.</p>
 </div>
 <p>Our primary question concerns prediction, followed by whether the
 same rule is equally reliable across groups. We frame the warning around
@@ -480,9 +471,6 @@ advice</a>, we kept the existing bars: they already started at zero and
 gave both counts and percentages. We did not change a chart that already
 supported this comparison. Its colours distinguish categories; their
 order does not rank students.</p>
-<p>We kept the zero-based bars because they already showed all three
-outcome counts and percentages clearly. The category colours distinguish
-labels; they do not rank students.</p>
 <div class="decision-note-en">
 <p>Our reasoning: We kept Enrolled because our question concerns
 recorded dropout at the stated endpoint. Removing those students would
@@ -493,8 +481,8 @@ that point, without claiming they graduated.</p>
 <div id="slide-3-what-the-entry-profiles-show" class="section level2">
 <h2>Slide 3: what the entry profiles show</h2>
 <div class="spoken" data-slide="3" data-speaker="Speaker 2">
-<p>These plots use training records only. Recorded dropouts were older
-on average, but ages and admission grades still overlapped. Quiz 7
+<p>These plots use training records only. The dropout group had a higher
+median age, but ages and admission grades still overlapped. Quiz 7
 pointed us to Data to Viz. Its boxplot advice reminded us to show group
 sizes, so we added the counts below each outcome. We kept the boxes to
 compare typical values and spread. These observed patterns are
@@ -516,9 +504,6 @@ not suggest equal numbers of students. We did not add thousands of raw
 dots to the main slide, and we do not claim the boxes reveal every
 distribution feature. The two panels use different, explicitly labelled
 units; we compare outcomes within each panel.</p>
-<p>We kept boxplots to compare typical values and spread, and added the
-group counts because equal-width boxes do not show how many records each
-group contains. Boxplots still omit some distribution detail.</p>
 <p>Transition: We then needed a small model and a fair test of its
 predictions.</p>
 </div>
@@ -582,10 +567,6 @@ reminded us to consider readers who cannot distinguish our colours. We
 gave the three curves different line patterns, so colour is no longer
 the only way to follow them. These are observed validation rates, not
 confidence bands; the selected threshold is still 0.31.</p>
-<p>We retained lines because the horizontal variable is a numerical
-threshold. Distinct line patterns supplement the colours. The curves
-describe validation rates at candidate thresholds; they are not
-confidence bands.</p>
 <p>Transition: We froze that choice and then checked what happened in
 the held-out test set.</p>
 <div class="decision-note-en">
@@ -598,14 +579,14 @@ set can still provide a separate evaluation.</p>
 <div id="slide-6-the-actual-test-results" class="section level2">
 <h2>Slide 6: the actual test results</h2>
 <div class="spoken" data-slide="6" data-speaker="Speaker 3">
-<p>Sensitivity is the share of actual dropout records we find. Precision
-is the share of warnings that match a dropout record. Lowering the
-threshold raised test sensitivity from twenty-eight to sixty-six per
-cent, but reduced precision from sixty-four to forty-six per cent. We
-found 107 more dropout records and produced 177 more false warnings.
-Accuracy also fell. Ninety-eight dropout records were still missed. An
-overall average cannot tell us who those students were. We therefore
-checked the same errors by recorded gender.</p>
+<p>Sensitivity tells us how many dropout records we find; precision
+tells us how many warnings match a dropout. Lowering the threshold found
+107 more dropout records, but produced 177 more false warnings. Our
+chosen rule found 187 of 285 dropouts: about sixty-six per cent. Only
+187 of its 409 warnings matched dropout: about forty-six per cent.
+Always giving no warning scores higher on accuracy, but finds no
+dropouts. That is why accuracy alone does not answer our question. We
+next ask who our rule misses.</p>
 </div>
 <p>At threshold 0.50, the same 889 test records yield 80 true warnings
 and 45 false warnings; at 0.31, they yield 187 and 222. The change
@@ -631,17 +612,15 @@ warnings are false, with separate denominators.</p>
 <div id="slide-7-whom-the-rule-misses" class="section level2">
 <h2>Slide 7: whom the rule misses</h2>
 <div class="spoken" data-slide="7" data-speaker="Speaker 4">
-<p>Of the ninety-eight missed records, sixty-four were female and
-thirty-four male. We compare rates within actual dropouts: sixty-four
-out of 144 female records, and thirty-four out of 141 male records. That
-is forty-four versus twenty-four per cent, a gap of twenty percentage
-points. Its conditional bootstrap interval is roughly ten to thirty-one
-points. Male students had the higher false-warning rate. The five rows
-check coverage, both error types, and outcomes among both warned and
-unwarned students: independence, separation and sufficiency. Recorded
-dropout rates were also different, twenty-five versus forty-five per
-cent. These differences need investigation before real use; they do not
-prove discrimination.</p>
+<p>We focus first on missed dropouts, because a missed warning could
+mean a missed offer of support. The rule missed 64 of 144 female dropout
+records and 34 of 141 male records: forty-four versus twenty-four per
+cent. The gap was about twenty percentage points, with a conditional
+interval of roughly ten to thirty-one points. Male students had a higher
+false-warning rate. The other rows check who receives warnings and
+recorded outcomes within both prediction groups. These are independence,
+separation and sufficiency. Different recorded dropout rates complicate
+those comparisons; the gaps alone do not establish discrimination.</p>
 </div>
 <p>Of 98 missed records, 64 were female and 34 male. The corresponding
 false-negative rates use actual dropout records as denominators: 64/144
@@ -658,10 +637,12 @@ the higher false-warning rate.</li>
 warned and unwarned prediction strata. Checking precision alone would
 omit the second stratum.</li>
 </ul>
-<p>Leaving gender out of the primary model does not establish fairness.
-Course and other features can still be associated with gender. We do not
-adjust group thresholds merely to equalise a table; observed gaps also
-reflect base rates, composition and unmeasured factors.</p>
+<p>Leaving gender out of the primary model does not establish fairness:
+course and other inputs may still be associated with gender. The groups
+have different recorded dropout proportions, so warning rates, error
+rates and predictive values answer different questions. This audit
+measures gaps; it does not separate their causes. We have not tested a
+policy of different thresholds by group.</p>
 <p><strong>Our figure-review explanation (not additional
 speech):</strong> We wanted to compare error rates, but a group’s total
 is not the denominator of every rate. The <a href="https://www.data-to-viz.com/caveats.html">sample-size caveat</a>
@@ -677,10 +658,6 @@ deviations or a guarantee about a future cohort. We also added circle
 and triangle markers. To compare the groups directly, we use the gap
 intervals in backup slide 12 rather than treating overlap of two
 separate intervals as a formal test.</p>
-<p>Every rate is labelled with its own denominator. For false-negative
-rates these are actual dropout counts, not the full group totals. The
-bars are conditional percentile bootstrap intervals, and distinct point
-shapes provide a cue beyond colour.</p>
 <p>Alternative transition (already included in the main script): These
 group differences lead us to the checks we would require before real
 use.</p>
@@ -695,13 +672,13 @@ favourable statistic.</p>
 <div id="slide-8-the-conclusion-and-next-step" class="section level2">
 <h2>Slide 8: the conclusion and next step</h2>
 <div class="spoken" data-slide="8" data-speaker="Speaker 4">
-<p>These errors explain why we would use a warning to start a
-conversation, with human review and a way to correct records. Before
-real use, we would check departure reasons, support capacity and
-performance on later cohorts at the intended institution. Our analysis
-found predictive signal in historical administrative records. We have
-not shown that acting on warnings prevents dropout. That would require a
-separate evaluation. Thank you.</p>
+<p>Our enrolment model found about two-thirds of recorded dropouts, with
+many false warnings and different error rates across groups. Before real
+use, we would check departure reasons, support capacity and performance
+on later cohorts at the intended institution. Any warning should lead to
+human review, with a way to correct records. We have not tested whether
+acting on warnings prevents dropout. That needs a separate evaluation of
+the support offered. Thank you.</p>
 </div>
 <p>The results support further investigation of a possible warning
 signal, rather than immediate deployment. Real use would require checks
@@ -723,11 +700,6 @@ then rewrote and ran the main R analysis. We checked the outputs against
 the raw records and saved predictions. The bootstrap idea came from
 class; applying it to several group rates needed extra implementation
 guidance.</p>
-<p>We applied the course principles of data handling, plots, bootstrap
-and fairness. We used explanations and documentation to learn unfamiliar
-modelling and evaluation methods, then rewrote and checked the main R
-analysis. Source checks, initial code/text drafts and formatting also
-received assistance, as recorded in the disclosure.</p>
 <p>Our statistical interpretation remains our responsibility. ChatGPT
 also helped with initial code and text drafts, source checks and slide
 formatting. We need to explain the inputs, assumptions and denominators,
@@ -764,11 +736,6 @@ zero-based horizontal bars, consistent with the <a href="https://www.data-to-viz
 advice</a>. The bar lengths still show shares within each group, not
 pooled counts. We have made the reading order clearer without changing
 the model or claiming this explains the error gap.</p>
-<p>The backups retain the original gap intervals and bootstrap
-calculations. The calibration plot uses group shapes and states that no
-intervals are plotted. Course categories are ordered by pooled training
-counts, while bar lengths remain proportions within each gender group;
-these quantities serve different purposes.</p>
 </div>
 <div id="first-person-explanations-you-can-use-selectively" class="section level2">
 <h2>First-person explanations you can use selectively</h2>
@@ -827,6 +794,38 @@ problem.</td>
 </div>
 <div id="questions-to-practise" class="section level2">
 <h2>Questions to practise</h2>
+<div id="does-higher-accuracy-mean-a-better-warning-rule" class="section level3">
+<h3>Does higher accuracy mean a better warning rule?</h3>
+<p>Not for this purpose on its own. Always giving no warning is correct
+for 604 of 889 records (67.9%), but finds none of the 285 recorded
+dropouts. The chosen rule is correct for 569 records (64.0%), finds 187
+dropouts and produces 222 false warnings. Whether that trade-off is
+acceptable depends on support capacity and the consequences of each
+error; these data do not establish an optimal policy.</p>
+</div>
+<div id="what-do-the-three-fairness-criteria-ask-here" class="section level3">
+<h3>What do the three fairness criteria ask here?</h3>
+<p>Independence asks whether students in each recorded-gender group
+receive warnings at the same rate: 218/575 female records (37.9%) versus
+191/314 male records (60.8%). Separation checks errors conditional on
+the actual label: false-warning rates are 138/431 (32.0%) and 84/173
+(48.6%); missed-dropout rates are 64/144 (44.4%) and 34/141 (24.1%).
+Binary Sufficiency checks outcomes within both prediction groups:
+dropout among warned records is 80/218 (36.7%) versus 107/191 (56.0%);
+dropout among unwarned records is 64/357 (17.9%) versus 34/123 (27.6%).
+These are conditional comparisons, not interchangeable measures or a
+causal verdict.</p>
+</div>
+<div id="does-a-20-point-gap-prove-discrimination" class="section level3">
+<h3>Does a 20-point gap prove discrimination?</h3>
+<p>No. The female-minus-male missed-dropout gap is about 20.3 percentage
+points in this held-out sample. Its interval conditions on the fitted
+model and threshold. It does not include all model-development
+uncertainty, account for unavailable cohort structure, or explain why
+the groups differ. The pattern warrants investigation before any use; it
+does not establish a causal explanation or identify who needs
+support.</p>
+</div>
 <div id="which-test-counts-support-sensitivity-and-precision" class="section level3">
 <h3>Which test counts support sensitivity and precision?</h3>
 <p>We found 187 of the 285 recorded dropouts, giving sensitivity of
@@ -969,6 +968,20 @@ then rewrote and ran the main R analysis and checked the outputs. R
 generated the statistical results; we are responsible for our final
 interpretation.</p>
 </div>
+</div>
+<div id="review-tools-and-sources" class="section level2">
+<h2>Review tools and sources</h2>
+<p>For the 8 November revision, we used Sciwrite (Lorena A. Barba, <a href="https://github.com/labarba/sciwrite" class="uri">https://github.com/labarba/sciwrite</a>) and Anti-defensive
+Writing (<a href="https://github.com/Kiterlin/anti-defensive-writing" class="uri">https://github.com/Kiterlin/anti-defensive-writing</a>) to
+review clarity and repetition. Scientific Critical Thinking helped check
+denominators, comparison claims and the scope of the fairness
+interpretation. These tools did not generate new statistical results or
+replace the course requirements.</p>
+<p>Kassis, T., Agarwal, V., He, Y., Patel, D., and Brueckner, A. M.
+(2026). Scientific Agent Skills: A Library of Procedural Knowledge for
+Research Agents. <a href="https://doi.org/10.48550/arXiv.2609.00065" class="uri">https://doi.org/10.48550/arXiv.2609.00065</a>. Source and
+version verified on 8 November 2026; cited for the review workflow, not
+as evidence about student dropout.</p>
 </div>
 
 

@@ -3,21 +3,21 @@
     {
       "file": "01_Presentation.pdf",
       "pages": 18,
-      "bytes": 988544,
-      "sha256": "aad9009603cc5f8530392df07f84d136d2209476a9df6a99ee90263763a49c78",
+      "bytes": 986870,
+      "sha256": "e33ad02f831605431ce2cfb3a5632bd2db27cbb46999a7f8c4606f71e8e88d58",
       "han_characters": 0,
       "out_of_bounds": []
     },
     {
       "file": "02_Speaker_Notes.pdf",
-      "pages": 9,
-      "bytes": 64569,
-      "sha256": "d9a4820e905d8ea3fb221b3186e188fbc26259bb65ed840c942128be7cdbba27",
+      "pages": 10,
+      "bytes": 67010,
+      "sha256": "f6dd979812dc74171261b4cde76dec8887aaa9cbdf9dca32b8af41886742e2fc",
       "han_characters": 0,
       "out_of_bounds": []
     }
   ],
   "professor_facing_language": "English",
   "preserved_numerical_files": 31,
-  "spoken_words": 600
+  "spoken_words": 596
 }
