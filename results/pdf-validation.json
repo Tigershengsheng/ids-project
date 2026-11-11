@@ -1,8 +1,8 @@
 {
-  "date": "2026-11-08",
+  "date": "2026-11-11",
   "pages": 18,
-  "sha256": "e33ad02f831605431ce2cfb3a5632bd2db27cbb46999a7f8c4606f71e8e88d58",
-  "bytes": 986870,
+  "sha256": "eb94ee97a92406cca612ebded466a6388156919df144945b6dff5f6ca8ebe062",
+  "bytes": 988324,
   "native_searchable_text": true,
-  "visual_review": "Changed slides inspected in the rendered HTML/PDF and Microsoft PowerPoint; the whole deck scanned. The revised English script and Q&A pages were inspected for fit and readability."
+  "visual_review": "All 14 Chinese guide pages inspected. All English slides scanned and changed slides inspected in Microsoft PowerPoint. The two longest backup headings were shortened; their revised native slides were inspected. English notes pages inspected; no clipping found."
 }

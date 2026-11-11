@@ -1,7 +1,7 @@
 {
   "schemaVersion": "presentation-finalization.v1",
-  "finalSha256": "a0a3518d4e5a7f528acd253d9104b062b2967f9e7507d871adb6bbdb0f6b9c5d",
-  "byteCount": 215202,
+  "finalSha256": "435840a28e29f4c95a277b92faa166dcd7ec3ce542db1dc64c36652c2f1c70fe",
+  "byteCount": 215503,
   "packageIntegrity": {
     "chart_count": 0,
     "claim_boundary": "Structural package checks only; no slide text, notes, formulas, chart values, or native PowerPoint execution were inspected.",
@@ -19,7 +19,7 @@
     "finding_count": 0,
     "findings": [],
     "font_policy": {
-      "checked_text_script_count": 447,
+      "checked_text_script_count": 448,
       "native_font_rendering_verified": false,
       "observed_font_families": [
         "Arial",
@@ -29,7 +29,7 @@
       "observed_font_use_counts": {
         "Arial": 137,
         "Segoe UI": 269,
-        "Segoe UI Semibold": 41
+        "Segoe UI Semibold": 42
       },
       "passed": true,
       "performed": true
@@ -65,7 +65,7 @@
     "exitCode": 0,
     "findingCount": 0,
     "fontPolicy": {
-      "checked_text_script_count": 447,
+      "checked_text_script_count": 448,
       "native_font_rendering_verified": false,
       "observed_font_families": [
         "Arial",
@@ -75,23 +75,23 @@
       "observed_font_use_counts": {
         "Arial": 137,
         "Segoe UI": 269,
-        "Segoe UI Semibold": 41
+        "Segoe UI Semibold": 42
       },
       "passed": true,
       "performed": true
     }
   },
   "fontSelection": {
-    "basis": "reference",
+    "basis": "design",
     "approvedFamilies": [
       "Segoe UI",
       "Segoe UI Semibold",
       "Arial"
     ],
     "scriptFonts": {},
-    "referenceSha256": "39619e5353ed89a6fede3ba2a68f768cd3a0a89077ce361f91279f985614a0ef",
-    "referenceFontsVerifiedInEncodedText": true,
-    "checked_text_script_count": 447,
+    "referenceSha256": null,
+    "referenceFontsVerifiedInEncodedText": false,
+    "checked_text_script_count": 448,
     "native_font_rendering_verified": false,
     "observed_font_families": [
       "Arial",
@@ -101,7 +101,7 @@
     "observed_font_use_counts": {
       "Arial": 137,
       "Segoe UI": 269,
-      "Segoe UI Semibold": 41
+      "Segoe UI Semibold": 42
     },
     "passed": true,
     "performed": true
@@ -110,7 +110,7 @@
     "performed": true,
     "passed": true,
     "slideCount": 18,
-    "sha256": "a0a3518d4e5a7f528acd253d9104b062b2967f9e7507d871adb6bbdb0f6b9c5d",
+    "sha256": "435840a28e29f4c95a277b92faa166dcd7ec3ce542db1dc64c36652c2f1c70fe",
     "runtimeNodeModules": "C:/Users/Administrator/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules",
     "nodeExecutable": "C:\\Users\\Administrator\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe"
   },
@@ -210,7 +210,7 @@
     "native_chart_count": 0,
     "native_powerpoint_verified": false,
     "passed": true,
-    "presentation_sha256": "a0a3518d4e5a7f528acd253d9104b062b2967f9e7507d871adb6bbdb0f6b9c5d",
+    "presentation_sha256": "435840a28e29f4c95a277b92faa166dcd7ec3ce542db1dc64c36652c2f1c70fe",
     "schema_version": "presentation-native-chart-titles.v1",
     "slide_count": 18,
     "source_text_emitted": false,
@@ -244,8 +244,8 @@
   "nativeChartValidation": {
     "detectedOwnerSlides": [],
     "detectedChartCount": 0,
-    "targetApplication": null,
-    "sourceChartOwnersExplicitlyDeclared": false,
+    "targetApplication": "portable",
+    "sourceChartOwnersExplicitlyDeclared": true,
     "validatorRan": false,
     "passed": true
   }

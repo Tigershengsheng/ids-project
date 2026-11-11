@@ -1,0 +1,56 @@
+[
+  {
+    "title": "Introducing linear models",
+    "pdf_pages": 55,
+    "reviewed_pages": [
+      22,
+      23,
+      26,
+      27,
+      28,
+      38,
+      39,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54
+    ],
+    "sha256": "5ad0358aae7b1f54e8966fa90114eaa25b12ffa912201f4907d9af815b63507b",
+    "review_date": "2026-11-11"
+  },
+  {
+    "title": "Model checking and multiple linear regression",
+    "pdf_pages": 66,
+    "reviewed_pages": [
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      19,
+      21,
+      22,
+      24,
+      27,
+      37,
+      38,
+      40,
+      41,
+      57,
+      59,
+      60,
+      61,
+      62,
+      63,
+      65,
+      66
+    ],
+    "sha256": "335e63a02ab3ca1ab465606baae3fe42e1573202f95e930c1d40a55ea5342332",
+    "review_date": "2026-11-11"
+  }
+]

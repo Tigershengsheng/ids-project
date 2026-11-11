@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-11",
+  "reason": "A dated note appended to the analysis plan invalidated the cache and re-executed the fixed analysis. The original plan is now preserved; the later review is documented separately.",
+  "new_model_or_threshold_search": false,
+  "all_saved_numerical_csvs_unchanged": true,
+  "summary_changed_only_in": "plan_sha256",
+  "frozen_artifact_hashes_restored": 5,
+  "protected_files_matching_original": 32,
+  "model_coefficients_and_fitted_values_match": true
+}

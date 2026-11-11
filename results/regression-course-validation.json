@@ -1,0 +1,172 @@
+{
+  "date": "2026-11-11",
+  "protected_files_unchanged": 32,
+  "main_slides": 8,
+  "total_slides": 18,
+  "spoken_blocks_synchronised": 8,
+  "spoken_words": 599,
+  "minutes_at_100wpm_before_pauses": 5.99,
+  "human_rehearsal_performed": false,
+  "new_interaction_model_fitted": false,
+  "pdfs": [
+    {
+      "role": "presentation",
+      "pages": 18,
+      "sha256": "eb94ee97a92406cca612ebded466a6388156919df144945b6dff5f6ca8ebe062",
+      "bytes": 988324
+    },
+    {
+      "role": "speaker-notes",
+      "pages": 11,
+      "sha256": "34e58c2a4e3541d0c91f460d48cc26ecd364296a9625a9df683cc43ee1dadfa8",
+      "bytes": 71018
+    },
+    {
+      "role": "private-chinese-guide",
+      "pages": 14,
+      "sha256": "8b15ac6d3e40acfdb06833fcf9d608c0651bc2ffd3c5f791afbe9f0cd3d5c145",
+      "bytes": 693235
+    }
+  ],
+  "pptx_sha256": "435840a28e29f4c95a277b92faa166dcd7ec3ce542db1dc64c36652c2f1c70fe",
+  "native_table_slides": [
+    6,
+    10,
+    11,
+    15,
+    16
+  ],
+  "restored_frozen_plan_and_results": "See regression-course-reproduction.json for the cache-triggered deterministic reproduction check.",
+  "pdf_page_comparisons": [
+    {
+      "slide": 1,
+      "changed": true,
+      "difference_box": [
+        1148,
+        656,
+        1162,
+        667
+      ]
+    },
+    {
+      "slide": 2,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 3,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 4,
+      "changed": true,
+      "difference_box": [
+        57,
+        480,
+        1189,
+        649
+      ]
+    },
+    {
+      "slide": 5,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 6,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 7,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 8,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 9,
+      "changed": true,
+      "difference_box": [
+        57,
+        225,
+        1167,
+        454
+      ]
+    },
+    {
+      "slide": 10,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 11,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 12,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 13,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 14,
+      "changed": true,
+      "difference_box": [
+        57,
+        44,
+        1179,
+        601
+      ]
+    },
+    {
+      "slide": 15,
+      "changed": false,
+      "difference_box": null
+    },
+    {
+      "slide": 16,
+      "changed": true,
+      "difference_box": [
+        224,
+        44,
+        898,
+        89
+      ]
+    },
+    {
+      "slide": 17,
+      "changed": true,
+      "difference_box": [
+        57,
+        43,
+        1217,
+        519
+      ]
+    },
+    {
+      "slide": 18,
+      "changed": true,
+      "difference_box": [
+        366,
+        43,
+        1059,
+        89
+      ]
+    }
+  ],
+  "powerpoint_application": {
+    "slides": 18,
+    "rendered_in": "Microsoft PowerPoint"
+  },
+  "visual_review": "All 14 Chinese guide pages inspected. All English slides scanned and changed slides inspected in Microsoft PowerPoint. The two longest backup headings were shortened; their revised native slides were inspected. English notes pages inspected; no clipping found."
+}

@@ -59,3 +59,11 @@ We compare missed-dropout rates within actual dropouts, because the groups have 
 ChatGPT provided explanations and helped with initial code and text drafts, source checks and slide formatting. We rewrote and ran the main R analysis and checked its outputs. We are responsible for the choices, interpretation and final work.
 
 Supplementary references: official R [stats::glm documentation](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/glm.html) and [Fairness and Machine Learning: classification](https://fairmlbook.org/classification.html). Bootstrap and fairness principles came from the course; some implementation details needed additional learning.
+
+## Reviewing our earlier model after the regression lectures, 11 November
+
+We use the newer regression lectures to review the model we first evaluated on 5 November. The categorical-predictor examples clarify why course is a factor and why its coefficients are comparisons with a reference course. The multiple-predictor examples clarify that a coefficient comparison holds the other included inputs fixed.
+
+The distinction between main effects and interactions helps us state an assumption we had already made: our age and grade effects are additive on the log-odds scale, with no interaction terms. We have not tested a new interaction model or established that the assumption is correct. The model-checking and parsimony material also helps us explain why we examine probabilities and errors, and require evidence before adding complexity.
+
+The logistic-regression link, classification scores and validation rule remain supplementary learning. We distinguish them from the OLS examples in the lectures. The specific checks, source pages and boundaries are recorded in regression-course-update.md.

@@ -14,13 +14,14 @@
   "human_rehearsal_performed": false,
   "topic_approval_received": false,
   "repository_or_submission_changed": false,
-  "notes": "The current revision synchronises the eight spoken blocks, clarifies baseline accuracy and group-rate denominators, and preserves all 31 protected numerical files. No human rehearsal has been performed.",
-  "spoken_words": 596,
+  "notes": "Regression-lecture connections and assumptions are explained. The original model, plan, threshold and protected result artifacts are unchanged. The deterministic reproduction triggered during documentation review is recorded separately. No interaction model or new threshold search was performed; no human rehearsal is claimed.",
+  "spoken_words": 599,
   "latest_slide_revision": {
-    "date": "2026-11-08",
-    "validation": "skills-review-validation.json",
-    "main_script_words": 596,
-    "english_pdf_pages": 10,
-    "new_statistical_analysis": false
+    "date": "2026-11-11",
+    "validation": "regression-course-validation.json",
+    "main_script_words": 599,
+    "english_pdf_pages": 11,
+    "private_chinese_guide_pages": 14,
+    "new_statistical_model": false
   }
 }

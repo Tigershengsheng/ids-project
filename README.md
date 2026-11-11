@@ -2,7 +2,7 @@
 
 **How accurate are enrolment-time warnings, and who gets missed?**
 
-Current IDS group project: enrolment-time prediction of recorded dropout and an audit of group error patterns. The repository is public. Updated 8 November 2026.
+Current IDS group project: enrolment-time prediction of recorded dropout and an audit of group error patterns. The repository is public. Updated 11 November 2026.
 
 ## Open the current work
 
@@ -63,3 +63,5 @@ Data: Realinho et al., UCI 697, [DOI 10.24432/C5MC89](https://doi.org/10.24432/C
 We used our course methods for data handling, plots, bootstrap ideas and fairness comparisons. For unfamiliar methods, we asked ChatGPT for explanations and checked documentation, then rewrote and ran the main R analysis and checked its outputs. ChatGPT also helped with initial code and text drafts, source checks and slide formatting. R generated all statistical results. Our first-person reasons for key choices are in `docs/learning-process.md` and in the speaker notes; the English script PDF now includes a separate preparation page for them.
 
 The 8 November presentation revision clarifies the accuracy baseline, synchronises the eight spoken blocks and removes repeated preparation text. The fixed statistical results are retained. Review tools and their sources are recorded in `docs/revision-review.md`.
+
+The 11 November course review connects the fixed model to the two regression lectures, clarifies the additive log-odds assumption and expands the probability-checking and Q&A explanations. See `docs/regression-course-update.md`. The model, threshold and numerical results are unchanged.

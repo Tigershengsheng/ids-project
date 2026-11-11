@@ -1,7 +1,7 @@
 ---
 title: "Presentation script and speaking notes"
 subtitle: "Student dropout warnings: English script, analysis decisions and Q&A"
-date: "8 November 2026"
+date: "11 November 2026"
 output:
   html_document:
     self_contained: true
@@ -75,10 +75,14 @@ Transition: We then needed a small model and a fair test of its predictions.
 ## Slide 4: inputs and evaluation design
 
 ::: {.spoken data-slide="4" data-speaker="Speaker 2"}
-We used age, admission grade and course, excluding later semester results and financial fields with unclear timing. We used course tools for summaries and plots. Logistic regression and validation were new to us, so we asked ChatGPT for explanations, checked R documentation, then rewrote and checked the main analysis. Training records fit the model. Validation records chose the threshold. Test records evaluated the frozen rule. Recorded gender was reserved for the main audit. A probability still needs a threshold before it becomes a warning.
+We use age, admission grade and course together, treating course as a category. Our model assumes additive effects on the log-odds scale, without interactions. The regression lectures help us review these assumptions; logistic regression needed further learning. We exclude later grades and financial fields with uncertain timing, and reserve recorded gender for the audit. Training records fit the model, validation records chose one threshold, and test records evaluated the frozen rule. This keeps a small model and separates its decisions. Next, we explain how probabilities become warnings.
 :::
 
 Our primary inputs are age at enrolment, admission grade and course. Logistic regression produces estimated probabilities. Course is categorical; age and grade enter linearly on the log-odds scale, with additive course effects and no interactions. These are simplifying assumptions.
+
+Our interpretation is conditional on the other included inputs: an age comparison holds admission grade and course fixed. A course coefficient compares that course with the reference course at the same included age and grade. These are fitted associations, not causal effects. The additive relationship is on the log-odds scale; it does not imply parallel probability curves.
+
+The regression lectures supplied for the 11 November review help us explain multiple predictors and categorical coding. They also motivate checking assumptions and keeping complexity justified. Logistic regression still needs the supplementary explanation recorded below. The original model and threshold remain fixed; we have not fitted an interaction model in this revision.
 
 In the training records, attendance regime was determined by course. We therefore retain course without the redundant attendance term. This decision uses training data, rather than the later validation or test scores.
 
@@ -196,6 +200,30 @@ These are alternatives to use when asked, not extra paragraphs to add to every s
 
 ## Questions to practise
 
+### How do the newer regression lectures connect to the project?
+
+Introducing linear models, pages 48-54, explains reference groups and dummy variables. This helps us explain why course is categorical. Model checking and multiple linear regression, pages 24-41, explains multiple predictors, conditional interpretations and interactions; pages 57-63 motivates parsimony. We reviewed these connections on 11 November after our original evaluation. Logistic regression, classification scores and the validation rule still require supplementary learning.
+
+### What does no interaction mean in our model?
+
+We use dropout ~ age10 + admission10 + course. The age coefficient is common across courses on the log-odds scale, as is the admission-grade coefficient. A term such as age10:course would allow the age association to differ by course. The corresponding probability curves need not be parallel even without that interaction. We have not fitted or demonstrated an improvement from interaction terms.
+
+### What checks have we actually performed, and what remains assumed?
+
+We checked factor coding and timing, compared against a baseline, kept evaluation partitions separate and examined held-out scores, error counts, group rates and the descriptive calibration figure. Calibration compares average predicted risk with observed dropout proportions in common bands. Coarse bins, small samples and the lack of intervals limit that display. These checks do not establish the correctness of linear age/grade terms or rule out interactions. Those remain explicit assumptions.
+
+### Why not use the lecture's adjusted R-squared or ordinary residual rule?
+
+The lecture's ordinary and adjusted R-squared compare OLS models for continuous responses; neither is our classification accuracy. For the binary dropout endpoint we report AUC for ranking, Brier score and calibration for probabilities, and sensitivity, precision and error rates for the warning rule. Binary raw residuals have a structured form, so we do not require the OLS residual cloud shown in the lecture. No single one of our scores establishes suitability or fairness.
+
+### Is log-transforming price the same as logistic regression?
+
+No. The lecture models log(price), a transformed continuous response. Logistic regression instead models log(p/(1-p)), the log-odds of a binary outcome, then converts that score to a probability. A logistic coefficient is not a percentage-point change in probability. Its exponential is an odds ratio for the stated predictor change, holding the other included predictors fixed.
+
+### Why keep a small model, and how could interactions be explored later?
+
+We chose a small set of defensible enrolment inputs so we can explain the timing, coding and assumptions. The lecture's parsimony principle supports requiring evidence before adding complexity; it does not show that our model is optimal. Any later interaction analysis should be specified and evaluated within development data, with small course groups and overfitting considered. We would not repeatedly select models or thresholds using already-viewed test results and present them as a fresh independent evaluation.
+
 ### Does higher accuracy mean a better warning rule?
 
 Not for this purpose on its own. Always giving no warning is correct for 604 of 889 records (67.9%), but finds none of the 285 recorded dropouts. The chosen rule is correct for 569 records (64.0%), finds 187 dropouts and produces 222 false warnings. Whether that trade-off is acceptable depends on support capacity and the consequences of each error; these data do not establish an optimal policy.
@@ -230,7 +258,7 @@ They were not available at the chosen prediction time. They could support a diff
 
 ### Why logistic regression, and is it in the supplied slides?
 
-We had not used logistic regression in the supplied course material. We used AI explanations and official R documentation to learn how it models a binary outcome and returns probabilities, then reimplemented and checked the analysis. We treated course as categorical. We also learned that our age and grade terms are linear on the log-odds scale, with no interactions; these are assumptions we need to explain.
+The two newly supplied lectures teach linear regression, including multiple predictors and categorical effects. They do not directly teach binomial logistic regression. We used AI explanations and official R documentation for that extension, then reimplemented and checked the main analysis. We use logistic regression because our response is binary and we need estimated probabilities. Our age and grade terms are additive and linear on the log-odds scale, without interactions.
 
 ### Why only three predictors?
 

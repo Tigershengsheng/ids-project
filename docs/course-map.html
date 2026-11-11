@@ -374,6 +374,8 @@ recommended exploration: Data to Viz</a></li>
 <li><a href="#supplementary-methods-explicitly-not-claimed-taught-in-the-supplied-slides" id="toc-supplementary-methods-explicitly-not-claimed-taught-in-the-supplied-slides">Supplementary
 methods, explicitly not claimed taught in the supplied slides</a></li>
 <li><a href="#deliberate-omissions" id="toc-deliberate-omissions">Deliberate omissions</a></li>
+<li><a href="#transfer-of-the-regression-lectures" id="toc-transfer-of-the-regression-lectures">Transfer of the regression
+lectures</a></li>
 </ul></li>
 </ul>
 </div>
@@ -494,6 +496,22 @@ honestly</td>
 <td>Slides 4, 7-9; all fairness backups</td>
 </tr>
 <tr class="even">
+<td>Introducing linear models (55 pages)</td>
+<td>22-28, 38-39, 48-54</td>
+<td>Response/predictor distinction, limits of interpretation, reference
+categories and dummy coding; logistic regression is a separate
+extension</td>
+<td>Slide 4; course coding; speaker notes</td>
+</tr>
+<tr class="odd">
+<td>Model checking and multiple linear regression (66 pages)</td>
+<td>6-12, 24-41, 57-63</td>
+<td>Diagnose fit, interpret multiple inputs conditionally, distinguish
+main effects/interactions, justify complexity; adapt checking to a
+binary outcome</td>
+<td>Slides 4, 14, 17; assumptions and Q&amp;A</td>
+</tr>
+<tr class="even">
 <td>Lab 04 - Project kick-off and data viz exercises</td>
 <td>1-2, 4-6</td>
 <td>Group repository/template, variable types, numerical and categorical
@@ -550,12 +568,17 @@ reviewed quiz bank</td>
 <div id="supplementary-methods-explicitly-not-claimed-taught-in-the-supplied-slides" class="section level2">
 <h2>Supplementary methods, explicitly not claimed taught in the supplied
 slides</h2>
-<p>The available slide collection does not include separate
-modelling/classification/validation lectures. Binomial logistic
-regression, train/validation/test splitting, AUC, Brier score, a
-validation threshold rule and the implementation of multi-metric
-bootstrap summaries are therefore explained as additions. Overfitting
-and group fairness themselves are present in Algorithmic Bias.</p>
+<p>The collection now includes Introducing linear models (55 pages) and
+Model checking and multiple linear regression (66 pages), reviewed on 11
+November 2026. They teach linear-regression foundations, categorical
+coding, multiple predictors, model checking, transformations,
+interactions and model comparison. They do not directly teach binomial
+logistic regression, our train/validation/test procedure, classification
+AUC/Brier scoring or the chosen validation threshold rule. Those
+extensions and the multi-metric bootstrap implementation remain
+separately explained. The newer lectures help review an analysis first
+evaluated on 5 November; they are not retrospectively described as its
+original source.</p>
 <ul>
 <li>Logistic regression: R’s official stats::glm and binomial-family
 documentation. It models a binary recorded endpoint and gives
@@ -582,6 +605,18 @@ macroeconomic values. No synthetic rebalancing or group-specific
 thresholds are used merely to improve a score or equalise a table. No
 Simpson’s paradox is claimed from the fact that course compositions
 differ.</p>
+</div>
+<div id="transfer-of-the-regression-lectures" class="section level2">
+<h2>Transfer of the regression lectures</h2>
+<p>We use the multiple-predictor and category-coding principles to
+explain the existing formula. The primary model is additive on the
+log-odds scale; no interactions are fitted. OLS residual-cloud rules,
+ordinary/adjusted R-squared and log-transforming a continuous response
+are not directly substituted for binary probability diagnostics or
+classification accuracy. The current calibration plot is descriptive; it
+does not validate all model assumptions. We retain the original results
+while recording possible development-data checks for a future
+extension.</p>
 </div>
 </div>
 

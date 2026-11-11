@@ -3,8 +3,8 @@ import {fileURLToPath,pathToFileURL} from 'node:url';
 process.on('uncaughtException',error=>{console.error(error.message);process.exit(1);});
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const workspaceDir=path.dirname(root);
-const build=path.join(workspaceDir,'tmp/student-dropout-pptx-build');
-const skill='C:/Users/Administrator/.codex/plugins/cache/openai-primary-runtime/presentations/26.1105.12137/skills/presentations';
+const build=process.argv[3] ?? path.join(workspaceDir,'tmp/student-dropout-pptx-build');
+const skill='C:/Users/Administrator/.codex/plugins/cache/openai-primary-runtime/presentations/26.1110.11613/skills/presentations';
 process.env.RUNTIME_NODE_MODULES ??= 'C:/Users/Administrator/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules';
 const {finalizePresentation}=await import(pathToFileURL(path.join(skill,'container_tools/artifact_tool_utils.mjs')).href);
 const result=await finalizePresentation({workspaceDir,candidatePath:path.join(build,'candidate-spaced.pptx'),

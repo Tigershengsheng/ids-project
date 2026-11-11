@@ -376,6 +376,8 @@ course</a></li>
 choices</a></li>
 <li><a href="#assistance-and-responsibility" id="toc-assistance-and-responsibility">Assistance and
 responsibility</a></li>
+<li><a href="#reviewing-our-earlier-model-after-the-regression-lectures-11-november" id="toc-reviewing-our-earlier-model-after-the-regression-lectures-11-november">Reviewing
+our earlier model after the regression lectures, 11 November</a></li>
 </ul></li>
 </ul>
 </div>
@@ -538,6 +540,26 @@ documentation</a> and <a href="https://fairmlbook.org/classification.html">Fairn
 Learning: classification</a>. Bootstrap and fairness principles came
 from the course; some implementation details needed additional
 learning.</p>
+</div>
+<div id="reviewing-our-earlier-model-after-the-regression-lectures-11-november" class="section level2">
+<h2>Reviewing our earlier model after the regression lectures, 11
+November</h2>
+<p>We use the newer regression lectures to review the model we first
+evaluated on 5 November. The categorical-predictor examples clarify why
+course is a factor and why its coefficients are comparisons with a
+reference course. The multiple-predictor examples clarify that a
+coefficient comparison holds the other included inputs fixed.</p>
+<p>The distinction between main effects and interactions helps us state
+an assumption we had already made: our age and grade effects are
+additive on the log-odds scale, with no interaction terms. We have not
+tested a new interaction model or established that the assumption is
+correct. The model-checking and parsimony material also helps us explain
+why we examine probabilities and errors, and require evidence before
+adding complexity.</p>
+<p>The logistic-regression link, classification scores and validation
+rule remain supplementary learning. We distinguish them from the OLS
+examples in the lectures. The specific checks, source pages and
+boundaries are recorded in regression-course-update.md.</p>
 </div>
 </div>
 

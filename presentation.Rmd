@@ -3,7 +3,7 @@ title: "Student dropout warnings"
 subtitle: "How accurate are they, and who gets missed?"
 author: "Strong Tiger"
 institute: "University of Edinburgh"
-date: "8 November 2026"
+date: "11 November 2026"
 output:
   xaringan::moon_reader:
     css: ["default", "slides.css"]
@@ -40,7 +40,7 @@ class: title-slide
 <h1>Student dropout<br><span class="gradient-word">warnings.</span></h1>
 <div class="cover-subtitle">How accurate are they,<br>and who gets missed?</div>
 </div>
-<div class="cover-bottom"><div><div class="cover-team">University of Edinburgh</div>Predictive signal. Unequal errors. A question of support.</div><div>UCI 697 &nbsp; / &nbsp; ONE PORTUGUESE INSTITUTION<br>Analysis 05 NOV 2026 &nbsp; / &nbsp; Revision 08 NOV 2026</div></div>
+<div class="cover-bottom"><div><div class="cover-team">University of Edinburgh</div>Predictive signal. Unequal errors. A question of support.</div><div>UCI 697 &nbsp; / &nbsp; ONE PORTUGUESE INSTITUTION<br>Analysis 05 NOV 2026 &nbsp; / &nbsp; Revision 11 NOV 2026</div></div>
 
 ???
 Our question is whether information known at enrolment can identify later recorded dropout, and who the same warning rule misses. We are interested in student support. We first define the outcome, then evaluate overall prediction, and finally check how errors differ between groups. We start with the label, because it determines what a warning can mean.
@@ -96,14 +96,14 @@ Figure review: Quiz 7 recommended Data to Viz. We wanted a compact comparison of
 <div class="flow-card"><div class="step">03 / EVALUATE</div><div class="flow-n accent">`r num(r$configuration$test_n)`</div><div class="flow-title">Test</div><div class="flow-purpose">Evaluate the frozen rule.</div></div>
 </div>
 
-.small[Semester results and financial fields with uncertain timing were excluded.<br>Recorded gender is an audit variable, <strong>not a primary predictor</strong>.]
+.small[Course is categorical; age and grade are additive on the log-odds scale, without interactions.<br>Later and timing-uncertain inputs are excluded. Recorded gender is reserved for the audit.]
 
-.learning-note[We used course methods for the summaries and plots. For unfamiliar methods, we asked ChatGPT, checked documentation, then rewrote and tested the main R analysis.]
+.learning-note[The regression lectures help us review these choices. Logistic regression required further learning.]
 
 .source[Seed 20261105; approximately 60/20/20, stratified by original outcome and recorded gender. Model fitting and validation use no test outcomes.]
 
 ???
-We used age, admission grade and course, excluding later semester results and financial fields with unclear timing. We used course tools for summaries and plots. Logistic regression and validation were new to us, so we asked ChatGPT for explanations, checked R documentation, then rewrote and checked the main analysis. Training records fit the model. Validation records chose the threshold. Test records evaluated the frozen rule. Recorded gender was reserved for the main audit. A probability still needs a threshold before it becomes a warning.
+We use age, admission grade and course together, treating course as a category. Our model assumes additive effects on the log-odds scale, without interactions. The regression lectures help us review these assumptions; logistic regression needed further learning. We exclude later grades and financial fields with uncertain timing, and reserve recorded gender for the audit. Training records fit the model, validation records chose one threshold, and test records evaluated the frozen rule. This keeps a small model and separates its decisions. Next, we explain how probabilities become warnings.
 
 ---
 <div class="kicker">04 &nbsp; / &nbsp; THE VALIDATION DECISION</div>
@@ -213,6 +213,7 @@ Our enrolment model found about two-thirds of recorded dropouts, with many false
 - Realinho et al. **UCI dataset 697**, DOI [10.24432/C5MC89](https://doi.org/10.24432/C5MC89). CC BY 4.0. Retrieved 5 November 2026.
 - Realinho et al. (2022). **Predicting Student Dropout and Academic Success**, *Data* 7, 146. [10.3390/data7110146](https://doi.org/10.3390/data7110146).
 - IDS course materials: **Algorithmic Bias**, pp. 6, 16-19; **Quantifying uncertainty**, pp. 21, 39, 46-53.
+- IDS regression lectures: **Introducing linear models**, pp. 22-28, 48-54; **Model checking and multiple linear regression**, pp. 24-41, 57-63.
 - R documentation: [binomial logistic regression with glm](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/glm.html). Fairness definitions: [Fairness and Machine Learning](https://fairmlbook.org/classification.html).
 - Figure review: [Data to Viz](https://www.data-to-viz.com/caveats.html), prompted by Quiz 7; page-specific advice is recorded in the notes.
 - Review tools: Sciwrite (Barba); Anti-defensive Writing; Kassis et al. (2026), [Scientific Agent Skills](https://doi.org/10.48550/arXiv.2609.00065).
@@ -272,13 +273,18 @@ slide_plot("figures/bootstrap-fnr-gap.png","350px","Bootstrap distribution of th
 .source[Gold lines are the 2.5th and 97.5th percentiles. Conditional on the fitted model and validation choice; the interval does not prove transportability or causal fairness.]
 
 ---
-# Backup: probabilities and binary labels
+# Backup: checking predicted probabilities
 
 ```{r calibration-plot, results='asis'}
-slide_plot("figures/probability-calibration.png","355px","Descriptive calibration by common probability bands and recorded gender")
+slide_plot("figures/probability-calibration.png","330px","Descriptive calibration by common probability bands and recorded gender")
 ```
 
+.small[We compare predicted probabilities with observed dropout proportions.<br>AUC checks ranking; Brier score checks probability error. Neither alone establishes calibration.]
+
 .source[Colour and shape identify recorded gender; point size indicates n. Common 0.2-wide bands; n < 30 points omitted (retained in CSV). No intervals shown. This descriptive check establishes neither group calibration nor binary sufficiency.]
+
+???
+The model-checking lecture asks whether a fitted relationship describes the data adequately. For our binary outcome we examine probabilities with a calibration plot, alongside ranking and threshold errors. Points above the diagonal indicate observed dropout proportions above the average predicted risk; points below indicate lower observed proportions. Bins are coarse, small bins are omitted and no intervals are shown. This descriptive plot does not establish calibration or validate every functional-form assumption. Ordinary OLS residual-cloud rules and adjusted R-squared are not classification accuracy measures.
 
 ---
 # Backup: sensitivity to the model inputs
@@ -299,7 +305,7 @@ The primary model was fixed before evaluating test performance.
 .small[Including gender changes the error pattern; it is not an automatic fairness correction. The slight AUC improvement does not decide which allocation of errors is acceptable.]
 
 ---
-# Backup: keeping the Enrolled group visible
+# Backup: why keep Enrolled?
 
 ```{r enrolled-sensitivity-table, results='asis'}
 tab <- data.frame(
@@ -313,19 +319,22 @@ cat(knitr::kable(tab,format="html"))
 .small[The last two rows evaluate only Dropout versus Graduate (`r num(r$sensitivity$n[1])` test records) at the same numerical threshold. They change the population and question. Better-looking numbers cannot replace the all-student endpoint analysis.]
 
 ---
-# Backup: how we used the course and learned further
+# Backup: course connections and model assumptions
 
-- **From our course:** we used factors, grouped summaries, joins, ggplot, bootstrap ideas and the three fairness criteria.
-- **Further learning:** we asked ChatGPT about logistic regression, validation, thresholds, AUC and Brier score, and checked the documentation.
-- **Our implementation:** we rewrote and ran the main R analysis, then checked its inputs, predictions and metric calculations.
-- **Our checks:** course codes are categories; later information is excluded; test records do not choose the threshold; each rate uses its own denominator.
+- **Course foundations:** data handling, factors, plots, bootstrap and the three fairness criteria.
+- **Regression lectures:** multiple predictors, category contrasts, model checking and parsimony.
+- **Fixed assumptions:** additive effects on the log-odds scale, without interactions. Interaction terms remain untested.
+- **Further learning:** logistic regression, validation, thresholds, AUC and Brier score; ChatGPT and documentation.
 
-.small[Bootstrap and fairness concepts were in our course; their specific multi-metric implementation needed extra work. Our account distinguishes these two levels.]
+.small[We rewrote and ran the main R analysis and checked its outputs. We now use the newer regression lectures to review those earlier choices.]
 
-.source[Course links and supplementary references: docs/course-map and docs/learning-process. We remain responsible for understanding the methods, explaining the code and checking the final work.]
+.source[Introducing linear models, pp. 48-54; Model checking and multiple linear regression, pp. 24-41, 57-63. Details: docs/course-map and docs/regression-course-update.]
+
+???
+The analysis was first evaluated on 5 November. We reviewed it against these regression lectures on 11 November. The lectures support the explanation of factor coding and multiple inputs, and help us state assumptions about interactions and complexity. They do not directly teach binomial logistic regression, and no interaction model has been fitted in this revision. Any later comparison must be developed using training and validation records, not by repeatedly selecting what looks best on the already-viewed test set.
 
 ---
-# Backup: course composition and group differences
+# Backup: course mix by group
 
 ```{r course-composition, results='asis'}
 slide_plot("figures/course-composition.png","365px","Training-only course composition for the two recorded-gender groups; six largest courses shown separately")
