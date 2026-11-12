@@ -1,78 +1,66 @@
 ---
-title: "Project title"
-author: "by Team-Name: User1, User2, User3, User4 & User5"
-date: "`r Sys.Date()`"
+title: "Who gets missed by an enrolment-time dropout warning?"
+author: "Strong Tiger"
 output: html_document
 ---
 
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+source("R/displaced-audit.R", encoding = "UTF-8")
+displaced <- displaced_audit()
 ```
 
+*Working draft. Add the team member names and review the draft before submission.*
 
-```{r load-lib, include = FALSE}
-library(tidyverse)
-# Add any other libraries here
+## Research question
 
-
-
-```
-
-
-```{r load-data, include=FALSE}
-# load your data here and any pre-processing/cleaning 
-#  that you need for your report.
-
-
-
-
-```
-
-
-## Research Question
-
-Describe your research question here. Include why this question might be of interest. 
-
-
-
-
+When a university uses the same dropout warning rule for everyone, who is more likely to be missed, and how does changing the threshold affect the errors across groups? We focus on recorded gender and use the dataset's `Displaced` field as a second comparison. Both a missed warning and a false warning can affect how staff prioritise follow-up.
 
 ## Data
 
-Briefly describe your dataset here - include a description of the key variables you will be investigating. 
-Include a citation for your data. 
-See http://libraryguides.vu.edu.au/c.php?g=386501&p=4347840 for guidance on proper citation for datasets. 
-If you got your data off the web, make sure to state the retrieval date.
+We used the UCI *Predict Students' Dropout and Academic Success* dataset, which contains 4,424 student records from one Portuguese higher education institution. The original labels are Graduate, Enrolled and Dropout. Our outcome is whether a student was recorded as Dropout by the normal course endpoint. A course or institution change can fall under this label, so the outcome is specific to the source's definition.
 
+The predictors available at enrolment in our main model are age, admission grade and course. Recorded gender and `Displaced` are used for group comparisons. The source describes displaced students as away from their original homes. The field is coded 1 for yes and 0 for no, with limited detail about the institution's coding criteria.
 
+## Methods
 
+We fitted the original logistic regression on 2,652 training records. The formula was `dropout ~ age10 + admission10 + course`, with age and admission grade scaled per ten units and course treated as categorical. This produced a risk score for each student. On 883 validation records, we selected the threshold with the highest specificity among the thresholds that reached at least 70% sensitivity. This gave 0.31. We held that rule fixed for the 889 test records and compared it with the conventional threshold of 0.50 using the same prediction scores.
 
+A missed-dropout rate is the share of recorded dropouts that received no warning. A false-warning rate is the share of students without a recorded dropout that received a warning. We computed both rates separately by recorded gender and by `Displaced`. The second grouping was added after the main analysis and is exploratory.
 
+## Results
 
-## Findings
+At 0.31, the model warned for 187 of 285 recorded dropouts and missed 98, giving a test sensitivity of 65.6%. It also produced 222 false warnings. At 0.50 it warned for 80 recorded dropouts and produced 45 false warnings. Lowering the threshold therefore identified 107 additional recorded dropouts and generated 177 additional false warnings on the same test records.
 
-The write-up of your project and findings go here. 
+At 0.31, the recorded female group had a higher missed-dropout rate than the recorded male group (44.4% versus 24.1%). The male group had a higher false-warning rate (48.6% versus 32.0%). The directions stayed the same at 0.50. The female–male gap in missed-dropout rates decreased from 20.3 to 13.2 percentage points, while both groups experienced more missed dropouts.
 
-Think of this as the text of your presentation with some extra detail to cover what there was not time to discuss in the presentation. This might include any assumptions you made when doing your analysis, any limitations of the work you have done or any ideas you have for future work. Feel free to split this section into subsections to make it easier to read. 
+```{r displaced-results}
+tab <- data.frame(
+  Threshold = sprintf("%.2f", displaced$threshold),
+  Displaced = ifelse(displaced$group == 1, "Yes (1)", "No (0)"),
+  `Missed dropout` = sprintf("%d/%d (%.1f%%)", displaced$missed,
+                             displaced$dropouts, 100 * displaced$fnr),
+  `False warning` = sprintf("%d/%d (%.1f%%)", displaced$false_warnings,
+                            displaced$no_dropout, 100 * displaced$fpr),
+  check.names = FALSE
+)
+knitr::kable(tab, caption = "Test-set errors by Displaced status and threshold.")
+```
 
-The length should be roughly 1,500 words. 
-If you want to use a word count addin, you can install this by copying and pasting the following into RStudio:
+At 0.31, the group marked displaced had a missed-dropout rate 15.7 percentage points higher and a false-warning rate 12.7 points lower. Those directions also appeared at 0.50. In this comparison, the missed-dropout gap widened to 21.1 points at the higher threshold. This differed from the recorded-gender comparison, where the missed-dropout gap narrowed.
 
-`devtools::install_github("benmarwick/wordcountaddin", type = "source", dependencies = TRUE)`
+## Discussion and limitations
 
-You will then need to restart RStudio. Once you have done that, select the text you want to count the words of, go to Addins, and select the `Word count` addin.
-This addin counts words using two different algorithms, but the results should be similar and as long as you're in the ballpark of 1,500 words, you're good! 
-The addin will ignore code chunks and only count the words in prose. If you don't want to use the addin you can always copy and paste the text into Microsoft Word to do a Word Count!
+A higher threshold reduced false warnings at the cost of missing more recorded dropouts in every group examined. The change in the missed-dropout gap depended on which grouping we examined. We would therefore report both absolute error rates and group gaps when discussing who might receive or miss an offer of support.
 
-You can also load your data here and present any analysis results / plots.
-Make sure to hide your code with  `echo = FALSE` unless the point you are trying to make is about the code itself, in which case you should show your code.
+These are descriptive comparisons from one institution's test set. Group membership can be related to other factors such as course, and these results do not establish a causal effect of gender or leaving home. The study evaluates predictions against recorded outcomes. Whether contacting students changes those outcomes would require a separate evaluation. If the institution used a warning to guide outreach, staff could check the student's situation before offering help and keep support accessible to students who did not receive warnings.
 
+## References and project link
 
+- Realinho et al. (2021). *Predict Students' Dropout and Academic Success*. UCI Machine Learning Repository. <https://doi.org/10.24432/C5MC89>
+- Realinho et al. (2022). *Predicting Student Dropout and Academic Success*. Data, 7(11), 146. <https://doi.org/10.3390/data7110146>
+- GitHub repository: <https://github.com/Tigershengsheng/ids-project>
 
+## Draft GenAI disclosure
 
-
-## References
-
-List any references here. You should, at a minimum, list your data source.
-
-
+Our team chose the project topic. We directed the focus on threshold trade-offs and approved the additional Displaced comparison. ChatGPT assisted with implementing the additional group summary, drafting this report text and revising the presentation. The presentation also contains AI-generated illustrative images. [Update this statement after team review and use the final course disclosure format.]

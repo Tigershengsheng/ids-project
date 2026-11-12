@@ -12,7 +12,7 @@ Status checked on 7 November 2026. This document describes repository access and
 | ReiyumEe | Invitation pending acceptance |
 | uoeIDS | Read/write collaborator invitation sent on 7 November 2026; pending acceptance. |
 
-The current presentation source/HTML, investigation source/HTML, R analysis, raw data, figures and optional PDF/PowerPoint reading set are included. The separate final report remains incomplete; `report.Rmd` is still the course template, and no completed `report.html` is claimed. Official Learn/Gradescope submission and individual peer evaluation remain separate actions.
+The current presentation source/HTML, investigation source/HTML, R analysis, raw data, figures and optional PDF/PowerPoint reading set are included. The report draft is included as `report.Rmd` and `report.html`. The team still needs to review and finalise it before submission. Official Learn/Gradescope submission and individual peer evaluation remain separate actions.
 
 The supplied course brief expects source and rendered files, collaboration, course-account access and reproducibility. Adding an account sends an invitation: access is only confirmed when the recipient accepts. Do not equate an invitation with accepted access.
 

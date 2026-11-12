@@ -36,13 +36,13 @@ The source contains 4,424 student records from one Portuguese institution. Dropo
 
 The primary model uses enrolment age, admission grade and course as a factor. Later-semester and timing-uncertain information is excluded. Training fits the model, validation selects a shared threshold using an illustrative sensitivity target, and the held-out test set evaluates the frozen rule. Recorded gender is used for auditing, with a separately reported comparison model.
 
-The main presentation links sensitivity, precision, accuracy, false warnings and missed records to Independence, Separation and binary Sufficiency. Denominators and conditional bootstrap uncertainty are reported. The results do not establish discrimination, external validity or an intervention that reduces dropout.
+The presentation compares missed dropouts and false warnings at thresholds 0.31 and 0.50 by recorded gender and, as an exploratory comparison, by Displaced status. Both comparisons use the original held-out model scores. These patterns do not establish causation, external validity or an effect of offering support.
 
 ## Reproduce in RStudio
 
 1. Download/clone the repository and open `student-dropout-final.Rproj`.
 2. If packages are missing, run `source("R/install.R")` once.
-3. Run `source("render_project.R")` to render the presentation and companion documents. Saved results are reused only when their data/source/design fingerprints match.
+3. Run `source("render_project.R")` to render the presentation, report draft, investigation and companion documents. Saved results are reused only when their data/source/design fingerprints match.
 4. Knit `investigation.Rmd` for the working notebook.
 5. Run `source("verify_project.R")` for the independent numerical checks.
 
@@ -50,7 +50,7 @@ The statistical analysis and analytical figures use R. Package versions are reco
 
 ## Group and submission status
 
-The presentation and supporting analysis are prepared. **The separate final report is not completed:** the existing root `report.Rmd` is a course template, and `report.html` has not been supplied. Uploading these files to GitHub is not a Gradescope submission. Topic feasibility confirmation, actual check-in notes, live rehearsal, peer evaluation and official submission must be completed and recorded by the group.
+The presentation and supporting analysis are prepared. The report draft is in `report.Rmd` and `report.html`. Add team member names, review the analysis and complete the GenAI disclosure before submission. Uploading these files to GitHub is not a Gradescope submission. Topic feasibility confirmation, actual check-in notes, live rehearsal, peer evaluation and official submission must be completed and recorded by the group.
 
 The group listed in the kick-off workspace is Tiger (`Tigershengsheng`), Harry (`HarryPeng725`), yingcheLiu (`yingcheliu0723`) and Reiyume (`ReiyumEe`). This upload does not establish equal contributions, accepted invitations or rehearsal. See the current access status below.
 

@@ -84,6 +84,24 @@ knitr::include_graphics("figures/group-fairness.png")
 
 The bootstrap fixes the fitted model and selected threshold while resampling test records within recorded-gender groups. It does not include refitting, clustering by cohort, transport to another institution, or the effect of acting on a warning.
 
+## Exploratory comparison by Displaced status
+
+Using the original held-out predictions, we compared warning errors at 0.31 and 0.50 by the recorded Displaced field. Code 1 identifies students marked as having left home to study and code 0 identifies the remaining students. The exact recording criteria are undocumented in the public data dictionary. This comparison does not refit the model or select a new threshold.
+
+```{r displaced-audit}
+source("R/displaced-audit.R", encoding = "UTF-8")
+d <- displaced_audit()
+knitr::kable(data.frame(
+  Threshold = sprintf("%.2f", d$threshold),
+  Displaced = d$group,
+  `Missed dropout` = sprintf("%d/%d (%s)", d$missed, d$dropouts, pct(d$fnr)),
+  `False warning` = sprintf("%d/%d (%s)", d$false_warnings, d$no_dropout, pct(d$fpr)),
+  check.names = FALSE
+))
+```
+
+The higher threshold increased missed dropouts and reduced false warnings in both groups. The missed-dropout rate gap widened from 15.7 to 21.1 percentage points in this grouping. The original gender comparison showed a narrower gap at the higher threshold.
+
 ## Checks, limitations and reproducibility
 
 The separate sensitivity checks address including gender and restricting the endpoint comparison. They do not retrospectively redefine the primary question or establish a new validated model.

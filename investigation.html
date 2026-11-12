@@ -367,6 +367,8 @@ exploratory figures</a></li>
 costs</a></li>
 <li><a href="#group-error-patterns-and-fairness-criteria" id="toc-group-error-patterns-and-fairness-criteria">Group error patterns
 and fairness criteria</a></li>
+<li><a href="#exploratory-comparison-by-displaced-status" id="toc-exploratory-comparison-by-displaced-status">Exploratory
+comparison by Displaced status</a></li>
 <li><a href="#checks-limitations-and-reproducibility" id="toc-checks-limitations-and-reproducibility">Checks, limitations and
 reproducibility</a></li>
 </ul>
@@ -961,6 +963,64 @@ threshold</td>
 resampling test records within recorded-gender groups. It does not
 include refitting, clustering by cohort, transport to another
 institution, or the effect of acting on a warning.</p>
+</div>
+<div id="exploratory-comparison-by-displaced-status" class="section level2">
+<h2>Exploratory comparison by Displaced status</h2>
+<p>Using the original held-out predictions, we compared warning errors
+at 0.31 and 0.50 by the recorded Displaced field. Code 1 identifies
+students marked as having left home to study and code 0 identifies the
+remaining students. The exact recording criteria are undocumented in the
+public data dictionary. This comparison does not refit the model or
+select a new threshold.</p>
+<pre class="r"><code>source(&quot;R/displaced-audit.R&quot;, encoding = &quot;UTF-8&quot;)
+d &lt;- displaced_audit()
+knitr::kable(data.frame(
+  Threshold = sprintf(&quot;%.2f&quot;, d$threshold),
+  Displaced = d$group,
+  `Missed dropout` = sprintf(&quot;%d/%d (%s)&quot;, d$missed, d$dropouts, pct(d$fnr)),
+  `False warning` = sprintf(&quot;%d/%d (%s)&quot;, d$false_warnings, d$no_dropout, pct(d$fpr)),
+  check.names = FALSE
+))</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Threshold</th>
+<th align="right">Displaced</th>
+<th align="left">Missed dropout</th>
+<th align="left">False warning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0.31</td>
+<td align="right">0</td>
+<td align="left">39/146 (26.7%)</td>
+<td align="left">105/236 (44.5%)</td>
+</tr>
+<tr class="even">
+<td align="left">0.31</td>
+<td align="right">1</td>
+<td align="left">59/139 (42.4%)</td>
+<td align="left">117/368 (31.8%)</td>
+</tr>
+<tr class="odd">
+<td align="left">0.50</td>
+<td align="right">0</td>
+<td align="left">90/146 (61.6%)</td>
+<td align="left">35/236 (14.8%)</td>
+</tr>
+<tr class="even">
+<td align="left">0.50</td>
+<td align="right">1</td>
+<td align="left">115/139 (82.7%)</td>
+<td align="left">10/368 (2.7%)</td>
+</tr>
+</tbody>
+</table>
+<p>The higher threshold increased missed dropouts and reduced false
+warnings in both groups. The missed-dropout rate gap widened from 15.7
+to 21.1 percentage points in this grouping. The original gender
+comparison showed a narrower gap at the higher threshold.</p>
 </div>
 <div id="checks-limitations-and-reproducibility" class="section level2">
 <h2>Checks, limitations and reproducibility</h2>
