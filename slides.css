@@ -59,6 +59,18 @@
 .metric-name { font-size:19px; margin-top:8px; }
 .metric-detail { font-size:14px; color:#b8c2d4; margin-top:5px; }
 .detailed-metrics table { margin:18px 0 12px; }
+.performance-grid { display:grid; grid-template-columns: minmax(0, 1.48fr) minmax(0, 1fr); gap:32px; align-items:start; }
+.performance-grid .metric-line { gap:15px; margin:0 0 16px; }
+.performance-grid .metric-value { font-size:39px; letter-spacing:-1.3px; }
+.performance-grid .metric-name { font-size:16px; margin-top:5px; }
+.performance-grid .metric-detail { font-size:13px; line-height:1.25; }
+.performance-grid table { font-size:18px; margin:14px 0 10px; }
+.performance-grid th,.performance-grid td { padding:10px 9px; }
+.performance-grid th { font-size:11px; }
+.performance-roc { padding-left:16px; border-left:1px solid var(--line); }
+.performance-roc .data-figure { width:100%; }
+.performance-roc .roc-key { text-align:center; font-size:13px; line-height:1.35; color:#bac5d4; }
+.test-context { margin:10px 0 0; }
 .error-summary { font-size:18px; line-height:1.4; margin:10px 0; }
 .bridge-line { font-size:19px; line-height:1.35; padding-top:11px; border-top:1px solid var(--line); color:#d8d2f0; }
 .audit-entry { font-size:16px; line-height:1.4; color:#c7cfdd; margin:4px 0 7px; }

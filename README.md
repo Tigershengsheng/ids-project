@@ -2,7 +2,7 @@
 
 **How accurate are enrolment-time warnings, and who gets missed?**
 
-Current IDS group project: enrolment-time prediction of recorded dropout and an audit of group error patterns. The repository is public. Updated 11 November 2026.
+Current IDS group project: enrolment-time prediction of recorded dropout and an audit of group error patterns. The repository is public. Updated 21 November 2026.
 
 ## Open the current work
 
@@ -13,6 +13,7 @@ Current IDS group project: enrolment-time prediction of recorded dropout and an 
 | Editable PowerPoint | [Student_Dropout_Presentation.pptx](output/powerpoint/Student_Dropout_Presentation.pptx) |
 | Presentation PDF | [01_Presentation.pdf](output/reading-pdfs/01_Presentation.pdf) |
 | English speaking script and Q&A | [02_Speaker_Notes.pdf](output/reading-pdfs/02_Speaker_Notes.pdf) |
+| Project report | [report.Rmd](report.Rmd), [report.html](report.html) |
 | Working research notebook | [investigation.Rmd](investigation.Rmd), [investigation.html](investigation.html) |
 | Complete statistical implementation | [R/analysis.R](R/analysis.R) |
 | Raw UCI data and attribution | [data/data.csv](data/data.csv), [data/README.md](data/README.md) |
@@ -22,9 +23,9 @@ Current IDS group project: enrolment-time prediction of recorded dropout and an 
 
 GitHub may display HTML source rather than run the presentation. Download the repository using **Code > Download ZIP**, extract it and open `presentation.html` in a browser, or use the PDF. For reproduction, open `student-dropout-final.Rproj` in RStudio.
 
-## Two people uploading to the same repository
+## Working in the group repository
 
-`Tigershengsheng` owns this repository. `yingcheliu0723` has a read/write invitation pending acceptance. Sign in as that account and [accept the repository invitation](https://github.com/Tigershengsheng/ids-project/invitations). Then both accounts can contribute their actual changes to this same project.
+`Tigershengsheng` owns this repository. `yingcheliu0723` has write access and contributed the report draft and Displaced analysis in [5201072](https://github.com/Tigershengsheng/ids-project/commit/52010729291c62865b81816630c45ba2e6679c2c).
 
 In each person's local clone: pull the latest changes before editing, make and knit the relevant changes, then commit and push under that person's own account. The public setting lets everyone read/download; it does not give everyone permission to push. Source files and HTML outputs should be kept together.
 
@@ -42,7 +43,7 @@ The presentation compares missed dropouts and false warnings at thresholds 0.31 
 
 1. Download/clone the repository and open `student-dropout-final.Rproj`.
 2. If packages are missing, run `source("R/install.R")` once.
-3. Run `source("render_project.R")` to render the presentation, report draft, investigation and companion documents. Saved results are reused only when their data/source/design fingerprints match.
+3. Run `source("render_project.R")` to render the presentation, report, investigation and companion documents. Saved results are reused only when their data/source/design fingerprints match.
 4. Knit `investigation.Rmd` for the working notebook.
 5. Run `source("verify_project.R")` for the independent numerical checks.
 
@@ -50,7 +51,7 @@ The statistical analysis and analytical figures use R. Package versions are reco
 
 ## Group and submission status
 
-The presentation and supporting analysis are prepared. The report draft is in `report.Rmd` and `report.html`. Add team member names, review the analysis and complete the GenAI disclosure before submission. Uploading these files to GitHub is not a Gradescope submission. Topic feasibility confirmation, actual check-in notes, live rehearsal, peer evaluation and official submission must be completed and recorded by the group.
+The presentation has eight speaking slides and one reference slide. The revised report includes the exploratory Displaced comparison and a GenAI disclosure. Review the author information and disclosure as a group before submitting the two HTML files through Gradescope.
 
 The group listed in the kick-off workspace is Tiger (`Tigershengsheng`), Harry (`HarryPeng725`), yingcheLiu (`yingcheliu0723`) and Reiyume (`ReiyumEe`). This upload does not establish equal contributions, accepted invitations or rehearsal. See the current access status below.
 

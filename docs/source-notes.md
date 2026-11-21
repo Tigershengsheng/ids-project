@@ -28,7 +28,7 @@ The open original PDF is preserved under docs/sources with a retrieval record. C
 
 No consent, ethical approval, contemporary representativeness, prospective validation or intervention success is inferred merely from open availability.
 
-## Methods added to the supplied course material
+## Method references and later course connections
 
 - Official R documentation for glm: https://stat.ethz.ch/R-manual/R-devel/library/stats/html/glm.html
 - Official R binomial-family documentation: https://stat.ethz.ch/R-manual/R-devel/library/stats/html/family.html
@@ -53,3 +53,5 @@ The error-bar article includes an informal probability description of confidence
 ## Assistance and outstanding review
 
 ChatGPT helped retrieve/check sources, write R code, draft the slides and prepare explanations. R generated all statistical results and analytical charts. The group must review the analysis, replace wording it cannot defend, confirm speakers and understand the code. No actual group discussion, tutor approval, rehearsal, peer evaluation or submission is invented.
+
+The later classification lectures cover logistic regression and threshold-based evaluation. Model building also covers ROC and AUC. See [course-map.md](course-map.md) for page numbers. The UCI codebook distinguishes qualification code 34 (Unknown), occupation code 90 (Other Situation), and occupation code 99 ((blank)). The audit counts them separately by field.

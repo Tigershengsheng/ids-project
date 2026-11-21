@@ -39,26 +39,26 @@
     {
       "slide": 6,
       "speaker": "Speaker 3",
-      "words": 85,
-      "seconds_at_100wpm": 51.0,
-      "seconds_at_120wpm": 42.5
+      "words": 75,
+      "seconds_at_100wpm": 45.0,
+      "seconds_at_120wpm": 37.5
     },
     {
       "slide": 7,
       "speaker": "Speaker 4",
-      "words": 95,
-      "seconds_at_100wpm": 57.0,
-      "seconds_at_120wpm": 47.5
+      "words": 91,
+      "seconds_at_100wpm": 54.6,
+      "seconds_at_120wpm": 45.5
     },
     {
       "slide": 8,
       "speaker": "Speaker 4",
-      "words": 72,
-      "seconds_at_100wpm": 43.199999999999996,
-      "seconds_at_120wpm": 36.0
+      "words": 83,
+      "seconds_at_100wpm": 49.8,
+      "seconds_at_120wpm": 41.5
     }
   ],
-  "total_words": 599,
-  "seconds_at_100wpm": 359.4,
-  "seconds_at_120wpm": 299.5
+  "total_words": 596,
+  "seconds_at_100wpm": 357.59999999999997,
+  "seconds_at_120wpm": 298.0
 }

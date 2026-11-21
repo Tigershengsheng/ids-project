@@ -15,11 +15,11 @@ We used R to import and inspect the data, treat coded categories as factors, and
 
 The page-level course evidence is in [course-map.md](course-map.md).
 
-## Methods we learned further
+## Initial learning and subsequent course review
 
-Logistic regression, separate validation/test evaluation, threshold selection, AUC and Brier score were less familiar to us. We asked ChatGPT to explain what they measure, checked the documentation, then rewrote and ran the main analysis in R. We checked the outputs against the raw records and saved predictions.
+Logistic regression, separate validation/test evaluation, threshold selection, AUC and Brier score were less familiar to us. We asked ChatGPT to explain what they measure, checked the documentation, then rewrote and ran the main analysis in R. We checked the outputs against the raw records and saved predictions. The subsequent review identified direct teaching on logistic regression, hold-out prediction, ROC/AUC and cutoff trade-offs in the later course materials. The precise validation rule, split and Brier score remain project choices or extensions.
 
-| Supplement | Why we used it | What we need to explain |
+| Method | Why we used it | What we need to explain |
 | --- | --- | --- |
 | Logistic regression | Our outcome is binary and we want estimated probabilities. | Inputs, factor coding and the additive linear terms on the log-odds scale. |
 | Training, validation and test records | Fitting, choosing a threshold and evaluating it need different records. | Which decisions use each partition, and why test outcomes do not choose the rule. |

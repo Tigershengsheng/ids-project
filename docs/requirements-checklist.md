@@ -12,17 +12,17 @@ Authority: the exact Final Project PDF supplied by the user, `Final Projects __ 
 | Course organiser or lecturer should confirm dataset feasibility, p. 5 | Candidate and its boundaries are documented | Pending actual confirmation; not claimed approved |
 | Data understanding, appropriate EDA, model and evaluation, pp. 1-3 | Timing audit, training-only EDA, fixed logistic model, validation threshold, held-out results, baseline | Implemented |
 | Critique data reliability, validity and methods; cautious interpretation, pp. 2-3 | Administrative departure includes transfers; one historical institution; no individual timestamps or cohort/year field | Explicit in slides and notes |
-| Select informative visualisations; clarity and coherence, p. 3 | Eight main slides; R plots with labelled denominators and uncertainty; detailed results in backups | All 18 HTML/PDF pages rendered and reviewed; offline browser has no overflow or missing resources |
+| Select informative visualisations; clarity and coherence, p. 3 | Eight main slides with labelled R plots, denominators and uncertainty. The report and speaker Q&A contain the detailed results. | The test ROC and group interval appear on slides 6 and 7. |
 | All analysis in R/RStudio, p. 3 | R/analysis.R generates every statistic and analytical figure | Implemented; Python only retrieves/extracts sources and packages/verifies exports |
 | Use the project-repository slide template, pp. 6, 8 | Original template archived in docs/course-template; xaringan::moon_reader, 16:9, knitr tables and ggplot workflow retained | Adapted; example content and optional confetti styling replaced |
-| Total group slot 10 minutes; suggested 7-minute talk + 2-minute questions, p. 6 | Slides 1-8 are the main talk; references/backups are for consultation | Script timings estimated from words; human rehearsal pending |
+| Total group slot 10 minutes; suggested 7-minute talk + 2-minute questions, p. 6 | Slides 1–8 are the main talk, and slide 9 lists sources. | Script timings are estimated from words. Time a group rehearsal in the actual workshop setup. |
 | Every member has an opportunity to speak, p. 6 | Suggested four-part allocation; actual speaker names and agreement need group confirmation | Proposed, not a contribution record |
 | Explain choices, reasons and findings rather than a chronological account, p. 6 | First-person notes explain decisions actually reflected in the source audit and analysis | Drafted for group review; no invented meetings or feedback |
 | Hide presentation code, but retain reproducible source, pp. 6, 10 | Global echo=FALSE; sourced R analysis and complete raw data accompany Rmd | Implemented |
-| GitHub collaboration and course-account access, pp. 3, 8-10 | Current R sources, data, presentation and working notebook uploaded to Tigershengsheng/ids-project on 7 November 2026; course-account and member invitations checked | Upload complete; uoeIDS and three member invitations pending acceptance |
+| GitHub collaboration and course-account access, pp. 3, 8-10 | Earlier project files are in Tigershengsheng/ids-project. Read the dated access record for permissions. | Write access verified for yingcheliu0723 on 21 November. Confirm course-account access before submitting |
 | Check-in discussions and feedback, pp. 5-6, 9 | Notes may be recorded after actual attendance | Pending; no tutor feedback fabricated |
 | HTML presentation submission, p. 9 | presentation.html is the formal slide format; sharing PDF is supplementary | File prepared, not submitted |
-| Approx. 1,500-word report, maximum 1,650; report HTML and repository link, pp. 7, 9 | This task covers the presentation and supporting analysis | Not produced; remains a separate deliverable |
+| Approx. 1,500-word report, maximum 1,650; report HTML and repository link, pp. 7, 9 | Revised report.Rmd and self-contained report.html include the repository link and GenAI disclosure | Group review and the formal submission are separate steps |
 | Peer evaluation and actual contribution, pp. 7-10 | Suggested speaking allocation does not establish contribution or peer scores | Pending each student's real evaluation |
 
 ## Stated mark allocation
@@ -40,3 +40,7 @@ The supplied document, PDF p. 11, allocates Presentation 50, Report 40, Reproduc
 ## Suggestions requiring later judgement
 
 Prospective validation, consultation about support capacity and error costs, more complete gender representation, privacy/access controls before any actual operational use, and review of the reasons behind administrative departures. None is presented as an intervention already shown to work.
+
+## Evidence still to obtain
+
+Check Learn or current course announcements for any update to the supplied brief. The dates in the supplied copy are a 27 November second check-in, a 4 December workshop presentation and a 7 December 10:00 GMT deadline for both HTML files and individual peer evaluations (PDF pp. 5–6, 9). Record actual feasibility confirmation, attendance, tutor feedback, speaking roles and contributions when the group has evidence. The project includes the revised report source and HTML. Confirm the author and disclosure details with the group before submission. One group member submits both HTML files and adds teammates. Each member completes their own peer evaluation. See PDF pp. 2–3, 5–11 for the corresponding requirements.

@@ -5,6 +5,7 @@ for (folder in c("results","figures")) dir.create(folder,showWarnings=FALSE)
 seed <- 20261105L
 set.seed(seed)
 
+## ---- data-preparation ----
 # 1. Preserve the original labels and a stable file-row identifier.
 raw <- read_delim("data/data.csv",delim=";",locale=locale(decimal_mark="."),
                   trim_ws=TRUE,show_col_types=FALSE,name_repair="minimal")
@@ -29,6 +30,7 @@ students <- raw %>% transmute(
 outcomes <- students %>% count(target,name="n") %>% mutate(proportion=n/sum(n))
 write_csv(outcomes,"results/outcome-counts.csv")
 
+## ---- field-audit ----
 # 2. Document every original field, including omitted and time-uncertain inputs.
 field_audit <- tibble(field=names(raw)) %>% mutate(
   timing=case_when(
@@ -53,12 +55,20 @@ field_audit <- tibble(field=names(raw)) %>% mutate(
     field=="Application order" ~ "Ordinal category",
     TRUE ~ "Categorical, including numeric codes"))
 write_csv(field_audit,"results/variable-timing-audit.csv")
-unknown_codes <- tibble(field=c("Mother's qualification","Father's qualification", "Mother's occupation","Father's occupation"),
-  source_note=c("Code 34 means Unknown","Code 34 means Unknown","Codes 90/99 need codebook interpretation","Codes 90/99 need codebook interpretation"),
-  count_34_or_90_or_99=vapply(c("Mother's qualification","Father's qualification","Mother's occupation","Father's occupation"),
-    function(x) sum(raw[[x]] %in% c(34,90,99)),integer(1)))
+# Codes are specific to their fields. Count each code separately.
+unknown_codes <- tibble(
+  field = rep(c("Mother's qualification", "Father's qualification",
+                "Mother's occupation", "Father's occupation"), c(1, 1, 2, 2)),
+  code = c(34L, 34L, 90L, 99L, 90L, 99L),
+  source_note = c("Unknown", "Unknown", "Other situation", "(blank)",
+                  "Other situation", "(blank)")
+)
+unknown_codes$count <- vapply(seq_len(nrow(unknown_codes)), function(i) {
+  sum(raw[[unknown_codes$field[i]]] == unknown_codes$code[i])
+}, integer(1))
 write_csv(unknown_codes,"results/coded-unknown-audit.csv")
 
+## ---- data-split ----
 # 3. Approximately 60/20/20 within original outcome and recorded-gender strata.
 # Exact full-record repeats, if present, stay together; they are not assumed to be one person.
 units <- students %>% distinct(profile_id,target,gender)
@@ -90,21 +100,49 @@ course_attendance <- table(training$course,training$attendance)
 stopifnot(all(rowSums(course_attendance>0)==1))
 write_csv(as_tibble(as.data.frame(course_attendance)),"results/training-course-attendance.csv")
 
+## ---- model-fit ----
 # 4. Fixed, interpretable candidate models; no feature search against test outcomes.
 primary_formula <- dropout ~ age10 + admission10 + course
 primary <- glm(primary_formula,data=training,family=binomial())
 with_gender <- glm(update(primary_formula,. ~ . + gender),data=training,family=binomial())
 stopifnot(primary$converged,with_gender$converged,all(is.finite(coef(primary))),all(is.finite(coef(with_gender))))
 validation$probability <- predict(primary,newdata=validation,type="response")
-divide <- function(a,b) ifelse(b>0,a/b,NA_real_)
-confusion <- function(y,flag) c(TP=sum(y==1 & flag),FP=sum(y==0 & flag),FN=sum(y==1 & !flag),TN=sum(y==0 & !flag))
-rates <- function(z) {
-  tp <- unname(z["TP"]); fp <- unname(z["FP"]); fn <- unname(z["FN"]); tn <- unname(z["TN"])
-  c(BaseRate=divide(tp+fn,sum(z)),WarningRate=divide(tp+fp,sum(z)),
-    FPR=divide(fp,fp+tn),FNR=divide(fn,tp+fn),Sensitivity=divide(tp,tp+fn),Specificity=divide(tn,tn+fp),
-    PPV=divide(tp,tp+fp),NPV=divide(tn,tn+fn),FOR=divide(fn,tn+fn),Accuracy=divide(tp+tn,sum(z)),
-    BalancedAccuracy=mean(c(divide(tp,tp+fn),divide(tn,tn+fp))))
+## ---- metric-functions ----
+# A rate is undefined when the relevant subgroup has no records.
+divide <- function(numerator, denominator) {
+  ifelse(denominator > 0, numerator / denominator, NA_real_)
 }
+
+# y is the recorded outcome (1 = Dropout), flag is the model decision.
+confusion <- function(y, flag) {
+  c(
+    TP = sum(y == 1 & flag),
+    FP = sum(y == 0 & flag),
+    FN = sum(y == 1 & !flag),
+    TN = sum(y == 0 & !flag)
+  )
+}
+
+rates <- function(z) {
+  tp <- unname(z["TP"])
+  fp <- unname(z["FP"])
+  fn <- unname(z["FN"])
+  tn <- unname(z["TN"])
+  c(
+    BaseRate = divide(tp + fn, sum(z)),
+    WarningRate = divide(tp + fp, sum(z)),
+    FPR = divide(fp, fp + tn),
+    FNR = divide(fn, tp + fn),
+    Sensitivity = divide(tp, tp + fn),
+    Specificity = divide(tn, tn + fp),
+    PPV = divide(tp, tp + fp),
+    NPV = divide(tn, tn + fn),
+    FOR = divide(fn, tn + fn),
+    Accuracy = divide(tp + tn, sum(z)),
+    BalancedAccuracy = mean(c(divide(tp, tp + fn), divide(tn, tn + fp)))
+  )
+}
+# AUC compares dropout and non-dropout score ranks. Tied pairs count halfway.
 auc_rank <- function(y,p) {
   n1 <- sum(y==1); n0 <- sum(y==0)
   if(!n1 || !n0) return(NA_real_)
@@ -116,13 +154,19 @@ model_metrics <- function(y,p,flag,label) {
     AUC=auc_rank(y,p),Brier=mean((p-y)^2),LogLoss=-mean(y*log(pmax(p,1e-12))+(1-y)*log(pmax(1-p,1e-12))),
     !!!as.list(rr))
 }
+## ---- threshold-selection ----
 threshold_grid <- bind_rows(lapply(seq(.05,.80,.01),function(t) {
   rr <- rates(confusion(validation$dropout,validation$probability>=t))
   tibble(threshold=t,!!!as.list(rr))
 }))
 eligible <- threshold_grid %>% filter(Sensitivity>=.70) %>% arrange(desc(Specificity),desc(threshold))
-threshold <- if(nrow(eligible)) eligible$threshold[1] else min(threshold_grid$threshold)
-threshold_target_attained <- nrow(eligible)>0
+threshold_target_attained <- nrow(eligible) > 0
+# A lower grid bound is used only if the illustrative target is unreachable.
+threshold <- if (threshold_target_attained) {
+  eligible$threshold[1]
+} else {
+  min(threshold_grid$threshold)
+}
 write_csv(threshold_grid,"results/validation-thresholds.csv")
 configuration <- list(seed=seed,training_n=nrow(training),validation_n=nrow(validation),test_n=nrow(test),
   primary_formula=deparse(primary_formula),threshold=threshold,validation_sensitivity_target=.70,
@@ -132,6 +176,7 @@ jsonlite::write_json(configuration,"results/frozen-configuration.json",pretty=TR
 write_csv(tibble(term=names(coef(primary)),coefficient=unname(coef(primary))),"results/primary-coefficients.csv")
 saveRDS(list(primary=primary,with_gender=with_gender),"results/fitted-models.rds")
 
+## ---- test-scoring ----
 # 5. Hold-out evaluation; the model and threshold are now fixed.
 test$probability <- predict(primary,newdata=test,type="response")
 test$probability_gender <- predict(with_gender,newdata=test,type="response")
@@ -148,6 +193,7 @@ write_csv(metrics,"results/test-metrics.csv")
 write_csv(test %>% select(row_id,target,dropout,gender,course,probability,probability_gender,flag,flag_05,flag_gender),
           "results/test-predictions.csv")
 
+## ---- group-audit ----
 group_summary <- function(d,flag_col="flag") bind_rows(lapply(levels(d$gender),function(g) {
   x <- filter(d,gender==g); z <- confusion(x$dropout,x[[flag_col]])
   tibble(gender=g,n=nrow(x),TP=z["TP"],FP=z["FP"],FN=z["FN"],TN=z["TN"],!!!as.list(rates(z)))
@@ -159,6 +205,7 @@ write_csv(group_metrics,"results/fairness-group-metrics.csv")
 write_csv(group_metrics_05,"results/fairness-threshold-05.csv")
 write_csv(group_metrics_gender,"results/fairness-gender-inclusive.csv")
 
+## ---- bootstrap ----
 # 6. Percentile bootstrap of fixed held-out predictions, within recorded-gender groups.
 B <- 5000L
 set.seed(seed+1L)
@@ -166,6 +213,8 @@ metric_names <- names(rates(c(TP=1,FP=1,FN=1,TN=1)))
 boot <- array(NA_real_,dim=c(B,length(metric_names),2),dimnames=list(NULL,metric_names,levels(test$gender)))
 overall_boot <- matrix(NA_real_,nrow=B,ncol=4,dimnames=list(NULL,c("AUC","Brier","Sensitivity","Accuracy")))
 group_rows <- lapply(levels(test$gender),function(g) which(test$gender==g))
+# Each draw resamples rows within gender using the original group sizes.
+# The predictions and flags travel with their outcomes, so no model is refitted.
 for(b in seq_len(B)) {
   draws <- lapply(group_rows,function(ids) sample(ids,length(ids),replace=TRUE))
   for(g in seq_len(2)) {
@@ -196,6 +245,7 @@ write_csv(gaps,"results/fairness-gaps.csv")
 write_csv(overall_intervals,"results/test-metric-intervals.csv")
 write_csv(as_tibble(gap_boot),"results/bootstrap-gaps.csv")
 
+## ---- endpoint-check ----
 # 7. Pre-specified sensitivity to the outcome definition; keep the original partitions.
 train_resolved <- training %>% filter(target!="Enrolled")
 test_resolved <- test %>% filter(target!="Enrolled")
@@ -209,11 +259,13 @@ sensitivity <- bind_rows(
                 "Refit on Dropout/Graduate training rows; same threshold"))
 write_csv(sensitivity,"results/enrolled-definition-sensitivity.csv")
 
+## ---- calibration ----
 # 8. A descriptive probability check using common bands, separate from label sufficiency.
 calibration <- test %>% mutate(band=cut(probability,breaks=seq(0,1,.2),include.lowest=TRUE)) %>%
   group_by(gender,band) %>% summarise(n=n(),mean_score=mean(probability),observed=mean(dropout),.groups="drop")
 write_csv(calibration,"results/calibration-bins.csv")
 
+## ---- figures ----
 # 9. Figures. Statistical visualisations are generated directly in R.
 colours <- c(Female="#6658A6",Male="#007E78")
 outcome_colours <- c(Graduate="#667585",Enrolled="#B99540",Dropout="#B64F4B")
@@ -305,6 +357,7 @@ p_composition <- ggplot(composition,aes(x=proportion,y=course_group,fill=gender)
     title="Course composition differs between the groups")
 save_plot("course-composition",p_composition)
 
+## ---- save-results ----
 # 10. Save the common result object and provenance used by every document.
 audit <- list(rows=nrow(raw),columns=ncol(raw),predictors=ncol(raw)-1L,missing_cells=sum(is.na(raw)),
   exact_duplicate_rows=sum(duplicated(raw)),courses=nlevels(students$course),

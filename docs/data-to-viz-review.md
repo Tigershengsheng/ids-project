@@ -41,7 +41,7 @@ Slide 3 briefly acknowledges Quiz 7's recommended resource. Slide 9 lists the ac
 
 ## Reproducibility and limits
 
-R/analysis.R, the raw CSV, fitted models, partitions, predictions, threshold, bootstrap replicates and numerical result files are preserved. R/refresh_figures.R reads those outputs and redraws all eight figures when presentation.Rmd is knitted. It does not fit, tune or resample. The chart types remain bars, boxplots, lines, points with intervals and a histogram. The main talk is still eight slides, followed by sources and nine backup slides.
+R/analysis.R, the raw CSV, fitted models, partitions, predictions, threshold, bootstrap replicates and numerical result files are preserved. R/refresh_figures.R reads the saved outputs when presentation.Rmd is knitted. It does not fit, tune or resample. The slide numbers above refer to the deck at the time of the figure review. In the current deck, slides 1–8 are the talk and slide 9 lists sources. The technical figures remain in the project figures folder.
 
 The error-bar article's informal wording about CI probability is not adopted; the project uses a repeated-sampling interpretation and conditional percentile bootstrap. We have not established how a real audience would respond to these changes. Topic approval, group review, actual rehearsal, repository setup and formal submission remain separate actions.
 

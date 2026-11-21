@@ -62,6 +62,52 @@ refresh_presentation_figures <- function(r) {
     labs(x="Warning threshold",y=NULL,colour=NULL,linetype=NULL)
   save_review_plot("validation-threshold",p_threshold,width=10.8,height=5.8)
 
+  # Use the frozen test scores for the ROC curve. Move tied scores together
+  # because a threshold applies the same decision to every tied record.
+  test_scores <- read_csv("results/test-predictions.csv", show_col_types=FALSE)
+  positive <- sum(test_scores$dropout == 1)
+  negative <- sum(test_scores$dropout == 0)
+  roc_points <- test_scores %>%
+    group_by(probability) %>%
+    summarise(dropouts=sum(dropout == 1), others=sum(dropout == 0), .groups="drop") %>%
+    arrange(desc(probability)) %>%
+    transmute(fpr=cumsum(others)/negative, tpr=cumsum(dropouts)/positive) %>%
+    bind_rows(tibble(fpr=0, tpr=0), .)
+
+  cutoffs <- c(0.50, r$threshold)
+  cutoff_points <- tibble(
+    label=sprintf("Cutoff %.2f", cutoffs),
+    fpr=vapply(cutoffs, function(cutoff) {
+      sum(test_scores$probability >= cutoff & test_scores$dropout == 0)/negative
+    }, numeric(1)),
+    tpr=vapply(cutoffs, function(cutoff) {
+      sum(test_scores$probability >= cutoff & test_scores$dropout == 1)/positive
+    }, numeric(1))
+  )
+  auc <- sum(diff(roc_points$fpr) *
+    (head(roc_points$tpr,-1) + tail(roc_points$tpr,-1))/2)
+  test_rules <- r$metrics[2:3,]
+  stopifnot(
+    positive + negative == nrow(test_scores),
+    nrow(test_scores) == r$configuration$test_n,
+    isTRUE(all.equal(cutoff_points$fpr, test_rules$FPR)),
+    isTRUE(all.equal(cutoff_points$tpr, test_rules$Sensitivity)),
+    all(abs(auc - test_rules$AUC) < 1e-12)
+  )
+
+  p_roc <- ggplot(roc_points,aes(fpr,tpr)) +
+    geom_abline(slope=1,intercept=0,colour="#8291A6",linetype="dashed") +
+    geom_path(colour="#55DFCA",linewidth=1.1) +
+    geom_point(data=cutoff_points,aes(shape=label),colour="#D9B977",size=3.9) +
+    geom_text(data=cutoff_points,aes(label=label),colour="#E7C982",
+      hjust=0,nudge_x=.045,nudge_y=-.047,size=5) +
+    scale_shape_manual(values=c(16,17),guide="none") +
+    scale_x_continuous(breaks=seq(0,1,.2),labels=scales::label_percent()) +
+    scale_y_continuous(breaks=seq(0,1,.2),labels=scales::label_percent()) +
+    coord_equal(xlim=c(0,1),ylim=c(0,1)) +
+    labs(x="False-warning rate",y="Sensitivity")
+  save_review_plot("test-roc",p_roc,width=5.6,height=5.1)
+
   metric_labels <- c(WarningRate="Flagged among all students",FPR="Flagged among non-dropouts (FPR)",
     FNR="Missed among recorded dropouts (FNR)",PPV="Dropouts among flagged students (PPV)",
     FOR="Dropouts among unflagged students")

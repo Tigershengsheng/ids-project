@@ -2,18 +2,8 @@
 
 Public group repository: https://github.com/Tigershengsheng/ids-project
 
-Status checked on 7 November 2026. This document describes repository access and deliverables, not actual check-in meeting attendance or peer contributions.
+The 21 November project version includes the nine-slide presentation, revised report and reproducible investigation. It builds on the group work in 5201072, which introduced the Displaced comparison. The report and notebook retain that analysis on the original test scores.
 
-| Account | Verified status |
-| --- | --- |
-| Tigershengsheng | Owner |
-| HarryPeng725 | Invitation pending acceptance |
-| yingcheliu0723 | Invitation pending acceptance |
-| ReiyumEe | Invitation pending acceptance |
-| uoeIDS | Read/write collaborator invitation sent on 7 November 2026; pending acceptance. |
+GitHub confirmed that `yingcheliu0723` has write access on 21 November 2026. The account is linked to commit [5201072](https://github.com/Tigershengsheng/ids-project/commit/52010729291c62865b81816630c45ba2e6679c2c). Check the repository's collaborator settings for current access for the rest of the team and the course account.
 
-The current presentation source/HTML, investigation source/HTML, R analysis, raw data, figures and optional PDF/PowerPoint reading set are included. The report draft is included as `report.Rmd` and `report.html`. The team still needs to review and finalise it before submission. Official Learn/Gradescope submission and individual peer evaluation remain separate actions.
-
-The supplied course brief expects source and rendered files, collaboration, course-account access and reproducibility. Adding an account sends an invitation: access is only confirmed when the recipient accepts. Do not equate an invitation with accepted access.
-
-The owner explicitly chose Public visibility on 7 November 2026. Anyone can now read and download the content. The course-account invitation remains pending; public read access does not require invitation acceptance. `yingcheliu0723` must accept the existing read/write invitation before pushing changes. Both students can contribute to the same repository; only one group member should perform the formal Gradescope submission.
+One member submits the presentation and report HTML files to Gradescope and adds the other group members. Each member completes peer evaluation individually.

@@ -17,7 +17,17 @@ slide_plot <- function(path, height = "380px", alt = basename(path)) {
 }
 load_results <- function() {
   path <- "results/analysis.rds"
-  stale <- !file.exists(path)
+  companion_outputs <- c(
+    "results/split-membership.csv", "results/split-counts.csv",
+    "results/validation-thresholds.csv", "results/test-metrics.csv",
+    "results/coded-unknown-audit.csv", "results/fairness-group-metrics.csv",
+    "results/fairness-gaps.csv", "results/fairness-gender-inclusive.csv",
+    "results/enrolled-definition-sensitivity.csv", "results/test-metric-intervals.csv",
+    "results/test-predictions.csv", "results/primary-coefficients.csv",
+    "results/fitted-models.rds", "results/bootstrap-gaps.csv",
+    "results/calibration-bins.csv", "results/training-course-composition.csv"
+  )
+  stale <- !all(file.exists(c(path, companion_outputs)))
   if (!stale) {
     r <- readRDS(path)
     stale <- !identical(r$data_sha256,file_sha256("data/data.csv")) ||

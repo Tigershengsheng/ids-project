@@ -371,7 +371,8 @@ methods and reasons for the analysis</a>
 <ul>
 <li><a href="#methods-we-applied-from-the-course" id="toc-methods-we-applied-from-the-course">Methods we applied from the
 course</a></li>
-<li><a href="#methods-we-learned-further" id="toc-methods-we-learned-further">Methods we learned further</a></li>
+<li><a href="#initial-learning-and-subsequent-course-review" id="toc-initial-learning-and-subsequent-course-review">Initial learning
+and subsequent course review</a></li>
 <li><a href="#our-reasons-for-key-choices" id="toc-our-reasons-for-key-choices">Our reasons for key
 choices</a></li>
 <li><a href="#assistance-and-responsibility" id="toc-assistance-and-responsibility">Assistance and
@@ -436,13 +437,16 @@ prediction groups.</td>
 </table>
 <p>The page-level course evidence is in <a href="course-map.md">course-map.md</a>.</p>
 </div>
-<div id="methods-we-learned-further" class="section level2">
-<h2>Methods we learned further</h2>
+<div id="initial-learning-and-subsequent-course-review" class="section level2">
+<h2>Initial learning and subsequent course review</h2>
 <p>Logistic regression, separate validation/test evaluation, threshold
 selection, AUC and Brier score were less familiar to us. We asked
 ChatGPT to explain what they measure, checked the documentation, then
 rewrote and ran the main analysis in R. We checked the outputs against
-the raw records and saved predictions.</p>
+the raw records and saved predictions. The subsequent review identified
+direct teaching on logistic regression, hold-out prediction, ROC/AUC and
+cutoff trade-offs in the later course materials. The precise validation
+rule, split and Brier score remain project choices or extensions.</p>
 <table>
 <colgroup>
 <col width="33%" />
@@ -451,7 +455,7 @@ the raw records and saved predictions.</p>
 </colgroup>
 <thead>
 <tr class="header">
-<th>Supplement</th>
+<th>Method</th>
 <th>Why we used it</th>
 <th>What we need to explain</th>
 </tr>

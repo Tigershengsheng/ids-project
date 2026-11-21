@@ -1,66 +1,196 @@
 ---
 title: "Who gets missed by an enrolment-time dropout warning?"
 author: "Strong Tiger"
-output: html_document
+output:
+  html_document:
+    self_contained: true
+    toc: true
+    toc_depth: 2
+    theme: readable
+    mathjax: null
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
-source("R/displaced-audit.R", encoding = "UTF-8")
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, fig.align = "center",
+                      fig.width = 7, fig.height = 3.8, dpi = 150)
+source("R/setup.R")
+results <- load_results()
+source("R/displaced-audit.R")
 displaced <- displaced_audit()
+
+rules <- results$metrics[match(
+  c("Always no warning", "Enrolment model: threshold 0.50",
+    "Enrolment model: validation rule"), results$metrics$Rule), ]
+baseline <- rules[1, ]
+default <- rules[2, ]
+selected <- rules[3, ]
+config <- results$configuration
+outcomes <- results$outcomes
+summary_train <- results$training_summary
+summary_train <- as.data.frame(summary_train)
+rownames(summary_train) <- summary_train$target
+counts <- setNames(outcomes$n, outcomes$target)
+
+by_gender <- results$group_metrics
+at_default <- read.csv("results/fairness-threshold-05.csv")
+female <- by_gender[by_gender$gender == "Female", ]
+male <- by_gender[by_gender$gender == "Male", ]
+gap <- subset(results$gaps, metric == "FNR")
+auc_interval <- subset(results$overall_intervals, metric == "AUC")
+
+fit <- readRDS("results/fitted-models.rds")$primary
+course_reference <- fit$xlevels$course[1]
+stopifnot(identical(course_reference, "171"))
+coefficients <- coef(fit)[c("age10", "admission10")]
+odds_ratio <- exp(coefficients)
+
+fmt <- function(x, digits = 0) formatC(x, format = "f", digits = digits, big.mark = ",")
+percent <- function(x) ifelse(is.na(x), "Undefined", paste0(fmt(100 * x, 1), "%"))
+fraction <- function(x, n) paste0(x, "/", n, " (", percent(x/n), ")")
+pp <- function(x) fmt(100 * x, 1)
+observed <- function(data, group, cutoff) {
+  data[data$group == group & abs(data$threshold - cutoff) < 1e-8, ]
+}
+displaced_gap <- function(cutoff, metric) {
+  observed(displaced, 1, cutoff)[[metric]] - observed(displaced, 0, cutoff)[[metric]]
+}
 ```
 
-*Working draft. Add the team member names and review the draft before submission.*
+<style>
+@media (max-width: 700px) {
+  .main-container table { display: block; overflow-x: auto; max-width: 100%; }
+}
+.figure img { max-width: 100%; height: auto; }
+.main-container caption { color: #555; }
+</style>
 
-## Research question
+## 1. Research question
 
-When a university uses the same dropout warning rule for everyone, who is more likely to be missed, and how does changing the threshold affect the errors across groups? We focus on recorded gender and use the dataset's `Displaced` field as a second comparison. Both a missed warning and a false warning can affect how staff prioritise follow-up.
+An enrolment-time warning could help student-support staff decide whom to contact while there is still time to offer help. A low cutoff can catch more departures but also creates more follow-up work. We ask how well age, admission grade and course predict recorded dropout by the normal end of a programme. We then ask who is missed by the same warning rule and how the error patterns change at two cutoffs. The recorded outcome lets us evaluate the warnings against historical records. Whether outreach improves outcomes is a separate question.
 
-## Data
+## 2. Data and exploration
 
-We used the UCI *Predict Students' Dropout and Academic Success* dataset, which contains 4,424 student records from one Portuguese higher education institution. The original labels are Graduate, Enrolled and Dropout. Our outcome is whether a student was recorded as Dropout by the normal course endpoint. A course or institution change can fall under this label, so the outcome is specific to the source's definition.
+Each row in UCI dataset 697 represents a student record from one Portuguese higher education institution. The data cover enrolments from 2008/09 to 2018/19 (Realinho et al., 2022). Of the `r fmt(results$audit$rows)` records, `r fmt(counts[["Dropout"]])` were labelled Dropout, `r fmt(counts[["Enrolled"]])` Enrolled and `r fmt(counts[["Graduate"]])` Graduate. The endpoint is the normal programme duration, typically three years and four for Nursing. The source counts changes of programme or institution as dropout. We retain all three labels and code the model outcome as 1 for Dropout and 0 for Graduate or Enrolled. The zero category means no recorded dropout at that endpoint. Students in Enrolled were still studying.
 
-The predictors available at enrolment in our main model are age, admission grade and course. Recorded gender and `Displaced` are used for group comparisons. The source describes displaced students as away from their original homes. The field is coded 1 for yes and 0 for no, with limited detail about the institution's coding criteria.
+We checked for empty cells, exact duplicate rows and coded categories before splitting. The downloaded table had `r results$audit$missing_cells` missing cells and `r results$audit$exact_duplicate_rows` exact duplicate rows. Special codes such as unknown parental qualifications were audited separately, outside the primary model. We used numerical age and admission grade and treated course codes as categories. We excluded first- and second-semester records because they become available after the intended warning, and left out fields with uncertain recording times. Recorded gender and Displaced were used to audit errors. The source records Displaced as a yes/no field for students away from their original homes, with limited detail about how the category was assigned.
 
-## Methods
+The median age in the training sample was `r summary_train["Dropout", "median_age"]` years for Dropout, `r summary_train["Enrolled", "median_age"]` for Enrolled and `r summary_train["Graduate", "median_age"]` for Graduate. Median admission grades were `r fmt(summary_train["Dropout", "median_admission"], 1)`, `r fmt(summary_train["Enrolled", "median_admission"], 1)` and `r fmt(summary_train["Graduate", "median_admission"], 1)` points, respectively. Both distributions overlap across outcome groups (Figure 1).
 
-We fitted the original logistic regression on 2,652 training records. The formula was `dropout ~ age10 + admission10 + course`, with age and admission grade scaled per ten units and course treated as categorical. This produced a risk score for each student. On 883 validation records, we selected the threshold with the highest specificity among the thresholds that reached at least 70% sensitivity. This gave 0.31. We held that rule fixed for the 889 test records and compared it with the conventional threshold of 0.50 using the same prediction scores.
+```{r entry-profile, fig.cap="Figure 1. Enrolment age and admission grades by recorded outcome in the training data. The boxes show the middle 50% and median. Group sizes are shown below the outcome labels."}
+students <- readr::read_delim("data/data.csv", delim = ";", show_col_types = FALSE,
+                             name_repair = "minimal")
+membership <- read.csv("results/split-membership.csv")
+train_ids <- membership$row_id[membership$split == "Training"]
+eda <- data.frame(
+  Age = students[["Age at enrollment"]][train_ids],
+  Grade = students[["Admission grade"]][train_ids],
+  Outcome = factor(students$Target[train_ids], levels = names(counts))
+)
+group_totals <- table(eda$Outcome)
+axis_labels <- setNames(paste0(names(group_totals), "\n(n = ", fmt(as.vector(group_totals)),
+                                ")"), names(group_totals))
+eda <- tidyr::pivot_longer(eda, c(Age, Grade), names_to = "Measure", values_to = "Value")
+eda$Measure <- factor(eda$Measure, levels = c("Age", "Grade"),
+                      labels = c("Enrolment age (years)", "Admission grade (points out of 200)"))
+ggplot2::ggplot(eda, ggplot2::aes(Outcome, Value, fill = Outcome)) +
+  ggplot2::geom_boxplot(width = .58, outlier.alpha = .22, show.legend = FALSE) +
+  ggplot2::facet_wrap(~Measure, scales = "free_y") +
+  ggplot2::scale_fill_manual(values = c(Graduate = "#9ABCCF", Enrolled = "#E0B877",
+                                        Dropout = "#CC8293")) +
+  ggplot2::scale_x_discrete(labels = axis_labels) +
+  ggplot2::labs(x = NULL, y = NULL) +
+  ggplot2::theme_minimal(base_size = 12) +
+  ggplot2::theme(panel.grid.major.x = ggplot2::element_blank())
+```
 
-A missed-dropout rate is the share of recorded dropouts that received no warning. A false-warning rate is the share of students without a recorded dropout that received a warning. We computed both rates separately by recorded gender and by `Displaced`. The second grouping was added after the main analysis and is exploratory.
+## 3. Methods
 
-## Results
+We used a fixed seed (`r config$seed`) to split the records by original outcome and recorded gender into training (`r fmt(config$training_n)`), validation (`r fmt(config$validation_n)`) and test (`r fmt(config$test_n)`) sets. We fitted a logistic regression on training data using age and admission grade scaled in tens, plus a course factor. The model estimates a probability from a binary outcome. Its age and grade terms are linear on the log-odds scale and share the same slopes across courses.
 
-At 0.31, the model warned for 187 of 285 recorded dropouts and missed 98, giving a test sensitivity of 65.6%. It also produced 222 false warnings. At 0.50 it warned for 80 recorded dropouts and produced 45 false warnings. Lowering the threshold therefore identified 107 additional recorded dropouts and generated 177 additional false warnings on the same test records.
+On validation data, we selected the cutoff with the highest specificity among those that reached at least 70% sensitivity, breaking ties in favour of the higher cutoff. We chose 70% to illustrate a warning policy that prioritises finding dropouts. We then evaluated that fixed rule on the test set against the same model at 0.50 and a baseline that never warns.
 
-At 0.31, the recorded female group had a higher missed-dropout rate than the recorded male group (44.4% versus 24.1%). The male group had a higher false-warning rate (48.6% versus 32.0%). The directions stayed the same at 0.50. The female–male gap in missed-dropout rates decreased from 20.3 to 13.2 percentage points, while both groups experienced more missed dropouts.
+Sensitivity is the fraction of recorded dropouts warned, specificity the fraction of other records left unflagged, and precision the fraction of warnings that match a dropout. Accuracy counts all matching decisions. ROC AUC measures score ranking across cutoffs. For the gender audit, we compared warning proportions (Independence), error rates at the same observed outcome (Separation), and dropout proportions within both warned and unwarned records (binary Sufficiency). Pointwise percentile intervals come from 5,000 bootstrap resamples within recorded-gender groups of the test set, with the fitted model and cutoff fixed. We used the same scores for a later exploratory comparison by Displaced.
 
-```{r displaced-results}
-tab <- data.frame(
-  Threshold = sprintf("%.2f", displaced$threshold),
-  Displaced = ifelse(displaced$group == 1, "Yes (1)", "No (0)"),
-  `Missed dropout` = sprintf("%d/%d (%.1f%%)", displaced$missed,
-                             displaced$dropouts, 100 * displaced$fnr),
-  `False warning` = sprintf("%d/%d (%.1f%%)", displaced$false_warnings,
-                            displaced$no_dropout, 100 * displaced$fpr),
+## 4. Results
+
+### What the fitted coefficients say
+
+```{r model-coefficients}
+coef_table <- data.frame(
+  Predictor = c("Age at enrolment, per 10 years", "Admission grade, per 10 points"),
+  Coefficient = fmt(coefficients, 3),
+  "Odds multiplier" = fmt(odds_ratio, 3),
   check.names = FALSE
 )
-knitr::kable(tab, caption = "Test-set errors by Displaced status and threshold.")
+knitr::kable(coef_table, row.names = FALSE,
+             caption = "Table 1. Fitted log-odds coefficients and their exponentiated values.")
 ```
 
-At 0.31, the group marked displaced had a missed-dropout rate 15.7 percentage points higher and a false-warning rate 12.7 points lower. Those directions also appeared at 0.50. In this comparison, the missed-dropout gap widened to 21.1 points at the higher threshold. This differed from the recorded-gender comparison, where the missed-dropout gap narrowed.
+At the same admission grade and course, a student ten years older had estimated odds of recorded dropout about twice as high. At the same age and course, ten more admission points were associated with about 16% lower odds. The coefficients describe associations conditional on the other model inputs. The probability difference depends on the starting probability. Each course coefficient compares its course with Animation and Multimedia Design (course `r course_reference`), at the same age and grade.
 
-## Discussion and limitations
+### The warning cutoff changes the errors
 
-A higher threshold reduced false warnings at the cost of missing more recorded dropouts in every group examined. The change in the missed-dropout gap depended on which grouping we examined. We would therefore report both absolute error rates and group gaps when discussing who might receive or miss an offer of support.
+The validation rule chose `r fmt(config$threshold, 2)`. On `r selected$n` test records, it caught `r selected$TP` of `r selected$TP + selected$FN` dropout records and missed `r selected$FN`. Lowering the cutoff from 0.50 to `r fmt(config$threshold, 2)` caught `r selected$TP - default$TP` more dropout records and generated `r selected$FP - default$FP` more false warnings. The no-warning baseline had higher accuracy than our chosen rule and caught zero cases. ROC AUC was `r fmt(selected$AUC, 3)` (95% conditional bootstrap interval `r fmt(auc_interval$lower, 3)` to `r fmt(auc_interval$upper, 3)`). That score is shared by the two cutoffs, which use the same probability ranking.
 
-These are descriptive comparisons from one institution's test set. Group membership can be related to other factors such as course, and these results do not establish a causal effect of gender or leaving home. The study evaluates predictions against recorded outcomes. Whether contacting students changes those outcomes would require a separate evaluation. If the institution used a warning to guide outreach, staff could check the student's situation before offering help and keep support accessible to students who did not receive warnings.
+```{r rule-results}
+performance <- data.frame(
+  Decision = c("Never warn", "Warn at 0.50", paste("Warn at", fmt(config$threshold, 2))),
+  "Dropouts caught" = rules$TP, "Missed" = rules$FN, "False warnings" = rules$FP,
+  Sensitivity = percent(rules$Sensitivity), Specificity = percent(rules$Specificity),
+  Precision = percent(rules$PPV), Accuracy = percent(rules$Accuracy), check.names = FALSE
+)
+knitr::kable(performance, caption = "Table 2. Three decision rules applied to the same 889 test records.")
+```
 
-## References and project link
+### Who is missed by the same rule?
 
-- Realinho et al. (2021). *Predict Students' Dropout and Academic Success*. UCI Machine Learning Repository. <https://doi.org/10.24432/C5MC89>
-- Realinho et al. (2022). *Predicting Student Dropout and Academic Success*. Data, 7(11), 146. <https://doi.org/10.3390/data7110146>
-- GitHub repository: <https://github.com/Tigershengsheng/ids-project>
+At `r fmt(config$threshold, 2)`, the rule missed a greater share of recorded female dropouts. The female-minus-male gap was `r pp(-gap$estimate)` percentage points (95% conditional bootstrap interval `r pp(-gap$upper)` to `r pp(-gap$lower)`). The false-warning rate was higher for male records without dropout. Warning rates also differed, and the dropout proportions in both warning categories differed by recorded gender. The observed dropout proportions among all female and male records were `r percent(female$BaseRate)` and `r percent(male$BaseRate)`, which helps explain why these group comparisons answer different questions.
 
-## Draft GenAI disclosure
+```{r fairness-results}
+group_rates <- function(g) c(
+  fraction(g$TP + g$FP, g$n),
+  fraction(g$FN, g$TP + g$FN),
+  fraction(g$FP, g$FP + g$TN),
+  fraction(g$TP, g$TP + g$FP),
+  fraction(g$FN, g$FN + g$TN)
+)
+fairness <- data.frame(
+  Criterion = c("Independence", "Separation", "Separation", "Sufficiency", "Sufficiency"),
+  Comparison = c("Warned out of all", "Missed among dropouts",
+                 "Warned among non-dropouts", "Dropout among warned", "Dropout among unwarned"),
+  Female = group_rates(female), Male = group_rates(male)
+)
+knitr::kable(fairness, caption = "Table 3. Group counts, denominators and rates at the 0.31 cutoff.")
+```
 
-Our team chose the project topic. We directed the focus on threshold trade-offs and approved the additional Displaced comparison. ChatGPT assisted with implementing the additional group summary, drafting this report text and revising the presentation. The presentation also contains AI-generated illustrative images. [Update this statement after team review and use the final course disclosure format.]
+At 0.50, both recorded-gender groups missed more dropout records. The female-minus-male gap narrowed to `r pp(at_default$FNR[at_default$gender == "Female"] - at_default$FNR[at_default$gender == "Male"])` points. The exploratory Displaced comparison went the other way: its missed-dropout gap widened from `r pp(displaced_gap(config$threshold, "fnr"))` to `r pp(displaced_gap(0.50, "fnr"))` points. The group marked Displaced had a lower false-warning rate at both cutoffs. At the higher cutoff, the female group's missed-dropout rate was 78.5% and the male group's was 65.2%. A smaller gap can coexist with more misses in both groups. Anyone choosing a cutoff should examine the rates alongside their difference.
+
+```{r displaced-results}
+displaced_table <- data.frame(
+  Cutoff = fmt(displaced$threshold, 2),
+  Displaced = ifelse(displaced$group == 1, "Yes", "No"),
+  "Missed among dropouts" = fraction(displaced$missed, displaced$dropouts),
+  "Warned among non-dropouts" = fraction(displaced$false_warnings, displaced$no_dropout),
+  check.names = FALSE
+)
+knitr::kable(displaced_table, caption = "Table 4. Exploratory error comparison by Displaced status at both cutoffs.")
+```
+
+## 5. Discussion and limitations
+
+The enrolment model detected about two-thirds of recorded dropouts at the chosen cutoff. That came with 222 false warnings and noticeably different error rates across groups. The observed gaps do not identify their causes. Course mix, underlying dropout rates and the institution's recording practices may all matter. Keeping Enrolled in the original records preserves the distinction between continuing and graduating. Restricting evaluation to Dropout and Graduate raises AUC to 0.756 for the same primary fit, but changes the evaluation population. That result is about students with a resolved outcome, so we report it as a sensitivity check.
+
+The model gives useful ranking information on these records, but a warning is an imperfect proxy for needing help. This distinction matters because a transfer is counted as dropout and students who remain enrolled may still benefit from support. The results concern historical data from one institution. The released data lack a cohort field for a chronological test. The bootstrap describes variation across resampled test records given the fixed fit and cutoff. It leaves out uncertainty from refitting and changes in future cohorts. The comparisons by Displaced are descriptive and would need confirmation on fresh data.
+
+Before considering use, we would validate the rule on a later cohort, check what transfers and other recorded departures mean for students, and estimate the staff time implied by the warning rate. A flagged record could prompt a conversation, with support still available to unflagged students. A separate evaluation would be needed to see whether that outreach helps.
+
+## Reproducibility and sources
+
+The [group repository](https://github.com/Tigershengsheng/ids-project) contains the raw data and R scripts. From the project root in RStudio, use `source("R/analysis.R")` to regenerate results and then knit this report. `verify_project.R` checks the split, threshold and main results.
+
+- Realinho et al. (2021). *Predict Students' Dropout and Academic Success*. UCI Machine Learning Repository. [Dataset](https://doi.org/10.24432/C5MC89), accessed 5 November 2026.
+- Realinho et al. (2022). *Predicting Student Dropout and Academic Success*. *Data*, 7(11), 146. [Data descriptor](https://doi.org/10.3390/data7110146).
+
+## Generative AI disclosure
+
+Our team chose the project topic and directed the focus on threshold trade-offs and the exploratory Displaced comparison. ChatGPT assisted with code, source checks, report drafting and revision, and presentation design. The group's presentation draft also used AI-generated illustrative images. All numerical results in this report are generated in R.

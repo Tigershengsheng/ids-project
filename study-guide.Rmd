@@ -56,7 +56,7 @@ fit <- glm(dropout ~ age10 + admission10 + course,
 
 `glm` fits a generalised linear model; `binomial` specifies the binary logistic model. Dividing age and admission grade by ten changes their units; it is not standardisation estimated from test data. Course is categorical. Age and grade are linear on the log-odds scale, with additive course effects and no interactions. These are simplifying assumptions.
 
-Logistic regression is supplementary to the supplied material. We explain it with the official R documentation rather than claiming it appeared in an uploaded modelling lecture.
+The initial analysis used further reading and R documentation. The subsequently supplied Predicting categorical outcomes lectures teach logistic regression. Model building covers hold-out evaluation, ROC and AUC. The particular split and validation objective are project choices.
 
 ## Training, validation and test records
 
