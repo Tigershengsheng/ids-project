@@ -176,6 +176,8 @@ displaced_table <- data.frame(
 knitr::kable(displaced_table, caption = "Table 4. Exploratory error comparison by Displaced status at both cutoffs.")
 ```
 
+For students recorded as living away from home, raising the cutoff from `r fmt(config$threshold, 2)` to 0.50 meant `r fmt(observed(displaced, 1, 0.50)$missed - observed(displaced, 1, config$threshold)$missed)` more missed dropouts and `r fmt(observed(displaced, 1, config$threshold)$false_warnings - observed(displaced, 1, 0.50)$false_warnings)` fewer false warnings on the same test set.
+
 ## 5. Discussion and limitations
 
 The enrolment model detected about two-thirds of recorded dropouts at the chosen cutoff. That came with 222 false warnings and noticeably different error rates across groups. The observed gaps do not identify their causes. Course mix, underlying dropout rates and the institution's recording practices may all matter. Keeping Enrolled in the original records preserves the distinction between continuing and graduating. Restricting evaluation to Dropout and Graduate raises AUC to 0.756 for the same primary fit, but changes the evaluation population. That result is about students with a resolved outcome, so we report it as a sensitivity check.
