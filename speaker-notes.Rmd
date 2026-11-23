@@ -1,7 +1,7 @@
 ---
 title: "Presentation script and speaking notes"
 subtitle: "Student dropout warnings: English script, analysis decisions and Q&A"
-date: "20 November 2026"
+date: "23 November 2026"
 output:
   html_document:
     self_contained: true
@@ -14,6 +14,8 @@ output:
 ```{r setup, include=FALSE}
 source("R/setup.R")
 r <- load_results()
+source("R/training-course-cv.R")
+course_cv <- training_course_cv()
 m <- r$metrics[3,]
 default <- r$metrics[2,]
 f <- r$group_metrics[1,]
@@ -76,7 +78,7 @@ Transition: We then needed a small model and a fair test of its predictions.
 ## Slide 4: inputs and evaluation design
 
 ::: {.spoken data-slide="4" data-speaker="Speaker 2"}
-We use age, admission grade and course together, treating course as a category. Our model assumes additive effects on the log-odds scale, without interactions. The regression lectures help us review these assumptions; logistic regression needed further learning. We exclude later grades and financial fields with uncertain timing, and reserve recorded gender for the audit. Training records fit the model, validation records chose one threshold, and test records evaluated the frozen rule. This keeps a small model and separates its decisions. Next, we explain how probabilities become warnings.
+We use age, admission grade and course, treating course as a category. A later five-fold check within the training set helped us see what course adds. Mean AUC rose from `r num(course_cv$average["without_course","AUC"],3)` to `r num(course_cv$average["with_course","AUC"],3)`. In the main analysis, we fitted the model on training records, chose the cutoff on validation records and evaluated the fixed rule on test records. We used information available at enrolment. Next, we explain how probabilities become warnings.
 :::
 
 Our primary inputs are age at enrolment, admission grade and course. Logistic regression produces estimated probabilities. Course is categorical; age and grade enter linearly on the log-odds scale, with additive course effects and no interactions. These are simplifying assumptions.
@@ -88,6 +90,8 @@ The regression lectures supplied for the 11 November review help us explain mult
 In the training records, attendance regime was determined by course. We therefore retain course without the redundant attendance term. This decision uses training data, rather than the later validation or test scores.
 
 The partitions contain `r num(r$configuration$training_n)` training, `r num(r$configuration$validation_n)` validation and `r num(r$configuration$test_n)` test records. Validation chooses the threshold; it is not subsequently added back into the fitted model.
+
+For the later course comparison, we split those `r num(course_cv$n)` training records into five folds. Both models trained on four folds and predicted the fifth in each round. Average squared probability error also fell, from `r num(course_cv$average["without_course","Brier"],3)` to `r num(course_cv$average["with_course","Brier"],3)`, when we included course. See *Cross Validation*, pp. 29–33 and 38–40.
 
 Transition: The next choice was how much estimated risk should trigger a warning.
 
@@ -137,7 +141,7 @@ Our reasoning: We cannot judge this warning by accuracy alone. Always predicting
 ## Slide 7: whom the rule misses
 
 ::: {.spoken data-slide="7" data-speaker="Speaker 4"}
-Were students in each group equally likely to be missed? Among those recorded as dropping out, we missed `r num(f$FN)` of `r num(f$TP+f$FN)` students recorded as female and `r num(male$FN)` of `r num(male$TP+male$FN)` recorded as male. That's about forty-four versus twenty-four per cent. A missed warning could mean a missed offer of support. When we looked at students without a dropout record, false warnings were more common in the male group. The other rows show who received a warning and what happened among students with and without one. Each row uses a different denominator.
+Were students in each group equally likely to be missed? Among those recorded as dropping out, we missed `r num(f$FN)` of `r num(f$TP+f$FN)` students recorded as female and `r num(male$FN)` of `r num(male$TP+male$FN)` recorded as male. That's about forty-four versus twenty-four per cent. To see how much that gap could vary, we resampled the test records within each group and kept the model and cutoff fixed. A missed warning could mean a missed offer of support. Among students without a dropout record, false warnings were more common in the male group.
 :::
 
 Of 98 missed records, 64 were female and 34 male. The corresponding false-negative rates use actual dropout records as denominators: 64/144 and 34/141. The female-minus-male gap is about 20.3 percentage points, with a conditional interval of about 9.5 to 30.7 points.
@@ -282,6 +286,10 @@ We wanted probabilities for a binary outcome. We read R documentation and asked 
 
 They have a defensible enrolment interpretation and keep the model explainable. We chose scope over a broad feature search. This does not prove other entry variables are irrelevant or that this model is optimal.
 
+### How do we know course added useful information?
+
+After the main analysis, we ran both candidate models on the same five splits of the original training records. With course, mean AUC rose from `r num(course_cv$average["without_course","AUC"],3)` to `r num(course_cv$average["with_course","AUC"],3)`, and mean Brier score fell from `r num(course_cv$average["without_course","Brier"],3)` to `r num(course_cv$average["with_course","Brier"],3)`. This supports using course in these data. The separately reported test AUC of `r num(m$AUC,3)` comes from the original fitted model.
+
 ### Why three partitions?
 
 We needed extra explanation of held-out evaluation. We learned to give each partition a different job: training fits coefficients, validation chooses the rule, and test estimates performance after both are fixed. We implemented this split in R and kept validation records out of the final fit. We did not use test results to choose the threshold.
@@ -317,6 +325,10 @@ They condition on different denominators and may conflict when groups have diffe
 ### What uncertainty does the bootstrap cover?
 
 It resamples held-out student records within each recorded-gender group, with the fitted model and threshold held fixed. It describes variation in this conditional evaluation. It does not account for refitting the model, cohort clustering, transport to another institution or the effect of offering support. The intervals are pointwise, not simultaneous fairness certification.
+
+### How does that connect to Inference in Linear Regression?
+
+Both methods resample whole rows with replacement and use the middle 95% of the resulting estimates. The lecture refits a linear model on each resample to estimate a slope. We fix our logistic model and cutoff, and recalculate the gap in miss rates on each test resample. The interval therefore describes uncertainty in that gap given our fitted rule.
 
 ### Is this a future-cohort test?
 

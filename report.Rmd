@@ -17,6 +17,8 @@ source("R/setup.R")
 results <- load_results()
 source("R/displaced-audit.R")
 displaced <- displaced_audit()
+source("R/training-course-cv.R")
+course_cv <- training_course_cv()
 
 rules <- results$metrics[match(
   c("Always no warning", "Enrolment model: threshold 0.50",
@@ -109,6 +111,8 @@ We used a fixed seed (`r config$seed`) to split the records by original outcome 
 
 On validation data, we selected the cutoff with the highest specificity among those that reached at least 70% sensitivity, breaking ties in favour of the higher cutoff. We chose 70% to illustrate a warning policy that prioritises finding dropouts. We then evaluated that fixed rule on the test set against the same model at 0.50 and a baseline that never warns.
 
+After the main analysis, we ran a five-fold comparison within the original training set. Both logistic models used the same folds, stratified by original outcome and recorded gender. We compared mean fold AUC and Brier score for age and admission grade, with and without course.
+
 Sensitivity is the fraction of recorded dropouts warned, specificity the fraction of other records left unflagged, and precision the fraction of warnings that match a dropout. Accuracy counts all matching decisions. ROC AUC measures score ranking across cutoffs. For the gender audit, we compared warning proportions (Independence), error rates at the same observed outcome (Separation), and dropout proportions within both warned and unwarned records (binary Sufficiency). Pointwise percentile intervals come from 5,000 bootstrap resamples within recorded-gender groups of the test set, with the fitted model and cutoff fixed. We used the same scores for a later exploratory comparison by Displaced.
 
 ## 4. Results
@@ -178,6 +182,21 @@ knitr::kable(displaced_table, caption = "Table 4. Exploratory error comparison b
 
 For students recorded as living away from home, raising the cutoff from `r fmt(config$threshold, 2)` to 0.50 meant `r fmt(observed(displaced, 1, 0.50)$missed - observed(displaced, 1, config$threshold)$missed)` more missed dropouts and `r fmt(observed(displaced, 1, config$threshold)$false_warnings - observed(displaced, 1, 0.50)$false_warnings)` fewer false warnings on the same test set.
 
+### What does course add?
+
+```{r training-course-comparison}
+cv_table <- data.frame(
+  Predictors = c("Age and admission grade", "Age, admission grade and course"),
+  "Mean AUC" = fmt(course_cv$average[, "AUC"], 3),
+  "Mean Brier score" = fmt(course_cv$average[, "Brier"], 3),
+  check.names = FALSE
+)
+knitr::kable(cv_table, row.names = FALSE,
+             caption = "Table 5. Five-fold comparison within the 2,652 original training records.")
+```
+
+Adding course improved AUC and reduced squared probability error in all five folds. That supports keeping course as a predictor in these historical data. This follow-up used the training records only. The test AUC of `r fmt(selected$AUC, 3)` describes the original fitted model.
+
 ## 5. Discussion and limitations
 
 The enrolment model detected about two-thirds of recorded dropouts at the chosen cutoff. That came with 222 false warnings and noticeably different error rates across groups. The observed gaps do not identify their causes. Course mix, underlying dropout rates and the institution's recording practices may all matter. Keeping Enrolled in the original records preserves the distinction between continuing and graduating. Restricting evaluation to Dropout and Graduate raises AUC to 0.756 for the same primary fit, but changes the evaluation population. That result is about students with a resolved outcome, so we report it as a sensitivity check.
@@ -192,6 +211,7 @@ The [group repository](https://github.com/Tigershengsheng/ids-project) contains 
 
 - Realinho et al. (2021). *Predict Students' Dropout and Academic Success*. UCI Machine Learning Repository. [Dataset](https://doi.org/10.24432/C5MC89), accessed 5 November 2026.
 - Realinho et al. (2022). *Predicting Student Dropout and Academic Success*. *Data*, 7(11), 146. [Data descriptor](https://doi.org/10.3390/data7110146).
+- Introduction to Data Science (2026/27). *Cross Validation*, slides 29–33 and 38–40.
 
 ## Generative AI disclosure
 

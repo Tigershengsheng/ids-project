@@ -2,7 +2,7 @@
 
 **How accurate are enrolment-time warnings, and who gets missed?**
 
-Current IDS group project: enrolment-time prediction of recorded dropout and an audit of group error patterns. The repository is public. Updated 21 November 2026.
+Current IDS group project: enrolment-time prediction of recorded dropout and an audit of group error patterns. The repository is public. Updated 23 November 2026.
 
 ## Open the current work
 
@@ -66,3 +66,5 @@ We used our course methods for data handling, plots, bootstrap ideas and fairnes
 The 8 November presentation revision clarifies the accuracy baseline, synchronises the eight spoken blocks and removes repeated preparation text. The fixed statistical results are retained. Review tools and their sources are recorded in `docs/revision-review.md`.
 
 The 11 November course review connects the fixed model to the two regression lectures, clarifies the additive log-odds assumption and expands the probability-checking and Q&A explanations. See `docs/regression-course-update.md`. The model, threshold and numerical results are unchanged.
+
+The 23 November follow-up compares models with and without course using five folds within the original training partition. Report Table 5 and slide 4 use the same results from `R/training-course-cv.R`. The investigation shows all five folds, and the slide 7 script explains how we resampled the fixed test predictions for the group-gap interval.

@@ -106,6 +106,19 @@ The following functions count predicted/recorded pairs and divide by the applica
 knitr::include_graphics("figures/validation-threshold.png")
 ```
 
+## Follow-up: what course adds
+
+The main model was already fixed when we did this comparison. Following *Cross Validation* (pp. 29–33 and 38–40), we used the same five folds for both logistic models within the original training partition. Each round fits on four folds and predicts the fifth. AUC measures ranking and Brier score measures squared probability error.
+
+```{r training-course-cross-validation}
+source("R/training-course-cv.R")
+course_cv <- training_course_cv()
+knitr::kable(course_cv$folds, digits = 3)
+knitr::kable(course_cv$average, digits = 3)
+```
+
+Every fold used both models on the same held-out training records. This comparison does not select a new cutoff or involve the original validation or test records.
+
 ## Test performance and error costs
 
 Accuracy, sensitivity and precision have different denominators. The always-no-warning baseline illustrates why accuracy alone is insufficient for this question. Lowering the threshold can identify more recorded dropouts while also creating more false warnings.

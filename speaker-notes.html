@@ -10,7 +10,7 @@
 
 
 
-<meta name="date" content="2026-11-20" />
+<meta name="date" content="2026-11-23" />
 
 <title>Presentation script and speaking notes</title>
 
@@ -365,7 +365,7 @@ display: none;
 <h1 class="title toc-ignore">Presentation script and speaking notes</h1>
 <h3 class="subtitle">Student dropout warnings: English script, analysis
 decisions and Q&amp;A</h3>
-<h4 class="date">20 November 2026</h4>
+<h4 class="date">23 November 2026</h4>
 
 </div>
 
@@ -510,15 +510,13 @@ predictions.</p>
 <div id="slide-4-inputs-and-evaluation-design" class="section level2">
 <h2>Slide 4: inputs and evaluation design</h2>
 <div class="spoken" data-slide="4" data-speaker="Speaker 2">
-<p>We use age, admission grade and course together, treating course as a
-category. Our model assumes additive effects on the log-odds scale,
-without interactions. The regression lectures help us review these
-assumptions; logistic regression needed further learning. We exclude
-later grades and financial fields with uncertain timing, and reserve
-recorded gender for the audit. Training records fit the model,
-validation records chose one threshold, and test records evaluated the
-frozen rule. This keeps a small model and separates its decisions. Next,
-we explain how probabilities become warnings.</p>
+<p>We use age, admission grade and course, treating course as a
+category. A later five-fold check within the training set helped us see
+what course adds. Mean AUC rose from 0.668 to 0.702. In the main
+analysis, we fitted the model on training records, chose the cutoff on
+validation records and evaluated the fixed rule on test records. We used
+information available at enrolment. Next, we explain how probabilities
+become warnings.</p>
 </div>
 <p>Our primary inputs are age at enrolment, admission grade and course.
 Logistic regression produces estimated probabilities. Course is
@@ -544,6 +542,11 @@ scores.</p>
 <p>The partitions contain 2,652 training, 883 validation and 889 test
 records. Validation chooses the threshold; it is not subsequently added
 back into the fitted model.</p>
+<p>For the later course comparison, we split those 2,652 training
+records into five folds. Both models trained on four folds and predicted
+the fifth in each round. Average squared probability error also fell,
+from 0.204 to 0.196, when we included course. See <em>Cross
+Validation</em>, pp. 29–33 and 38–40.</p>
 <p>Transition: The next choice was how much estimated risk should
 trigger a warning.</p>
 <div class="decision-note-en">
@@ -625,11 +628,11 @@ warnings are false, with separate denominators.</p>
 <p>Were students in each group equally likely to be missed? Among those
 recorded as dropping out, we missed 64 of 144 students recorded as
 female and 34 of 141 recorded as male. That’s about forty-four versus
-twenty-four per cent. A missed warning could mean a missed offer of
-support. When we looked at students without a dropout record, false
-warnings were more common in the male group. The other rows show who
-received a warning and what happened among students with and without
-one. Each row uses a different denominator.</p>
+twenty-four per cent. To see how much that gap could vary, we resampled
+the test records within each group and kept the model and cutoff fixed.
+A missed warning could mean a missed offer of support. Among students
+without a dropout record, false warnings were more common in the male
+group.</p>
 </div>
 <p>Of 98 missed records, 64 were female and 34 male. The corresponding
 false-negative rates use actual dropout records as denominators: 64/144
@@ -989,6 +992,14 @@ explainable. We chose scope over a broad feature search. This does not
 prove other entry variables are irrelevant or that this model is
 optimal.</p>
 </div>
+<div id="how-do-we-know-course-added-useful-information" class="section level3">
+<h3>How do we know course added useful information?</h3>
+<p>After the main analysis, we ran both candidate models on the same
+five splits of the original training records. With course, mean AUC rose
+from 0.668 to 0.702, and mean Brier score fell from 0.204 to 0.196. This
+supports using course in these data. The separately reported test AUC of
+0.718 comes from the original fitted model.</p>
+</div>
 <div id="why-three-partitions" class="section level3">
 <h3>Why three partitions?</h3>
 <p>We needed extra explanation of held-out evaluation. We learned to
@@ -1065,6 +1076,15 @@ variation in this conditional evaluation. It does not account for
 refitting the model, cohort clustering, transport to another institution
 or the effect of offering support. The intervals are pointwise, not
 simultaneous fairness certification.</p>
+</div>
+<div id="how-does-that-connect-to-inference-in-linear-regression" class="section level3">
+<h3>How does that connect to Inference in Linear Regression?</h3>
+<p>Both methods resample whole rows with replacement and use the middle
+95% of the resulting estimates. The lecture refits a linear model on
+each resample to estimate a slope. We fix our logistic model and cutoff,
+and recalculate the gap in miss rates on each test resample. The
+interval therefore describes uncertainty in that gap given our fitted
+rule.</p>
 </div>
 <div id="is-this-a-future-cohort-test" class="section level3">
 <h3>Is this a future-cohort test?</h3>
