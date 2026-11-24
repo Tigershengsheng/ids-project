@@ -1,4 +1,4 @@
-36 independent checks passed
+41 independent checks passed
 Raw file matches independently retrieved SHA-256
 Raw dimensions and explicit missingness
 Every original student row retained exactly once in split membership
@@ -20,6 +20,10 @@ Primary confusion counts sum to the held-out sample
 AUC agrees with independent positive-negative pair comparisons
 Brier score agrees with direct probability error
 Sensitivity and PPV have distinct correct denominators
+Both cutoffs use the same dropout denominators and reproduce the four plotted counts
+Displayed differences are calculated before rounding, and totals match the two group counts
+The plotted interval is for the female-minus-male gap under the fixed warning rule
+Training-only five-fold AUC and original-model test AUC are reproduced separately
 Female confusion counts independently match raw-row evaluation
 Female all three fairness criteria use the stated conditioning groups
 Female sufficiency includes the unflagged prediction stratum
@@ -33,5 +37,6 @@ FNR gap direction and percentile interval agree with exports
 PPV gap direction and percentile interval agree with exports
 FOR gap direction and percentile interval agree with exports
 Cached analysis fingerprints match current data, R source and plan
+The validation figure caption shows the pooled numerator and denominator recomputed from scores
 Rendered slide content includes the verified primary results
-Presentation code and routine messages are hidden in the compiled deck
+Presentation source hides analysis code and routine plotting warnings

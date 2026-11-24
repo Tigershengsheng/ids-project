@@ -3,7 +3,7 @@ title: "Student dropout warnings"
 subtitle: "How accurate are they, and who gets missed?"
 author: "Strong Tiger"
 institute: "University of Edinburgh"
-date: "20 November 2026"
+date: "24 November 2026"
 output:
   xaringan::moon_reader:
     css: ["default", "slides.css"]
@@ -17,226 +17,198 @@ output:
       highlightLines: true
       countIncrementalSlides: false
 ---
+
 ```{r setup, include=FALSE}
 source("R/setup.R")
-knitr::opts_chunk$set(echo=FALSE,message=FALSE,warning=FALSE)
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE)
 r <- load_results()
-source("R/refresh_figures.R")
-refresh_presentation_figures(r)
+source("R/talk-figures.R")
+talk_figures(r)
 source("R/training-course-cv.R")
-course_cv <- training_course_cv()
-m <- r$metrics[3,]
-f <- r$group_metrics[1,]
-male <- r$group_metrics[2,]
-fn_gap <- subset(r$gaps,metric=="FNR")
-source("R/displaced-audit.R")
-displaced <- subset(displaced_audit(), abs(threshold - r$threshold) < 1e-10)
-fn_interval <- c(-fn_gap$upper,-fn_gap$lower)
-validation_dropouts <- sum(subset(r$split_counts,split=="Validation" & target=="Dropout")$n)
-validation_found <- round(r$threshold_row$Sensitivity*validation_dropouts)
+cv <- training_course_cv()$average
+source("R/talk-notes.R")
+spoken <- talk_notes()
+stopifnot(length(spoken) == 11L)
+
+m <- subset(r$metrics, Rule == "Enrolment model: validation rule")
+comparison <- subset(r$metrics, Rule == "Enrolment model: threshold 0.50")
+baseline <- subset(r$metrics, Rule == "Always no warning")
+n_validation_dropout <- sum(subset(r$split_counts, split == "Validation" & target == "Dropout")$n)
+found_validation <- round(r$threshold_row$Sensitivity * n_validation_dropout)
+actual <- m$TP + m$FN
+warnings <- m$TP + m$FP
+age_median <- setNames(r$training_summary$median_age, r$training_summary$target)
+
+# The saved gap table is male minus female. Reverse both limits in reverse
+# order to give the spoken female-minus-male comparison.
+fnr <- subset(r$gaps, metric == "FNR")
+gap <- -fnr$estimate * 100
+limits <- c(-fnr$upper, -fnr$lower) * 100
+other <- read.csv("results/fairness-threshold-05.csv")
+other_rate <- setNames(other$FN / (other$FN + other$TP), other$gender)
+other_gap <- 100 * unname(other_rate["Female"] - other_rate["Male"])
+chosen <- num(r$threshold, 2)
+
+# The original filename is retained for editable PowerPoint export, while
+# image_uri embeds the image in the self-contained coursework HTML.
+chart <- function(name, alt, height) {
+  path <- paste0("figures/talk-", name, ".png")
+  sprintf('<img class="data-figure" data-asset="%s" src="%s" alt="%s" style="max-height:%dpx">',
+          path, knitr::image_uri(path), htmltools::htmlEscape(alt, attribute=TRUE), height)
+}
 ```
 
-class: title-slide
+class: cover
 
-<div class="cover-copy">
-<div class="kicker">STRONG TIGER &nbsp; / &nbsp; INTRODUCTION TO DATA SCIENCE</div>
-<h1>Student dropout<br><span class="gradient-word">warnings.</span></h1>
-<div class="cover-subtitle">How accurate are they,<br>and who gets missed?</div>
+<div class="eyebrow">University of Edinburgh · Introduction to Data Science</div>
+<div class="cover-grid">
+<div class="title-pair"><h1>Student dropout<br>warnings</h1><div class="subtitle">How accurate are they,<br>and who gets missed?</div><div class="cover-question">Before first-term grades arrive, who might a university reach out to?</div></div>
+<div class="cover-art"><div class="figure-wrap">`r chart("cohort", paste(num(r$audit$rows), "dots, one for each student record in the dataset"), 360)`</div><div class="caption">`r num(r$audit$rows)` records · one dot per record</div></div>
 </div>
-<div class="cover-bottom"><div><div class="cover-team">University of Edinburgh</div>Predictive signal. Unequal errors. A question of support.</div><div>UCI 697 &nbsp; / &nbsp; ONE PORTUGUESE INSTITUTION<br>Analysis 05 NOV 2026 &nbsp; / &nbsp; Revision 20 NOV 2026</div></div>
+<div class="foot">Strong Tiger · UCI Machine Learning Repository, dataset 697</div>
 
 ???
-Our question is whether information known at enrolment can identify later recorded dropout, and who the same warning rule misses. We are interested in student support. We first define the outcome, then evaluate overall prediction, and finally check how errors differ between groups. We start with the label, because it determines what a warning can mean.
+
+`r spoken[1]`
 
 ---
-<div class="kicker">01 &nbsp; / &nbsp; DEFINE THE OUTCOME</div>
 
-# What counts as<br>recorded dropout?
-
-<div class="evidence-grid"><div><div class="hero-number">`r num(r$audit$rows)`</div><div class="hero-label">student records.<br>Three outcomes kept visible.</div><div class="fine-rule"></div><div class="quote-line">A course or institution change also counts as <strong>Dropout</strong>.</div></div><div>
-
-```{r outcomes, results='asis'}
-slide_plot("figures/recorded-outcomes.png","315px","Counts of Graduate, Enrolled and Dropout records at the normal course endpoint")
-```
-
-</div></div>
-
-.small[Target: recorded dropout by the normal course endpoint.<br>Graduate and Enrolled mean no recorded dropout then. Enrolled does not mean graduated.]
-
-.source[Realinho et al. (2022), pp. 1-4. Enrolments 2008/09-2018/19; endpoint usually 3 years, 4 for Nursing. No causal or Edinburgh-wide claim.]
+<div class="eyebrow">The outcome</div>
+<h1>What counts as a dropout?</h1>
+<div class="two-col">
+<div><div class="stat">`r num(r$audit$rows)`</div><div class="stat-label">student records from one Portuguese institution</div><div class="body-copy">A change of course or institution can count as <strong>Dropout</strong>.</div></div>
+<div class="figure-wrap">`r chart("outcomes", paste(r$outcomes$target, num(r$outcomes$n), collapse = "; "), 330)`</div>
+</div>
+<div class="foot">Status at the normal course endpoint, usually three years (four for Nursing). Enrolled means still studying at that endpoint.</div>
 
 ???
-We used `r num(r$audit$rows)` records from one Portuguese institution. We checked the original paper because dropout can mean different things. Here it includes changing course or institution, so it does not always mean leaving higher education. The outcomes were recorded at the normal end of the course, usually three years. We retained students still enrolled. In our binary analysis they have no recorded dropout at that point; they are not assumed to have graduated. These choices define what our predictions can mean.
+
+`r spoken[2]`
 
 ---
-<div class="kicker">02 &nbsp; / &nbsp; LOOK BEFORE MODELLING</div>
 
-# Entry profiles overlap
-
-```{r entry-plot, results='asis'}
-slide_plot("figures/entry-profiles.png","360px","Training-set boxplots of enrolment age and admission grade by recorded outcome")
-```
-
-.takeaway[Higher median age in the recorded-dropout group.<br>Substantial overlap in admission grades. <strong>No individual outcome is determined.</strong>]
-
-.source[Training only, n = `r num(r$configuration$training_n)`; associations, not causes.<br>Quiz 7 recommended Data to Viz; this prompted our figure review. [Boxplot advice](https://www.data-to-viz.com/caveat/boxplot.html).]
+<div class="eyebrow">Training data · `r num(r$configuration$training_n)` students</div>
+<h1>The groups overlap at enrolment</h1>
+<div class="figure-wrap">`r chart("profiles", "Training boxplots by recorded outcome. The median ages for Graduate, Enrolled and Dropout are 19, 20 and 22 years. Grades overlap across groups.", 324)`</div>
+<div class="takeaway">Median age was `r num(age_median["Dropout"])` for the dropout group and `r num(age_median["Graduate"])` for graduates. Admission grades overlapped too.</div>
+<div class="foot">The line inside each box is the median. Quiz 7 led us to <a href="https://www.data-to-viz.com/caveat/boxplot.html">Data to Viz</a>; group sizes are printed beneath each box.</div>
 
 ???
-These plots use training records only. The dropout group had a higher median age, but ages and admission grades still overlapped. Quiz 7 pointed us to Data to Viz. Its boxplot advice reminded us to show group sizes, so we added the counts below each outcome. We kept the boxes to compare typical values and spread. These observed patterns are associations, not causes.
 
-Figure review: Quiz 7 recommended Data to Viz. We wanted a compact comparison of the centres and spread. Its boxplot page reminded us that equal-width boxes hide group sizes, so we added the training count below each outcome. We retained boxplots for this comparison; they do not reveal the full distribution. Each panel has its own labelled units. This is our design choice, not an additional course requirement.
+`r spoken[3]`
 
 ---
-<div class="kicker">03 &nbsp; / &nbsp; A SEPARATE JOB FOR EACH DATASET</div>
 
-# Training, validation and test
-
-<div class="capsule-row"><div class="capsule">Age</div><div class="capsule">Admission grade</div><div class="capsule">Course</div><div class="capsule">Logistic regression → probability</div></div>
-
+<div class="eyebrow">Enrolment-time prediction</div>
+<h1>From enrolment records to a warning score</h1>
+<div class="flow-intro">A logistic model combines age, admission grade and course to estimate the probability of recorded dropout.</div>
 <div class="flow">
-<div class="flow-card"><div class="step">01 / FIT</div><div class="flow-n">`r num(r$configuration$training_n)`</div><div class="flow-title">Training</div><div class="flow-purpose">Fit the model.</div></div>
-<div class="flow-card"><div class="step">02 / CHOOSE</div><div class="flow-n violet">`r num(r$configuration$validation_n)`</div><div class="flow-title">Validation</div><div class="flow-purpose">Choose one warning threshold.</div></div>
-<div class="flow-card"><div class="step">03 / EVALUATE</div><div class="flow-n accent">`r num(r$configuration$test_n)`</div><div class="flow-title">Test</div><div class="flow-purpose">Evaluate the frozen rule.</div></div>
+<div class="stage"><div class="name">Training</div><strong>`r num(r$configuration$training_n)`</strong><div class="job">Fit the model.</div></div>
+<div class="stage"><div class="name">Validation</div><strong>`r num(r$configuration$validation_n)`</strong><div class="job">Choose the cutoff.</div></div>
+<div class="stage"><div class="name">Test</div><strong>`r num(r$configuration$test_n)`</strong><div class="job">Evaluate the fixed rule.</div></div>
 </div>
-
-.small[Course is categorical; age and grade are additive on the log-odds scale, without interactions.<br>Later and timing-uncertain inputs are excluded. Recorded gender is reserved for the audit.]
-
-.learning-note[Later training-only check: adding course raised mean five-fold AUC from `r num(course_cv$average["without_course","AUC"],3)` to `r num(course_cv$average["with_course","AUC"],3)`.]
-
-.source[Seed 20261105; approximately 60/20/20, stratified by original outcome and recorded gender. Model fitting and validation use no test outcomes.]
+<div class="cv-result">Later, on training folds: mean AUC rose from <strong>`r num(cv["without_course", "AUC"], 3)`</strong> to <strong>`r num(cv["with_course", "AUC"], 3)`</strong> with course included.</div>
+<div class="foot">Course is categorical. Semester grades were unavailable at enrolment; recorded gender was reserved for the audit.</div>
 
 ???
-We use age, admission grade and course, treating course as a category. A later five-fold check within the training set helped us see what course adds. Mean AUC rose from `r num(course_cv$average["without_course","AUC"],3)` to `r num(course_cv$average["with_course","AUC"],3)`. In the main analysis, we fitted the model on training records, chose the cutoff on validation records and evaluated the fixed rule on test records. We used information available at enrolment. Next, we explain how probabilities become warnings.
+
+`r spoken[4]`
 
 ---
-<div class="kicker">04 &nbsp; / &nbsp; THE VALIDATION DECISION</div>
 
-# Choosing the warning threshold
-
-<div class="split-plot"><div><div class="hero-number">`r num(r$threshold,2)`</div><div class="hero-label">One common threshold.<br><br>Highest specificity while identifying at least <strong>70%</strong> of validation dropouts.<br><br>Validation sensitivity:<br><strong>`r num(validation_found)` / `r num(validation_dropouts)` = `r pct(r$threshold_row$Sensitivity)`</strong></div></div><div>
-
-```{r threshold-plot, results='asis'}
-slide_plot("figures/validation-threshold.png","385px","Validation sensitivity, specificity and warning rate across common thresholds")
-```
-
-</div></div>
-
-.source[Our illustrative target, not a university policy. Grid 0.05-0.80 in steps of 0.01; one threshold for both groups. We then froze the rule and evaluated its sensitivity, precision and errors on test records.]
+<div class="eyebrow">Choosing a rule · validation only</div>
+<h1>Why draw the line at `r chosen`?</h1>
+<div class="two-col choice-grid">
+<div><div class="stat">`r chosen`</div><div class="stat-label">Warn at or above this score.</div><div class="body-copy">Aim for at least 70% sensitivity, then choose the highest specificity.</div><div class="threshold-result"><strong>`r found_validation` / `r n_validation_dropout`</strong> dropout records found</div></div>
+<div class="figure-wrap">`r chart("validation", "Validation sensitivity falls as the threshold rises. Specificity rises. The marked threshold meets our illustrative 70 per cent sensitivity target.", 340)`</div>
+</div>
+<div class="foot">Our illustrative support target. We compared thresholds from 0.05 to 0.80 in steps of 0.01.</div>
 
 ???
-We wanted to find at least seventy per cent of dropout records in validation data while limiting false warnings. This illustrative target selected a common threshold of 0.31. It found 200 of 284 validation dropouts, about seventy per cent. We then froze the rule. The next slide checks test sensitivity and precision, and the cost in false warnings.
 
-Figure review: We kept lines because the horizontal axis is a numerical threshold and the purpose is to compare how rates change. After checking Data to Viz's colour caveats, we gave all three curves different line patterns as well as colours. The curves remain descriptive validation rates, not confidence bands; the full 0-100% rate scale is retained.
+`r spoken[5]`
 
 ---
-class: tradeoff detailed-metrics
 
-<div class="kicker">05 &nbsp; / &nbsp; OVERALL TEST PERFORMANCE</div>
-
-# What the warning catches
-
-<div class="performance-grid">
-<div>
-
-<div class="metric-line">
-<div><div class="metric-value accent">`r pct(m$Sensitivity)`</div><div class="metric-name">Sensitivity</div><div class="metric-detail">`r num(m$TP)` / `r num(m$TP+m$FN)` dropouts found</div></div>
-<div><div class="metric-value violet">`r pct(m$PPV)`</div><div class="metric-name">Precision</div><div class="metric-detail">`r num(m$TP)` / `r num(m$TP+m$FP)` warnings matched</div></div>
-<div><div class="metric-value">`r pct(m$Accuracy)`</div><div class="metric-name">Accuracy</div><div class="metric-detail">`r num(m$TP+m$TN)` / `r num(m$n)` decisions matched</div></div>
-</div>
-
-```{r test-table, results='asis'}
-mm <- r$metrics[1:3,]
-tab <- data.frame(
-  Rule=c("Always no warning","Cutoff 0.50",paste0("Cutoff ",num(r$threshold,2))),
-  `Missed dropouts`=num(mm$FN),
-  `False warnings`=num(mm$FP),check.names=FALSE)
-cat(knitr::kable(tab,format="html"))
-```
-
-<div class="error-summary">No warnings gives <strong>`r pct(r$metrics$Accuracy[1])` accuracy</strong> and finds zero dropouts.</div>
-</div>
-<div class="performance-roc">
-
-```{r test-roc-plot, results='asis'}
-slide_plot("figures/test-roc.png", "290px", "Test ROC curve with two marked cutoffs and a diagonal for chance ranking")
-```
-
-<div class="roc-key">Test ROC AUC <strong>`r num(m$AUC,3)`</strong>. Dashed line shows chance ranking.</div>
-</div>
-</div>
-
-<div class="bridge-line">At `r num(r$threshold,2)`, we still missed <strong>`r num(m$FN)`</strong> dropout records. Who was more likely to be missed?</div>
-
-.source.test-context[`r num(m$n)` test records (`r num(m$TP+m$FN)` recorded dropouts and `r num(m$FP+m$TN)` without recorded dropout). Top metrics use cutoff `r num(r$threshold,2)`. Specificity `r pct(m$Specificity)` (`r num(m$TN)`/`r num(m$TN+m$FP)`). Sensitivity 95% conditional bootstrap interval `r interval_pct(subset(r$overall_intervals,metric=="Sensitivity")$lower,subset(r$overall_intervals,metric=="Sensitivity")$upper)`.]
+<div class="eyebrow">Test results · `r num(m$n)` students · cutoff `r chosen`</div>
+<h1>Two ways to read the same `r m$TP` students</h1>
+<div class="figure-wrap test-bars">`r chart("denominators", paste0("Sensitivity: ", m$TP, " of ", actual, ", ", pct(m$Sensitivity), ". Precision: ", m$TP, " of ", warnings, ", ", pct(m$PPV), "."), 266)`</div>
+<div class="performance-foot">Always issuing no warnings gives <strong>`r pct(baseline$Accuracy)` accuracy</strong> and finds <strong>zero</strong> dropouts.</div>
+<div class="foot">Top bar: sensitivity. Bottom bar: precision. Test ROC AUC `r num(m$AUC, 3)` measures how well the scores rank students across thresholds.</div>
 
 ???
-At 0.31, we found `r num(m$TP)` of `r num(m$TP+m$FN)` recorded dropouts. That's sensitivity. Of the `r num(m$TP+m$FP)` warnings we issued, `r num(m$TP)` matched a dropout record. That's precision. Look at the two points on the curve. Lowering the cutoff finds more dropouts and produces more false warnings. The scores still rank students in the same order, so the AUC stays at `r num(m$AUC,3)`. We still missed `r num(m$FN)` cases, so we checked how those misses were distributed.
+
+`r spoken[6]`
 
 ---
-class: fairness
 
-<div class="kicker">06 &nbsp; / &nbsp; WHO GETS MISSED?</div>
-
-# Who is missed by the same rule?
-
-<div class="comparison"><div><div class="big violet">`r pct(f$FNR)`</div><div class="label">Female: `r num(f$FN)` / `r num(f$TP+f$FN)`<br>missed / dropout records</div></div><div><div class="big accent">`r pct(male$FNR)`</div><div class="label">Male: `r num(male$FN)` / `r num(male$TP+male$FN)`<br>missed / dropout records</div></div></div>
-
-.audit-entry[Of the `r num(m$FN)` missed records, `r num(f$FN)` were female and `r num(male$FN)` male. The percentages use actual dropout records in each group.]
-
-```{r fairness-plot, results='asis'}
-slide_plot("figures/group-fairness.png","335px","Female circles and male triangles: five group rates with rate-specific denominators and conditional 95 percent bootstrap intervals")
-```
-
-.criterion-key[Coverage: Independence &nbsp; | &nbsp; Errors: Separation &nbsp; | &nbsp; Outcomes within warned / unwarned groups: Sufficiency]
-
-.takeaway[False-warning rates: Female <strong>`r pct(f$FPR)`</strong>; Male <strong>`r pct(male$FPR)`</strong>.]
-
-.small[Female minus male miss-rate gap: `r num(-100*fn_gap$estimate,1)` percentage points (95% interval `r num(-100*fn_gap$upper,1)` to `r num(-100*fn_gap$lower,1)`).]
-
-.source[Points: observed rates. n: denominator for each point. Bars: pointwise 95% percentile bootstrap intervals, conditional on the fixed model and threshold; 5,000 resamples within each group. These are not standard deviations.]
+<div class="eyebrow">Two cutoffs · same test students and scores</div>
+<h1>A lower threshold catches more and flags more</h1>
+<table class="compare-table"><thead><tr><th>Cutoff</th><th>Recorded dropouts found</th><th>False warnings</th></tr></thead>
+<tbody><tr><td>0.50</td><td>`r comparison$TP`</td><td>`r comparison$FP`</td></tr>
+<tr class="chosen"><td>`r chosen`</td><td>`r m$TP`</td><td>`r m$FP`</td></tr></tbody></table>
+<div class="table-interpretation">At `r chosen` we found <strong>`r m$TP - comparison$TP` more</strong> dropout records and issued <strong>`r m$FP - comparison$FP` more</strong> false warnings.</div>
+<div class="foot">A false warning means someone was flagged and had no recorded dropout by the endpoint. The scores have the same test AUC at both cutoffs.</div>
 
 ???
-Were students in each group equally likely to be missed? Among those recorded as dropping out, we missed `r num(f$FN)` of `r num(f$TP+f$FN)` students recorded as female and `r num(male$FN)` of `r num(male$TP+male$FN)` recorded as male. That's about forty-four versus twenty-four per cent. To see how much that gap could vary, we resampled the test records within each group and kept the model and cutoff fixed. A missed warning could mean a missed offer of support. Among students without a dropout record, false warnings were more common in the male group.
 
-Figure review: Data to Viz's sample-size and error-bar guidance prompted us to label each point's denominator. We use a separate interval for the direct gap because it estimates the difference between the two rates. The group intervals describe one rate at a time.
+`r spoken[7]`
 
 ---
-class: closing
 
-<div class="kicker">07 &nbsp; / &nbsp; BEFORE REAL USE</div>
+class: fair-page
 
-# A warning should start<br>a <span class="accent">conversation.</span>
+<div class="eyebrow">Recorded gender · `r num(actual)` test students with a dropout record</div>
+<h1>Who did the rule miss?</h1>
+<div class="figure-wrap">`r chart("misses", "Cutoff 0.31. Female: 64 of 144 missed (44.4%). Male: 34 of 141 missed (24.1%). Each denominator counts actual dropout records within that group.", 293)`</div>
+<div class="gap"><div class="gap-main">Female minus male: <strong>`r num(gap, 1)` percentage points</strong></div><div class="gap-sub">95% bootstrap interval for this difference: `r num(limits[1], 1)` to `r num(limits[2], 1)` percentage points.</div></div>
+<div class="foot">`r num(r$bootstrap_reps)` resamples within each recorded-gender group. The fitted model and cutoff stayed fixed.</div>
 
-<div class="next-grid">
-<div class="next-item">Keep human review.<span>Offer support without punishment; allow records to be corrected.</span></div>
-<div class="next-item">Check capacity.<span>`r pct(m$WarningRate)` flagged is a substantial support commitment.</span></div>
-<div class="next-item">Investigate the errors.<span>In an exploratory check, the miss rate was `r num(100*diff(displaced$fnr),1)` percentage points higher for students marked as living away from home.</span></div>
-<div class="next-item">Test later cohorts.<span>Validate at the institution where the rule would actually be used.</span></div>
+???
+
+`r spoken[8]`
+
+---
+
+class: fair-page
+
+<div class="eyebrow">Same students · the higher cutoff added for comparison</div>
+<h1>A smaller gap can mean more missed students</h1>
+<div class="figure-wrap">`r chart("thresholds", paste0("At 0.31: female 64/144, male 34/141. At 0.50: female 113/144, male 92/141. Both groups have higher miss rates at 0.50."), 293)`</div>
+<div class="gap"><div class="gap-main">Gap: `r num(gap, 1)` → <strong>`r num(other_gap, 1)` percentage points</strong> &nbsp;·&nbsp; Total missed: `r m$FN` → <strong>`r comparison$FN` students</strong></div></div>
+<div class="foot">These are two previously evaluated rules. The primary cutoff remains `r chosen`, chosen on the validation set.</div>
+
+???
+
+`r spoken[9]`
+
+---
+
+<div class="eyebrow">What the evidence can support</div>
+<h1>What a university could do next</h1>
+<div class="end-actions">
+<div class="action"><div class="action-title">Offer a conversation</div><div class="action-copy">Let a person check the record and ask what support would help.</div></div>
+<div class="action"><div class="action-title">Plan for the workload</div><div class="action-copy">The primary rule flagged `r warnings` of `r num(m$n)` test students.</div></div>
+<div class="action"><div class="action-title">Test the next cohort</div><div class="action-copy">Check who is missed locally and evaluate the effect of outreach.</div></div>
 </div>
-
-<div class="closing-statement">Predictive signal is not evidence that warnings prevent dropout.</div>
-
-.source[One institution, historical cohorts, no cohort/year field for a chronological test. The historic split supports evaluation within these records. Future cohorts need separate validation.]
+<div class="foot">One institution and historical enrolments. These data measure recorded outcomes; the effect of offering support needs its own evaluation.</div>
 
 ???
-Our enrolment model found about two-thirds of recorded dropouts. In an exploratory check, the model also missed a larger share of dropouts among students marked as living away from home. These patterns give us specific errors to investigate. Before real use, we would check departure reasons, support capacity and performance on later cohorts. A warning should lead to human review, with a way to correct records. Whether the support itself prevents dropout is a separate question we would need to test. Thank you.
+
+`r spoken[10]`
 
 ---
-# Sources and assistance
 
-.references[
-- Realinho et al. **UCI dataset 697**, DOI [10.24432/C5MC89](https://doi.org/10.24432/C5MC89). CC BY 4.0. Retrieved 5 November 2026.
-- Realinho et al. (2022). **Predicting Student Dropout and Academic Success**, *Data* 7, 146. [10.3390/data7110146](https://doi.org/10.3390/data7110146).
-- IDS course materials: **Algorithmic Bias**, pp. 6, 16-19; **Quantifying uncertainty**, pp. 21, 39, 46-53.
-- IDS regression lectures: **Introducing linear models**, pp. 22-28, 48-54; **Model checking and multiple linear regression**, pp. 24-41, 57-63.
-- IDS classification lectures: **Predicting categorical outcomes**, pp. 15–30; **Model building**, pp. 15–19, 38–44.
-- IDS [Lab 08 – Predicting rain](https://uoeids.github.io/labs/lab-08/lab-08.html), pp. 10–11, on ROC and cutoff trade-offs.
-- IDS **Cross Validation**, pp. 29–33, 38–40, and **Inference in Linear Regression**, pp. 8–9, 19–21.
-- R documentation: [binomial logistic regression with glm](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/glm.html). Fairness definitions: [Fairness and Machine Learning](https://fairmlbook.org/classification.html).
-- Figure review: [Data to Viz](https://www.data-to-viz.com/caveats.html), prompted by Quiz 7; page-specific advice is recorded in the notes.
-- Review tools: Sciwrite (Barba); Anti-defensive Writing; Kassis et al. (2026), [Scientific Agent Skills](https://doi.org/10.48550/arXiv.2609.00065).
-]
+<div class="eyebrow">Strong Tiger · Introduction to Data Science</div>
+<h1>Sources and acknowledgements</h1>
+<div class="ref-grid">
+<div class="ref-block"><div class="ref-title">Data and definitions</div>
+<p>Realinho and colleagues. <a href="https://doi.org/10.24432/C5MC89">UCI dataset 697</a> (CC BY 4.0) and the <a href="https://doi.org/10.3390/data7110146">original data paper</a>.</p>
+<p>Group error criteria: <a href="https://fairmlbook.org/classification.html">Fairness and Machine Learning</a> and the IDS Algorithmic Bias lecture.</p></div>
+<div class="ref-block"><div class="ref-title">Models and figures</div>
+<p>IDS modelling, uncertainty and cross-validation lectures; <a href="https://uoeids.github.io/labs/lab-08/lab-08.html">Lab 08</a> on ROC curves.</p>
+<p>Quiz 7 prompted our review of <a href="https://www.data-to-viz.com/caveat/boxplot.html">boxplots</a> and <a href="https://www.data-to-viz.com/caveat/error_bar.html">interval labels</a> in Data to Viz.</p></div>
+</div>
+<div class="disclosure">ChatGPT/Codex assisted with code and text drafts, explanations, source checks and slide production. Details and responsibilities are recorded in the report.</div>
+<div class="foot"><a href="https://github.com/Tigershengsheng/ids-project">Project repository</a> · R source, data, analysis and full references</div>
 
-.small[We applied our course methods to data handling, plots, bootstrap and the fairness audit.<br>
-For unfamiliar methods, we used ChatGPT and documentation, then rewrote and checked the main R analysis.<br>
-ChatGPT also supported initial code/text drafts, source checks and slide formatting. We take responsibility for the final work.]

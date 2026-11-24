@@ -97,8 +97,8 @@ eda$Measure <- factor(eda$Measure, levels = c("Age", "Grade"),
 ggplot2::ggplot(eda, ggplot2::aes(Outcome, Value, fill = Outcome)) +
   ggplot2::geom_boxplot(width = .58, outlier.alpha = .22, show.legend = FALSE) +
   ggplot2::facet_wrap(~Measure, scales = "free_y") +
-  ggplot2::scale_fill_manual(values = c(Graduate = "#9ABCCF", Enrolled = "#E0B877",
-                                        Dropout = "#CC8293")) +
+  ggplot2::scale_fill_manual(values = c(Graduate = "#9CBDB4", Enrolled = "#D8C39B",
+                                        Dropout = "#A48EAE")) +
   ggplot2::scale_x_discrete(labels = axis_labels) +
   ggplot2::labs(x = NULL, y = NULL) +
   ggplot2::theme_minimal(base_size = 12) +
@@ -167,7 +167,9 @@ fairness <- data.frame(
 knitr::kable(fairness, caption = "Table 3. Group counts, denominators and rates at the 0.31 cutoff.")
 ```
 
-At 0.50, both recorded-gender groups missed more dropout records. The female-minus-male gap narrowed to `r pp(at_default$FNR[at_default$gender == "Female"] - at_default$FNR[at_default$gender == "Male"])` points. The exploratory Displaced comparison went the other way: its missed-dropout gap widened from `r pp(displaced_gap(config$threshold, "fnr"))` to `r pp(displaced_gap(0.50, "fnr"))` points. The group marked Displaced had a lower false-warning rate at both cutoffs. At the higher cutoff, the female group's missed-dropout rate was 78.5% and the male group's was 65.2%. A smaller gap can coexist with more misses in both groups. Anyone choosing a cutoff should examine the rates alongside their difference.
+Raising the cutoff to 0.50 narrowed the female-minus-male gap to `r pp(at_default$FNR[at_default$gender == "Female"] - at_default$FNR[at_default$gender == "Male"])` percentage points. Yet the rule now missed `r fraction(at_default$FN[at_default$gender == "Female"], female$TP + female$FN)` female dropout records and `r fraction(at_default$FN[at_default$gender == "Male"], male$TP + male$FN)` male dropout records. Total misses rose from `r selected$FN` to `r default$FN`. Looking only at the smaller gap would hide what happened to both groups.
+
+The exploratory Displaced comparison went the other way. Its missed-dropout gap widened from `r pp(displaced_gap(config$threshold, "fnr"))` to `r pp(displaced_gap(0.50, "fnr"))` percentage points. The group marked Displaced had a lower false-warning rate at both cutoffs.
 
 ```{r displaced-results}
 displaced_table <- data.frame(
@@ -203,7 +205,7 @@ The enrolment model detected about two-thirds of recorded dropouts at the chosen
 
 The model gives useful ranking information on these records, but a warning is an imperfect proxy for needing help. This distinction matters because a transfer is counted as dropout and students who remain enrolled may still benefit from support. The results concern historical data from one institution. The released data lack a cohort field for a chronological test. The bootstrap describes variation across resampled test records given the fixed fit and cutoff. It leaves out uncertainty from refitting and changes in future cohorts. The comparisons by Displaced are descriptive and would need confirmation on fresh data.
 
-Before considering use, we would validate the rule on a later cohort, check what transfers and other recorded departures mean for students, and estimate the staff time implied by the warning rate. A flagged record could prompt a conversation, with support still available to unflagged students. A separate evaluation would be needed to see whether that outreach helps.
+Before considering use, we would validate the frozen rule on a later cohort. We would ask staff whether they could review `r selected$TP + selected$FP` warnings per `r selected$n` entrants, and ask students what a transfer or another recorded departure meant for them. Students without warnings would still need a route to help. A separate evaluation of outreach would be needed to learn whether it improves outcomes.
 
 ## Reproducibility and sources
 

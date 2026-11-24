@@ -1,7 +1,7 @@
 ---
 title: "Student dropout warnings: study guide"
 subtitle: "Research design, R implementation and interpretation"
-date: "7 November 2026"
+date: "24 November 2026"
 output:
   html_document:
     self_contained: true
@@ -56,7 +56,9 @@ fit <- glm(dropout ~ age10 + admission10 + course,
 
 `glm` fits a generalised linear model; `binomial` specifies the binary logistic model. Dividing age and admission grade by ten changes their units; it is not standardisation estimated from test data. Course is categorical. Age and grade are linear on the log-odds scale, with additive course effects and no interactions. These are simplifying assumptions.
 
-The initial analysis used further reading and R documentation. The subsequently supplied Predicting categorical outcomes lectures teach logistic regression. Model building covers hold-out evaluation, ROC and AUC. The particular split and validation objective are project choices.
+Holding course and entry grade fixed, an increase of ten years in entry age is associated with about twice the estimated odds of a dropout record. Holding age and course fixed, ten more grade points are associated with about 16% lower odds. An odds ratio acts on odds, p/(1−p). Starting from p=0.20, doubling the odds from 0.25 to 0.50 gives p=0.33. The two course coefficients being compared must use the same reference course (Animation and Multimedia Design for this fit).
+
+The initially supplied materials and further reading informed the original analysis. The later categorical-outcomes, model-building and cross-validation materials let us explain the logistic model, check ranking and examine course in a training-only comparison. The three-way split and validation objective were project choices.
 
 ## Training, validation and test records
 
@@ -69,7 +71,7 @@ knitr::kable(data.frame(
 
 The random split is stratified by original outcome and recorded gender. It is not a national probability sample. Exact full-record profiles stay together within one partition. No cohort field is available for a chronological future-cohort test.
 
-Test outcomes do not choose the main model, inputs or threshold. The validation records are not subsequently added into a refitted model.
+Test outcomes do not choose the main model, inputs or threshold. The validation records are not subsequently added into a refitted model. A later five-fold check within the original training set compared age and grade with age, grade and course. Adding course raised the mean validation-fold AUC from 0.668 to 0.702. The frozen three-input model’s AUC on the separate test set is 0.718.
 
 ## The threshold and illustrative sensitivity target
 
@@ -110,6 +112,10 @@ Binary Sufficiency requires both prediction strata. Precision alone omits outcom
 
 Base dropout rates also differ: `r pct(f$BaseRate)` for female records and `r pct(male$BaseRate)` for male records. Gaps require investigation; they do not establish that gender causes dropout or that the model is discriminatory.
 
+## Reading the two thresholds
+
+The main rule uses 0.31. At 0.50 the same records and the same scores give 113/144 female misses (78.5%) and 92/141 male misses (65.2%). The female-minus-male gap shrinks to 13.2 percentage points, calculated using the original fractions. Yet total misses climb from 98 to 205. A smaller gap can coincide with worse coverage for both groups.
+
 ## Bootstrap intervals and calibration
 
 The course bootstrap idea is to sample with replacement, recalculate statistics, repeat, and use the middle 95% of the distribution. Here we resample test records within recorded-gender groups, holding the model and threshold fixed, for `r num(r$bootstrap_reps)` repetitions.
@@ -137,8 +143,8 @@ Open `student-dropout-final.Rproj`. `R/analysis.R` imports and defines records, 
 
 `presentation.Rmd` reads the saved results rather than manually copying numerical answers. `verify_project.R` independently checks raw-row identities, partitions, predictions, threshold selection and metric denominators.
 
-The supplied material supports data import, factors, wrangling, joins, plotting, bootstrap ideas and the fairness criteria. Logistic regression, held-out evaluation, AUC/Brier and implementation helpers are explained as further learning. See `docs/course-map.md`.
+The supplied material supports data import, factors, wrangling, joins, plotting, bootstrap ideas and the fairness criteria. The later course material covers logistic regression, validation and ranking. The stratified fixed-rule bootstrap, group denominator checks and some implementation details adapt those ideas to this project. See `docs/course-map.md`.
 
 ## Remaining work and limits
 
-The analysis, presentation and supporting documents do not replace topic-feasibility confirmation, actual group review, rehearsal, check-ins, accepted collaboration invitations, the separate report, peer evaluation or formal submission. We have not established that the warning reduces dropout or transfers reliably to Edinburgh.
+The report and presentation record our analytical work. Before the presentation, the group should time a full run and practise answering questions. Confirm course check-ins, invitations, individual peer evaluation and the formal team submission using the corresponding course and GitHub records. Testing a later cohort and evaluating support itself would answer questions this historical release leaves open.

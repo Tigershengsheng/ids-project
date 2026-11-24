@@ -60,6 +60,35 @@ check(near(pairwise_auc,metrics$AUC[3]),"AUC agrees with independent positive-ne
 check(near(mean((p$probability-y)^2),metrics$Brier[3]),"Brier score agrees with direct probability error")
 check(near(z["TP"]/(z["TP"]+z["FN"]),metrics$Sensitivity[3]) && near(z["TP"]/(z["TP"]+z["FP"]),metrics$PPV[3]),"Sensitivity and PPV have distinct correct denominators")
 
+# Replay the two cutoffs on exactly the same students. The talk reports
+# female minus male, while the stored bootstrap differences use the opposite order.
+missed_by_group <- function(cutoff) {
+  dropout_rows <- y == 1
+  tapply(p$probability[dropout_rows] < cutoff, gender[dropout_rows], sum)
+}
+group_dropout_n <- table(gender[y == 1])
+selected_misses <- missed_by_group(r$threshold)
+half_misses <- missed_by_group(0.50)
+check(near(group_dropout_n[c("Female", "Male")], c(144, 141)) &&
+      near(selected_misses[c("Female", "Male")], c(64, 34)) &&
+      near(half_misses[c("Female", "Male")], c(113, 92)),
+      "Both cutoffs use the same dropout denominators and reproduce the four plotted counts")
+gap_pp <- function(misses) {
+  rates <- misses / as.numeric(group_dropout_n[names(misses)])
+  100 * unname(rates["Female"] - rates["Male"])
+}
+check(near(round(c(gap_pp(selected_misses), gap_pp(half_misses)), 1), c(20.3, 13.2)) &&
+      sum(selected_misses) == 98 && sum(half_misses) == 205,
+      "Displayed differences are calculated before rounding, and totals match the two group counts")
+check(near(round(100 * quantile(-bootstrap$FNR, c(.025, .975)), 1), c(9.5, 30.7)),
+      "The plotted interval is for the female-minus-male gap under the fixed warning rule")
+source("R/training-course-cv.R")
+course_cv_check <- training_course_cv()
+check(sum(course_cv_check$folds$n) == r$configuration$training_n &&
+      near(round(course_cv_check$average[, "AUC"], 3), c(.668, .702)) &&
+      near(round(pairwise_auc, 3), .718),
+      "Training-only five-fold AUC and original-model test AUC are reproduced separately")
+
 for(g in c("Female","Male")) {
   q <- which(gender==g); row <- groups[groups$gender==g,]
   tp <- sum(y[q]==1 & p$flag[q]); fp <- sum(y[q]==0 & p$flag[q]); fn <- sum(y[q]==1 & !p$flag[q]); tn <- sum(y[q]==0 & !p$flag[q])
@@ -78,9 +107,14 @@ for(metric in c("WarningRate","FPR","FNR","PPV","FOR")) {
 check(identical(r$data_sha256,file_sha256("data/data.csv")) && identical(r$analysis_sha256,file_sha256("R/analysis.R")) &&
       identical(r$plan_sha256,file_sha256("docs/analysis-plan.md")),"Cached analysis fingerprints match current data, R source and plan")
 html <- paste(readLines("presentation.html",encoding="UTF-8",warn=FALSE),collapse="\n")
+chosen_found <- sum(vy == 1 & vp >= r$threshold)
+validation_fraction <- sprintf("%d / %d", chosen_found, sum(vy == 1))
+check(grepl(validation_fraction, html, fixed = TRUE),
+      "The validation figure caption shows the pooled numerator and denominator recomputed from scores")
 check(grepl("187",html,fixed=TRUE) && grepl("44.4%",html,fixed=TRUE) && grepl("0.31",html,fixed=TRUE),"Rendered slide content includes the verified primary results")
-check(grepl("warning=FALSE",paste(readLines("presentation.Rmd",warn=FALSE),collapse="\n"),fixed=TRUE) &&
-      grepl("echo=FALSE",paste(readLines("presentation.Rmd",warn=FALSE),collapse="\n"),fixed=TRUE),"Presentation code and routine messages are hidden in the compiled deck")
+source_text <- paste(readLines("presentation.Rmd", warn=FALSE), collapse="\n")
+check(grepl("warning\\s*=\\s*FALSE",source_text) && grepl("echo\\s*=\\s*FALSE",source_text),
+      "Presentation source hides analysis code and routine plotting warnings")
 writeLines(c(paste(length(checks),"independent checks passed"),checks),"results/verification.txt")
 jsonlite::write_json(list(checks_passed=length(checks),checks=checks),"results/verification.json",pretty=TRUE,auto_unbox=TRUE)
 cat(length(checks),"independent checks passed.\n")

@@ -369,12 +369,12 @@ display: none;
 <li><a href="#figure-review-prompted-by-quiz-7" id="toc-figure-review-prompted-by-quiz-7">Figure review prompted by Quiz
 7</a>
 <ul>
-<li><a href="#what-we-checked-and-changed" id="toc-what-we-checked-and-changed">What we checked and
-changed</a></li>
+<li><a href="#original-figure-review-slide-numbers-refer-to-the-november-6-deck" id="toc-original-figure-review-slide-numbers-refer-to-the-november-6-deck">Original
+figure review (slide numbers refer to the November 6 deck)</a></li>
 <li><a href="#visual-redesign-requested-during-the-review" id="toc-visual-redesign-requested-during-the-review">Visual redesign
 requested during the review</a></li>
-<li><a href="#denominators-now-shown-on-slide-7" id="toc-denominators-now-shown-on-slide-7">Denominators now shown on
-slide 7</a></li>
+<li><a href="#denominators-in-the-original-five-rate-figure" id="toc-denominators-in-the-original-five-rate-figure">Denominators in
+the original five-rate figure</a></li>
 <li><a href="#how-the-revision-appears-in-the-presentation" id="toc-how-the-revision-appears-in-the-presentation">How the revision
 appears in the presentation</a></li>
 <li><a href="#reproducibility-and-limits" id="toc-reproducibility-and-limits">Reproducibility and limits</a></li>
@@ -394,8 +394,9 @@ below were actually consulted. The Quiz 7 question itself was not
 independently inspected in this revision. First-person text is a draft
 describing real choices and changes, for the group to review; it does
 not invent a group meeting or audience testing.</p>
-<div id="what-we-checked-and-changed" class="section level2">
-<h2>What we checked and changed</h2>
+<div id="original-figure-review-slide-numbers-refer-to-the-november-6-deck" class="section level2">
+<h2>Original figure review (slide numbers refer to the November 6
+deck)</h2>
 <table>
 <colgroup>
 <col width="25%" />
@@ -502,8 +503,8 @@ endorsement are implied. The numerical analysis remains unchanged. The
 later PDF delivery revision adds the boxplot/sample-size reasoning to
 the spoken paragraph for slide 3 while retaining the 635-word total.</p>
 </div>
-<div id="denominators-now-shown-on-slide-7" class="section level2">
-<h2>Denominators now shown on slide 7</h2>
+<div id="denominators-in-the-original-five-rate-figure" class="section level2">
+<h2>Denominators in the original five-rate figure</h2>
 <table>
 <colgroup>
 <col width="21%" />
@@ -560,24 +561,19 @@ alone.</p>
 </div>
 <div id="how-the-revision-appears-in-the-presentation" class="section level2">
 <h2>How the revision appears in the presentation</h2>
-<p>Slide 3 briefly acknowledges Quiz 7’s recommended resource. Slide 9
-lists the actual pages. Longer first-person explanations sit beside the
-corresponding slides in speaker-notes.html and in presenter notes where
-relevant. The current word count is recorded in
-results/script-timing.json; the later narrative revision includes the
-main transitions directly. Preparation notes do not add to the scheduled
-talk. No actual human rehearsal has been performed by producing these
-files.</p>
+<p>The current talk uses group sizes in the training-only boxplots
+(slide 3). Slides 8–9 concentrate on one error rate, print its numerator
+and denominator, and keep the same scale at both thresholds. The 95%
+percentile interval on slide 8 describes the difference between the two
+rates. The sources slide and speaker notes credit the visual review. The
+report retains all five group audit rates and their denominators.</p>
 </div>
 <div id="reproducibility-and-limits" class="section level2">
 <h2>Reproducibility and limits</h2>
-<p>R/analysis.R, the raw CSV, fitted models, partitions, predictions,
-threshold, bootstrap replicates and numerical result files are
-preserved. R/refresh_figures.R reads the saved outputs when
-presentation.Rmd is knitted. It does not fit, tune or resample. The
-slide numbers above refer to the deck at the time of the figure review.
-In the current deck, slides 1–8 are the talk and slide 9 lists sources.
-The technical figures remain in the project figures folder.</p>
+<p>The presentation reads the original cohort, fixed predictions and
+saved bootstrap results. The figure scripts redraw the analytical
+illustrations in R. Slide numbers in the historical review table above
+refer to that earlier edition.</p>
 <p>The error-bar article’s informal wording about CI probability is not
 adopted; the project uses a repeated-sampling interpretation and
 conditional percentile bootstrap. We have not established how a real

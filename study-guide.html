@@ -10,7 +10,7 @@
 
 
 
-<meta name="date" content="2026-11-07" />
+<meta name="date" content="2026-11-24" />
 
 <title>Student dropout warnings: study guide</title>
 
@@ -365,7 +365,7 @@ display: none;
 <h1 class="title toc-ignore">Student dropout warnings: study guide</h1>
 <h3 class="subtitle">Research design, R implementation and
 interpretation</h3>
-<h4 class="date">7 November 2026</h4>
+<h4 class="date">24 November 2026</h4>
 
 </div>
 
@@ -385,6 +385,7 @@ and illustrative sensitivity target</a></li>
 <li><a href="#reading-the-test-results" id="toc-reading-the-test-results">Reading the test results</a></li>
 <li><a href="#three-fairness-criteria-and-their-denominators" id="toc-three-fairness-criteria-and-their-denominators">Three fairness
 criteria and their denominators</a></li>
+<li><a href="#reading-the-two-thresholds" id="toc-reading-the-two-thresholds">Reading the two thresholds</a></li>
 <li><a href="#bootstrap-intervals-and-calibration" id="toc-bootstrap-intervals-and-calibration">Bootstrap intervals and
 calibration</a></li>
 <li><a href="#explaining-our-choices" id="toc-explaining-our-choices">Explaining our choices</a></li>
@@ -471,11 +472,18 @@ and admission grade by ten changes their units; it is not
 standardisation estimated from test data. Course is categorical. Age and
 grade are linear on the log-odds scale, with additive course effects and
 no interactions. These are simplifying assumptions.</p>
-<p>The initial analysis used further reading and R documentation. The
-subsequently supplied Predicting categorical outcomes lectures teach
-logistic regression. Model building covers hold-out evaluation, ROC and
-AUC. The particular split and validation objective are project
-choices.</p>
+<p>Holding course and entry grade fixed, an increase of ten years in
+entry age is associated with about twice the estimated odds of a dropout
+record. Holding age and course fixed, ten more grade points are
+associated with about 16% lower odds. An odds ratio acts on odds,
+p/(1−p). Starting from p=0.20, doubling the odds from 0.25 to 0.50 gives
+p=0.33. The two course coefficients being compared must use the same
+reference course (Animation and Multimedia Design for this fit).</p>
+<p>The initially supplied materials and further reading informed the
+original analysis. The later categorical-outcomes, model-building and
+cross-validation materials let us explain the logistic model, check
+ranking and examine course in a training-only comparison. The three-way
+split and validation objective were project choices.</p>
 </div>
 <div id="training-validation-and-test-records" class="section level2">
 <h2>Training, validation and test records</h2>
@@ -510,7 +518,11 @@ gender. It is not a national probability sample. Exact full-record
 profiles stay together within one partition. No cohort field is
 available for a chronological future-cohort test.</p>
 <p>Test outcomes do not choose the main model, inputs or threshold. The
-validation records are not subsequently added into a refitted model.</p>
+validation records are not subsequently added into a refitted model. A
+later five-fold check within the original training set compared age and
+grade with age, grade and course. Adding course raised the mean
+validation-fold AUC from 0.668 to 0.702. The frozen three-input model’s
+AUC on the separate test set is 0.718.</p>
 </div>
 <div id="the-threshold-and-illustrative-sensitivity-target" class="section level2">
 <h2>The threshold and illustrative sensitivity target</h2>
@@ -738,6 +750,14 @@ proportion.</p>
 for male records. Gaps require investigation; they do not establish that
 gender causes dropout or that the model is discriminatory.</p>
 </div>
+<div id="reading-the-two-thresholds" class="section level2">
+<h2>Reading the two thresholds</h2>
+<p>The main rule uses 0.31. At 0.50 the same records and the same scores
+give 113/144 female misses (78.5%) and 92/141 male misses (65.2%). The
+female-minus-male gap shrinks to 13.2 percentage points, calculated
+using the original fractions. Yet total misses climb from 98 to 205. A
+smaller gap can coincide with worse coverage for both groups.</p>
+</div>
 <div id="bootstrap-intervals-and-calibration" class="section level2">
 <h2>Bootstrap intervals and calibration</h2>
 <p>The course bootstrap idea is to sample with replacement, recalculate
@@ -782,18 +802,20 @@ manually copying numerical answers. <code>verify_project.R</code>
 independently checks raw-row identities, partitions, predictions,
 threshold selection and metric denominators.</p>
 <p>The supplied material supports data import, factors, wrangling,
-joins, plotting, bootstrap ideas and the fairness criteria. Logistic
-regression, held-out evaluation, AUC/Brier and implementation helpers
-are explained as further learning. See
+joins, plotting, bootstrap ideas and the fairness criteria. The later
+course material covers logistic regression, validation and ranking. The
+stratified fixed-rule bootstrap, group denominator checks and some
+implementation details adapt those ideas to this project. See
 <code>docs/course-map.md</code>.</p>
 </div>
 <div id="remaining-work-and-limits" class="section level2">
 <h2>Remaining work and limits</h2>
-<p>The analysis, presentation and supporting documents do not replace
-topic-feasibility confirmation, actual group review, rehearsal,
-check-ins, accepted collaboration invitations, the separate report, peer
-evaluation or formal submission. We have not established that the
-warning reduces dropout or transfers reliably to Edinburgh.</p>
+<p>The report and presentation record our analytical work. Before the
+presentation, the group should time a full run and practise answering
+questions. Confirm course check-ins, invitations, individual peer
+evaluation and the formal team submission using the corresponding course
+and GitHub records. Testing a later cohort and evaluating support itself
+would answer questions this historical release leaves open.</p>
 </div>
 
 

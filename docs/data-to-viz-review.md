@@ -4,7 +4,7 @@ Review date: 6 November 2026. Statistical analysis date: 5 November 2026.
 
 The user reports that course Quiz Question 7 recommended exploring Data to Viz. That recommendation prompted this check; it is not a new compulsory project requirement or marking criterion. The website pages below were actually consulted. The Quiz 7 question itself was not independently inspected in this revision. First-person text is a draft describing real choices and changes, for the group to review; it does not invent a group meeting or audience testing.
 
-## What we checked and changed
+## Original figure review (slide numbers refer to the November 6 deck)
 
 | Location | What we wanted to communicate | Advice actually consulted | Our change or reason for retaining the figure |
 |---|---|---|---|
@@ -23,7 +23,7 @@ Colour review: following the user's request for a launch-style visual redesign, 
 
 The user asked for a more distinctive, Apple-keynote-like presentation. This is a presentation design preference, not advice attributed to Data to Viz. We rebuilt the cover, used large takeaway headlines, replaced the partition table with three labelled stages, and highlighted the actual trade-off (+107 identified records / +177 false warnings relative to threshold 0.50). Slide 7 highlights the two missed-dropout rates while retaining all five rate rows, denominators and intervals. Slide 8 gives human review and validation clear visual priority. Decorative cover rings encode no data. No Apple assets or endorsement are implied. The numerical analysis remains unchanged. The later PDF delivery revision adds the boxplot/sample-size reasoning to the spoken paragraph for slide 3 while retaining the 635-word total.
 
-## Denominators now shown on slide 7
+## Denominators in the original five-rate figure
 
 | Rate | Female n | Male n | Who is counted in n? |
 |---|---:|---:|---|
@@ -37,11 +37,11 @@ Values come from the frozen confusion counts. The R figure script independently 
 
 ## How the revision appears in the presentation
 
-Slide 3 briefly acknowledges Quiz 7's recommended resource. Slide 9 lists the actual pages. Longer first-person explanations sit beside the corresponding slides in speaker-notes.html and in presenter notes where relevant. The current word count is recorded in results/script-timing.json; the later narrative revision includes the main transitions directly. Preparation notes do not add to the scheduled talk. No actual human rehearsal has been performed by producing these files.
+The current talk uses group sizes in the training-only boxplots (slide 3). Slides 8–9 concentrate on one error rate, print its numerator and denominator, and keep the same scale at both thresholds. The 95% percentile interval on slide 8 describes the difference between the two rates. The sources slide and speaker notes credit the visual review. The report retains all five group audit rates and their denominators.
 
 ## Reproducibility and limits
 
-R/analysis.R, the raw CSV, fitted models, partitions, predictions, threshold, bootstrap replicates and numerical result files are preserved. R/refresh_figures.R reads the saved outputs when presentation.Rmd is knitted. It does not fit, tune or resample. The slide numbers above refer to the deck at the time of the figure review. In the current deck, slides 1–8 are the talk and slide 9 lists sources. The technical figures remain in the project figures folder.
+The presentation reads the original cohort, fixed predictions and saved bootstrap results. The figure scripts redraw the analytical illustrations in R. Slide numbers in the historical review table above refer to that earlier edition.
 
 The error-bar article's informal wording about CI probability is not adopted; the project uses a repeated-sampling interpretation and conditional percentile bootstrap. We have not established how a real audience would respond to these changes. Topic approval, group review, actual rehearsal, repository setup and formal submission remain separate actions.
 

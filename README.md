@@ -1,70 +1,30 @@
-# Student dropout warnings
+# Student Dropout Warnings: How Accurate Are They, and Who Gets Missed?
 
-**How accurate are enrolment-time warnings, and who gets missed?**
+Using 4,424 records from one Portuguese institution, we tested what age, admission grade and course could tell student-support staff at enrolment. The selected warning rule caught 187 of 285 recorded dropouts in the test set. Among recorded dropouts, it missed 64 of 144 female students and 34 of 141 male students.
 
-Current IDS group project: enrolment-time prediction of recorded dropout and an audit of group error patterns. The repository is public. Updated 23 November 2026.
-
-## Open the current work
-
-| Purpose | File |
+| Item | Files |
 | --- | --- |
-| Presentation in the course's HTML format | [presentation.html](presentation.html) |
-| Reproducible presentation source | [presentation.Rmd](presentation.Rmd) |
-| Editable PowerPoint | [Student_Dropout_Presentation.pptx](output/powerpoint/Student_Dropout_Presentation.pptx) |
-| Presentation PDF | [01_Presentation.pdf](output/reading-pdfs/01_Presentation.pdf) |
-| English speaking script and Q&A | [02_Speaker_Notes.pdf](output/reading-pdfs/02_Speaker_Notes.pdf) |
-| Project report | [report.Rmd](report.Rmd), [report.html](report.html) |
-| Working research notebook | [investigation.Rmd](investigation.Rmd), [investigation.html](investigation.html) |
-| Complete statistical implementation | [R/analysis.R](R/analysis.R) |
-| Raw UCI data and attribution | [data/data.csv](data/data.csv), [data/README.md](data/README.md) |
-| Decisions, course links and learning process | [analysis plan](docs/analysis-plan.md), [course map](docs/course-map.md), [learning process](docs/learning-process.md) |
-| Numerical checks | [verify_project.R](verify_project.R), [36-check results](results/verification.txt) |
-| Access and outstanding deliverables | [repository-status.md](repository-status.md) |
+| Formal presentation | [HTML](presentation.html) · [Xaringan source](presentation.Rmd) |
+| Talk and English rehearsal notes | [PowerPoint](output/powerpoint/Student_Dropout_Presentation.pptx) · [slides PDF](output/reading-pdfs/01_Presentation.pdf) · [script PDF](output/reading-pdfs/02_Speaker_Notes.pdf) |
+| Report | [HTML](report.html) · [R Markdown](report.Rmd) |
+| Investigation and code walkthrough | [HTML](investigation.html) · [R Markdown](investigation.Rmd) |
+| Data and analysis | [data and attribution](data/README.md) · [analysis script](R/analysis.R) · [training-only cross-validation](R/training-course-cv.R) |
+| Course and submission checks | [requirements](docs/requirements-checklist.md) · [course map](docs/course-map.md) · [repository access](repository-status.md) |
 
-GitHub may display HTML source rather than run the presentation. Download the repository using **Code > Download ZIP**, extract it and open `presentation.html` in a browser, or use the PDF. For reproduction, open `student-dropout-final.Rproj` in RStudio.
+Open the downloaded HTML in a browser. To reproduce the results, open `student-dropout-final.Rproj` in RStudio. If needed, run `source("R/install.R")`. Run the following from the project root:
 
-## Working in the group repository
+```r
+source("R/analysis.R")        # rebuild splits, fits, scores and intervals from data/data.csv
+source("render_project.R")   # render the slides, report and investigation
+source("verify_project.R")   # independently check results against the underlying records
+```
 
-`Tigershengsheng` owns this repository. `yingcheliu0723` has write access and contributed the report draft and Displaced analysis in [5201072](https://github.com/Tigershengsheng/ids-project/commit/52010729291c62865b81816630c45ba2e6679c2c).
+## Check-in and team work
 
-In each person's local clone: pull the latest changes before editing, make and knit the relevant changes, then commit and push under that person's own account. The public setting lets everyone read/download; it does not give everyone permission to push. Source files and HTML outputs should be kept together.
+For the 27 November check-in we have a four-speaker draft, a threshold comparison and a group-error audit. Our question for the tutor is whether the distinction between a recorded transfer and a student who needs support comes through clearly. **After the meeting:** add who attended, the feedback received and which changes the group agreed to make. Earlier project-kickoff materials remain in the archive and its history.
 
-The course brief distinguishes this collaboration from official submission: one member submits the presentation/report to Gradescope and adds the rest of the group. This repository upload is not that submission.
+The team roster in the kick-off workspace lists Tiger, Harry, yingcheLiu and Reiyume. `yingcheliu0723` contributed the report and exploratory Displaced comparison in [5201072](https://github.com/Tigershengsheng/ids-project/commit/52010729291c62865b81816630c45ba2e6679c2c). The [access record](repository-status.md) distinguishes accepted collaborators from pending invitations. One member submits the two HTML files on Gradescope and adds the rest of the group. Every member completes their own peer evaluation.
 
-## Research design
+## Sources
 
-The source contains 4,424 student records from one Portuguese institution. Dropout is the recorded administrative outcome at the normal course endpoint, including changes of course or institution. Graduate and Enrolled are retained as no recorded Dropout at that endpoint; Enrolled is not described as graduated. A separate resolved-outcome check is reported.
-
-The primary model uses enrolment age, admission grade and course as a factor. Later-semester and timing-uncertain information is excluded. Training fits the model, validation selects a shared threshold using an illustrative sensitivity target, and the held-out test set evaluates the frozen rule. Recorded gender is used for auditing, with a separately reported comparison model.
-
-The presentation compares missed dropouts and false warnings at thresholds 0.31 and 0.50 by recorded gender and, as an exploratory comparison, by Displaced status. Both comparisons use the original held-out model scores. These patterns do not establish causation, external validity or an effect of offering support.
-
-## Reproduce in RStudio
-
-1. Download/clone the repository and open `student-dropout-final.Rproj`.
-2. If packages are missing, run `source("R/install.R")` once.
-3. Run `source("render_project.R")` to render the presentation, report, investigation and companion documents. Saved results are reused only when their data/source/design fingerprints match.
-4. Knit `investigation.Rmd` for the working notebook.
-5. Run `source("verify_project.R")` for the independent numerical checks.
-
-The statistical analysis and analytical figures use R. Package versions are recorded in `results/session-info.txt`; Pandoc is supplied by RStudio. No Windows package library or saved workspace is committed. Export helpers under `tools/` prepare PDF/PowerPoint versions; the formal R/HTML presentation does not require those optional export tools.
-
-## Group and submission status
-
-The presentation has eight speaking slides and one reference slide. The revised report includes the exploratory Displaced comparison and a GenAI disclosure. Review the author information and disclosure as a group before submitting the two HTML files through Gradescope.
-
-The group listed in the kick-off workspace is Tiger (`Tigershengsheng`), Harry (`HarryPeng725`), yingcheLiu (`yingcheliu0723`) and Reiyume (`ReiyumEe`). This upload does not establish equal contributions, accepted invitations or rehearsal. See the current access status below.
-
-Earlier Lab 04 files and Seoul Bike candidate material are retained for continuity. Previous versions of replaced documents are in `archive/project-kickoff/` and in Git history; they are not the current research topic. Earlier check-in meetings have not been invented or reconstructed.
-
-## Sources and assistance
-
-Data: Realinho et al., UCI 697, [DOI 10.24432/C5MC89](https://doi.org/10.24432/C5MC89), CC BY 4.0. Original descriptor: [Realinho et al. (2022), Data 7, 146](https://doi.org/10.3390/data7110146). Full source notes and variable timing decisions are included under `docs/`.
-
-We used our course methods for data handling, plots, bootstrap ideas and fairness comparisons. For unfamiliar methods, we asked ChatGPT for explanations and checked documentation, then rewrote and ran the main R analysis and checked its outputs. ChatGPT also helped with initial code and text drafts, source checks and slide formatting. R generated all statistical results. Our first-person reasons for key choices are in `docs/learning-process.md` and in the speaker notes; the English script PDF now includes a separate preparation page for them.
-
-The 8 November presentation revision clarifies the accuracy baseline, synchronises the eight spoken blocks and removes repeated preparation text. The fixed statistical results are retained. Review tools and their sources are recorded in `docs/revision-review.md`.
-
-The 11 November course review connects the fixed model to the two regression lectures, clarifies the additive log-odds assumption and expands the probability-checking and Q&A explanations. See `docs/regression-course-update.md`. The model, threshold and numerical results are unchanged.
-
-The 23 November follow-up compares models with and without course using five folds within the original training partition. Report Table 5 and slide 4 use the same results from `R/training-course-cv.R`. The investigation shows all five folds, and the slide 7 script explains how we resampled the fixed test predictions for the group-gap interval.
+Realinho et al., [UCI dataset 697](https://doi.org/10.24432/C5MC89), CC BY 4.0; [data descriptor](https://doi.org/10.3390/data7110146). The report describes AI assistance in code, source checks, writing and design. The [figure-review notes](docs/data-to-viz-review.md) trace the Quiz 7 recommendation. Figures and all numerical results are generated in R.

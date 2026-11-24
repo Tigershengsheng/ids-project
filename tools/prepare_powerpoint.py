@@ -4,18 +4,10 @@ This reads source evidence; it performs no modelling or statistical calculations
 """
 from pathlib import Path
 from html.parser import HTMLParser
-import argparse, base64, html, json, math, re, statistics, sys
-try:
-    import pymupdf
-except ImportError:
-    # An existing local PDF-tool environment; no package installation is hidden here.
-    import PIL
-    sys.path.append(r'D:\data science\tmp\spanish_deps')
-    import pymupdf
+import argparse, base64, json, math, re, statistics
+import pymupdf
 
 ROOT = Path(__file__).resolve().parents[1]
-FIGURES = {2:'recorded-outcomes',3:'entry-profiles',5:'validation-threshold',7:'group-fairness',
-           12:'fairness-gaps',13:'bootstrap-fnr-gap',14:'probability-calibration',18:'course-composition'}
 
 def colour(value,opacity=1):
     if value is None: return 'none'
@@ -114,7 +106,9 @@ def extract_page(page, box, table_mode=False, clip_images=False):
         seen.add(identity)
         fontname=span['font']; rotation=math.degrees(math.atan2(-span['dir'][1],span['dir'][0]))
         size=span['size']*sx
-        family='Segoe UI' if 'Segoe' in fontname else 'Arial'
+        family = ('Georgia' if 'Georgia' in fontname else
+                  'Segoe UI' if 'Segoe' in fontname else
+                  'Times New Roman' if 'Times' in fontname else 'Arial')
         bold=bool('Bold' in fontname or 'Semibold' in fontname or span['flags']&16)
         if 'Semibold' in fontname:family='Segoe UI Semibold'; bold=False
         spacing=0
@@ -140,74 +134,104 @@ def extract_page(page, box, table_mode=False, clip_images=False):
     return elements
 
 class NotesParser(HTMLParser):
-    def __init__(self): super().__init__(); self.sections={}; self.current=None; self.heading=False; self.headingtext=''; self.parts=[]; self.skip=0
-    def handle_starttag(self,tag,attrs):
-        if tag in ('script','style'): self.skip+=1
-        if tag=='h2':
-            if self.current: self.sections[self.current]=''.join(self.parts).strip()
-            self.heading=True; self.headingtext=''; self.parts=[]; self.current=None
-        if tag in ('p','div','li','br','tr','h3'): self.parts.append('\n')
-        if tag=='a':
-            href=dict(attrs).get('href','')
-            if href.startswith('http'): self.parts.append(' ['+href+'] ')
-    def handle_endtag(self,tag):
-        if tag in ('script','style'): self.skip=max(0,self.skip-1)
-        if tag=='h2':
-            self.heading=False; match=re.match(r'Slide (\d+):',self.headingtext.strip())
-            if match: self.current=int(match.group(1))
-        if tag in ('p','li','div'): self.parts.append('\n')
-    def handle_data(self,data):
-        if self.skip: return
-        if self.heading: self.headingtext+=data
-        else: self.parts.append(data)
-    def finish(self):
-        if self.current:self.sections[self.current]=''.join(self.parts).strip()
+    """Extract each explicitly tagged spoken paragraph and its stage direction."""
+    def __init__(self):
+        super().__init__()
+        self.slide = 0
+        self.depth = 0
+        self.sections = {}
+
+    def handle_starttag(self, tag, attrs):
+        attrs = dict(attrs)
+        if tag == 'div' and 'spoken' in attrs.get('class', '').split():
+            self.slide = int(attrs['data-slide'])
+            self.sections[self.slide] = [attrs.get('data-speaker', '').strip()]
+            self.depth = 1
+        elif self.depth and tag == 'div':
+            self.depth += 1
+        if self.depth and tag in ('p','br'):
+            self.sections[self.slide].append('\n')
+
+    def handle_endtag(self, tag):
+        if self.depth and tag == 'div':
+            self.depth -= 1
+
+    def handle_data(self, data):
+        if self.depth:
+            self.sections[self.slide].append(data)
+
+def read_notes(build, root, count):
+    local = build / 'notes.json'
+    if local.exists():
+        notes = json.loads(local.read_text(encoding='utf-8-sig'))
+    else:
+        parser = NotesParser()
+        parser.feed((root / 'speaker-notes.html').read_text(encoding='utf-8-sig'))
+        notes = [''.join(parser.sections.get(i, [])).strip() for i in range(1, count)]
+        notes.append('Sources. Leave this slide visible for questions.')
+    if len(notes) == count and not notes[-1]:
+        notes[-1] = 'Sources. Leave this slide visible for questions.'
+    if len(notes) != count or any(not isinstance(line, str) or not line.strip() for line in notes):
+        raise ValueError('Missing slide-specific presenter notes. Rebuild speaker-notes.html first.')
+    return notes
+
+def image_object(page, plan, keep_pixels):
+    """Match a single displayed R plot to its real PDF image box, including object-fit."""
+    images = [b for b in page.get_text('dict')['blocks'] if b['type'] == 1]
+    if len(plan['images']) != len(images):
+        raise ValueError(f"Image roster differs on {plan['title']!r}: {len(plan['images'])} vs {len(images)}")
+    if len(images) > 1:
+        raise ValueError('Check source-to-image ordering before exporting a multi-image slide.')
+    for source, block in zip(plan['images'], images):
+        asset = Path(source['asset'])
+        rect = pymupdf.Rect(block['bbox'])
+        info = min(page.get_image_info(xrefs=True), key=lambda obj: sum(abs(a-b) for a,b in zip(obj['bbox'],rect)))
+        if not info['xref']:
+            raise ValueError(f'Could not identify the image on {plan["title"]!r}')
+        # Relative asset paths come from the current R Markdown, independent of slide number.
+        yield asset, rect, info['xref'], block['image'] if keep_pixels else None
 
 def main():
-    parser=argparse.ArgumentParser(); parser.add_argument('--build-dir',required=True); args=parser.parse_args()
-    build=Path(args.build_dir); build.mkdir(parents=True,exist_ok=True)
-    doc=pymupdf.open(ROOT/'output/pdf/Student_Dropout_Presentation.pdf')
-    notes=NotesParser(); notes.feed((ROOT/'speaker-notes.html').read_text(encoding='utf-8-sig')); notes.finish()
-    source=html.unescape(re.search(r'<textarea[^>]*id="source"[^>]*>(.*?)</textarea>',(ROOT/'presentation.html').read_text(encoding='utf-8-sig'),re.S).group(1))
-    remark=re.split(r'\n---\s*\n',source)
-    slides=[]
-    for n,page in enumerate(doc,1):
-        elements=extract_page(page,(0,0,1280,720),table_mode=True)
-        # Preserve the existing cover/closing artwork as original source assets.
-        # Data figures are recovered from their R PDF as editable paths and text.
-        figure=FIGURES.get(n)
-        if figure:
-            blocks=[b for b in page.get_text('dict')['blocks'] if b['type']==1]
-            assert len(blocks)==1,(n,len(blocks))
-            bbox=pymupdf.Rect(blocks[0]['bbox']); sx=1280/page.rect.width; sy=720/page.rect.height
-            graphic=pymupdf.open(ROOT/f'figures/{figure}.pdf')
-            elements+=extract_page(graphic[0],(bbox.x0*sx,bbox.y0*sy,bbox.width*sx,bbox.height*sy))
-        elif n in (1,8):
-            # The source's backdrop is an existing raster/gradient design asset.
-            # Extract only the original backdrop, never the foreground content.
-            # Original PDF image blocks contain its backdrop; use the first large block.
-            blocks=[b for b in page.get_text('dict')['blocks'] if b['type']==1]
-            bgblocks=[b for b in blocks if pymupdf.Rect(b['bbox']).width>page.rect.width*.9]
-            if bgblocks:
-                block=bgblocks[0]
-                elements.insert(0,dict(type='image',data=base64.b64encode(block['image']).decode(),x=0,y=0,w=1280,h=720))
-            # PDF soft-mask fills are not standalone artwork. Retain the original
-            # backdrop and circle outlines; the gradient word stays editable text.
-            elements=[e for e in elements if not (e['type']=='path' and e['fill']!='none')]
-        text=page.get_text()
-        rendered_notes=notes.sections.get(n,'')
-        fallback=remark[n-1].split('???',1)[1].strip() if n<=len(remark) and '???' in remark[n-1] else ''
-        uris=sorted({link.get('uri') for link in page.get_links() if link.get('uri')})
-        citations='\n\nSources: UCI dataset 697, https://doi.org/10.24432/C5MC89 ; Realinho et al. (2022), https://doi.org/10.3390/data7110146 .'
-        notes_text=rendered_notes or fallback or text+citations
-        if uris:notes_text+='\n\nLinks on this slide:\n'+'\n'.join(uris)
-        links=[]
-        for link in page.get_links():
-            if link.get('uri'):
-                b=link['from']; links.append(dict(uri=link['uri'],x=b.x0*1280/page.rect.width,y=b.y0*720/page.rect.height,w=b.width*1280/page.rect.width,h=b.height*720/page.rect.height))
-        slides.append(dict(number=n,elements=elements,notes=notes_text,links=links,title=text.splitlines()[0]))
-    output=dict(width=1280,height=720,slides=slides,source_pdf=str(ROOT/'output/pdf/Student_Dropout_Presentation.pdf'))
-    (build/'source-layout.json').write_text(json.dumps(output,ensure_ascii=False),encoding='utf-8')
-    print(json.dumps(dict(slides=len(slides),text_boxes=sum(e['type']=='text' for s in slides for e in s['elements']),editable_paths=sum(e['type']=='path' for s in slides for e in s['elements']),native_tables=sum(e['type']=='table' for s in slides for e in s['elements']),main_notes=len(notes.sections))))
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--build-dir', type=Path, required=True)
+    parser.add_argument('--project', type=Path, default=ROOT)
+    args = parser.parse_args()
+    build, root = args.build_dir, args.project.resolve()
+    source = json.loads((build/'slides.json').read_text(encoding='utf-8-sig'))
+    slides = []
+    with pymupdf.open(build/'browser.pdf') as printed:
+        if len(printed) != source['total']:
+            raise ValueError('Printed page count differs from the HTML slide count.')
+        notes = read_notes(build, root, len(printed))
+        for n, (page, plan) in enumerate(zip(printed,source['slides']), 1):
+            sx, sy = 1280/page.rect.width, 720/page.rect.height
+            elements = extract_page(page, (0,0,1280,720))
+            for asset, rect, xref, pixels in image_object(page, plan, True):
+                if asset.is_absolute() or '..' in asset.parts or not asset.stem:
+                    raise ValueError(f'Missing or invalid R figure asset on slide {n}')
+                if len(asset.parts) == 1:
+                    asset = Path('figures')/asset
+                box = (rect.x0*sx, rect.y0*sy, rect.width*sx, rect.height*sy)
+                if asset.stem == 'talk-cohort':
+                    # The cover's 4,424 dots form one replaceable illustration.
+                    elements.append(dict(type='image',data=base64.b64encode(pixels).decode(),
+                                         x=box[0],y=box[1],w=box[2],h=box[3],alt=plan['images'][0]['alt']))
+                else:
+                    with pymupdf.open(root/asset.with_suffix('.pdf')) as graphic:
+                        elements += extract_page(graphic[0], box)
+                        page.delete_image(xref)
+                        page.show_pdf_page(rect, graphic, 0, keep_proportion=False)
+            links=[]
+            for link in page.get_links():
+                if link.get('uri'):
+                    b=link['from']
+                    links.append(dict(uri=link['uri'],x=b.x0*sx,y=b.y0*sy,w=b.width*sx,h=b.height*sy))
+            slides.append(dict(number=n,elements=elements,notes=notes[n-1],links=links,title=plan['title']))
+        printed.set_metadata(dict(title='Student Dropout Warnings: How Accurate Are They, and Who Gets Missed?',
+                                  author='Strong Tiger',subject='Introduction to Data Science – Final Project'))
+        printed.save(build/'01_Presentation.pdf',garbage=4,deflate=True)
+    (build/'source-layout.json').write_text(json.dumps(dict(width=1280,height=720,slides=slides),ensure_ascii=False),encoding='utf-8')
+    print(f'{len(slides)} pages prepared; R charts retain their original vectors and text.')
 
-if __name__=='__main__': main()
+if __name__ == '__main__':
+    main()

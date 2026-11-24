@@ -1,5 +1,7 @@
 # Regression lecture review, 11 November 2026
 
+This is a dated revision note with historical slide numbers. For the present talk see [the current outline](slide-outline.md).
+
 The model was first evaluated on 5 November. This later review connects it to the two newly supplied IDS lectures and clarifies assumptions. It introduces no new model, tuning decision or statistical result.
 
 | Lecture evidence | Connection to the existing project | Boundary |

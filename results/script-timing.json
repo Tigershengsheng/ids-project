@@ -1,64 +1,67 @@
 {
-  "method": "Current spoken blocks, including embedded transitions; optional alternative handovers and pauses excluded; no human rehearsal performed",
+  "method": "Written-word count; times are planning targets including pointing, pauses and handovers. Human rehearsal pending.",
   "slides": [
     {
       "slide": 1,
       "speaker": "Speaker 1",
-      "words": 56,
-      "seconds_at_100wpm": 33.6,
-      "seconds_at_120wpm": 28.0
+      "words": 70,
+      "target_seconds": 38
     },
     {
       "slide": 2,
       "speaker": "Speaker 1",
-      "words": 82,
-      "seconds_at_100wpm": 49.199999999999996,
-      "seconds_at_120wpm": 41.0
+      "words": 74,
+      "target_seconds": 47
     },
     {
       "slide": 3,
       "speaker": "Speaker 2",
-      "words": 63,
-      "seconds_at_100wpm": 37.8,
-      "seconds_at_120wpm": 31.5
+      "words": 67,
+      "target_seconds": 40
     },
     {
       "slide": 4,
       "speaker": "Speaker 2",
-      "words": 73,
-      "seconds_at_100wpm": 43.8,
-      "seconds_at_120wpm": 36.5
+      "words": 87,
+      "target_seconds": 52
     },
     {
       "slide": 5,
       "speaker": "Speaker 3",
-      "words": 59,
-      "seconds_at_100wpm": 35.4,
-      "seconds_at_120wpm": 29.5
+      "words": 68,
+      "target_seconds": 35
     },
     {
       "slide": 6,
       "speaker": "Speaker 3",
-      "words": 75,
-      "seconds_at_100wpm": 45.0,
-      "seconds_at_120wpm": 37.5
+      "words": 69,
+      "target_seconds": 46
     },
     {
       "slide": 7,
-      "speaker": "Speaker 4",
-      "words": 88,
-      "seconds_at_100wpm": 52.8,
-      "seconds_at_120wpm": 44.0
+      "speaker": "Speaker 3",
+      "words": 45,
+      "target_seconds": 30
     },
     {
       "slide": 8,
       "speaker": "Speaker 4",
-      "words": 83,
-      "seconds_at_100wpm": 49.8,
-      "seconds_at_120wpm": 41.5
+      "words": 71,
+      "target_seconds": 50
+    },
+    {
+      "slide": 9,
+      "speaker": "Speaker 4",
+      "words": 67,
+      "target_seconds": 38
+    },
+    {
+      "slide": 10,
+      "speaker": "Speaker 4",
+      "words": 66,
+      "target_seconds": 32
     }
   ],
-  "total_words": 579,
-  "seconds_at_100wpm": 347.4,
-  "seconds_at_120wpm": 289.5
+  "total_words": 684,
+  "target_seconds": 408
 }

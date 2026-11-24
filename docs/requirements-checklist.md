@@ -1,46 +1,21 @@
-# Course requirements and delivery status
+# IDS final project · requirements and evidence
 
-Authority: the exact Final Project PDF supplied by the user, `Final Projects __ Introduction to Data Science (2023).pdf`, 11 PDF pages. The title is retained for identification; it is not treated as evidence that these are obsolete requirements. Any explicit current-course update takes precedence. The supplied document contains an overall allocation of marks, not a detailed 50-point presentation rubric; no additional marking bands are invented.
+Authority: the supplied 13-page *Final Projects — Introduction to Data Science* brief and its Week 7 update. Dates below are for 2026. Where Learn publishes a later instruction, use the later instruction.
 
-## Explicit requirements
+| What the brief asks for | Where to check | Status or next action |
+| --- | --- | --- |
+| A meaningful question, appropriate R analysis and selective visualisation; discuss validity, reliability and limitations (pp. 2–4) | Report sections 1–5 and the investigation. The slides follow one entry-time decision through to its errors. | Data, method and results are documented. The report distinguishes an administrative departure, a need for help and a benefit of outreach. |
+| At least 100 records and a mix of numerical and categorical variables; confirm feasibility for a chosen dataset (p. 6) | UCI 697: 4,424 records, numerical age/grade, categorical course. Source and timing audit in data/ and results/. | Check the group's actual correspondence for organiser/lecturer confirmation. |
+| Use the repo slide template; hide code; allow every member to speak; explain choices, reasons and findings (pp. 7, 10–11) | presentation.Rmd, slides.css, R scripts and presentation.html; the four parts in speaker-notes.Rmd. | Ten speaking slides and a source slide. Time an actual group rehearsal including transitions. |
+| 10-minute group slot, suggested 7-minute talk plus 2 minutes for questions (p. 7); live workshop on 4 December (pp. 6, 8, 12) | The timed four-speaker notes and the separate rehearsal questions. | All four members should attend and speak. Use the workshop schedule on Learn. |
+| Report summarising dataset, question, methods, findings and discussion, around 1,500 words, maximum 1,650 excluding figures, tables, code and references (p. 8) | report.Rmd and report.html; Table 3 gives conditional group denominators. | Read the rendered report together and confirm group identification. |
+| Record GenAI use and disclose it in the report (p. 1); include the group repository link in the submitted report (p. 10) | End of report, “Reproducibility and sources” and “Generative AI disclosure”. | Members should confirm the statement accurately describes their work. |
+| GitHub teamwork; include the course account, three source/HTML pairs, README progress notes, data and supplementary images (pp. 9–11) | README.md, data/, img/, R/, figures/, the root Rmd/HTML files and Git history. | Current access and the verified teammate contribution are in repository-status.md. |
+| Check in with tutor; at least one member attends the marked second check-in on 27 November (pp. 6–7, 10) | README has a preparation summary and space for the group's actual feedback. | Group to attend and record feedback, decisions and remaining work. |
+| Submit report.html and presentation.html by 7 December, 10:00 GMT; each student completes peer evaluation (pp. 6, 9–10) | Learn → Assessment → Gradescope → Final project - team. | One member uploads both HTMLs and adds the other three via View or edit group. Each member submits their own evaluation. Confirm both in Learn. |
 
-| Requirement and evidence | This project | Status |
-|---|---|---|
-| Interesting real-world question using course techniques, pp. 1-2 | Enrolment warning accuracy and group errors, with a support-oriented interpretation | Implemented; group must understand and review |
-| Alternative datasets allowed; UCI specifically recommended, p. 5 | UCI 697; official data, metadata and original paper retrieved | Source verified |
-| At least 100 rows after missing-value handling; numerical and categorical variables, p. 5 | 4,424 records; age/admission grade numerical, course/recorded gender categorical; no blank/NA cells in source | Verified by R audit; coded unknowns documented separately |
-| Course organiser or lecturer should confirm dataset feasibility, p. 5 | Candidate and its boundaries are documented | Pending actual confirmation; not claimed approved |
-| Data understanding, appropriate EDA, model and evaluation, pp. 1-3 | Timing audit, training-only EDA, fixed logistic model, validation threshold, held-out results, baseline | Implemented |
-| Critique data reliability, validity and methods; cautious interpretation, pp. 2-3 | Administrative departure includes transfers; one historical institution; no individual timestamps or cohort/year field | Explicit in slides and notes |
-| Select informative visualisations; clarity and coherence, p. 3 | Eight main slides with labelled R plots, denominators and uncertainty. The report and speaker Q&A contain the detailed results. | The test ROC and group interval appear on slides 6 and 7. |
-| All analysis in R/RStudio, p. 3 | R/analysis.R generates every statistic and analytical figure | Implemented; Python only retrieves/extracts sources and packages/verifies exports |
-| Use the project-repository slide template, pp. 6, 8 | Original template archived in docs/course-template; xaringan::moon_reader, 16:9, knitr tables and ggplot workflow retained | Adapted; example content and optional confetti styling replaced |
-| Total group slot 10 minutes; suggested 7-minute talk + 2-minute questions, p. 6 | Slides 1–8 are the main talk, and slide 9 lists sources. | Script timings are estimated from words. Time a group rehearsal in the actual workshop setup. |
-| Every member has an opportunity to speak, p. 6 | Suggested four-part allocation; actual speaker names and agreement need group confirmation | Proposed, not a contribution record |
-| Explain choices, reasons and findings rather than a chronological account, p. 6 | First-person notes explain decisions actually reflected in the source audit and analysis | Drafted for group review; no invented meetings or feedback |
-| Hide presentation code, but retain reproducible source, pp. 6, 10 | Global echo=FALSE; sourced R analysis and complete raw data accompany Rmd | Implemented |
-| GitHub collaboration and course-account access, pp. 3, 8-10 | Earlier project files are in Tigershengsheng/ids-project. Read the dated access record for permissions. | Write access verified for yingcheliu0723 on 21 November. Confirm course-account access before submitting |
-| Check-in discussions and feedback, pp. 5-6, 9 | Notes may be recorded after actual attendance | Pending; no tutor feedback fabricated |
-| HTML presentation submission, p. 9 | presentation.html is the formal slide format; sharing PDF is supplementary | File prepared, not submitted |
-| Approx. 1,500-word report, maximum 1,650; report HTML and repository link, pp. 7, 9 | Revised report.Rmd and self-contained report.html include the repository link and GenAI disclosure | Group review and the formal submission are separate steps |
-| Peer evaluation and actual contribution, pp. 7-10 | Suggested speaking allocation does not establish contribution or peer scores | Pending each student's real evaluation |
+## Marking and choices
 
-## Stated mark allocation
+Page 12 allocates 50 points to presentation, 40 to report, 5 to reproducibility/organisation and 5 to the second check-in. The report and organisation components are adjusted using the specified peer-evaluation formula. The brief gives no per-speaker mark breakdown.
 
-The supplied document, PDF p. 11, allocates Presentation 50, Report 40, Reproducibility/organisation 5, Second check-in 5. The report and organisation components are adjusted according to the stated peer-assessment formula. This package cannot establish a mark or complete participation requirements.
-
-## Our choices rather than course requirements
-
-- The exact topic, gender comparison, small predictor set and binary endpoint.
-- Approximately 60/20/20 splitting and seed 20261105.
-- A validation sensitivity goal of 70%, one shared threshold and 5,000 bootstrap replicates.
-- The gender-inclusive and Enrolled-exclusion sensitivity checks.
-- Eight main slides, four suggested speaking parts and the visual colour scheme.
-
-## Suggestions requiring later judgement
-
-Prospective validation, consultation about support capacity and error costs, more complete gender representation, privacy/access controls before any actual operational use, and review of the reasons behind administrative departures. None is presented as an intervention already shown to work.
-
-## Evidence still to obtain
-
-Check Learn or current course announcements for any update to the supplied brief. The dates in the supplied copy are a 27 November second check-in, a 4 December workshop presentation and a 7 December 10:00 GMT deadline for both HTML files and individual peer evaluations (PDF pp. 5–6, 9). Record actual feasibility confirmation, attendance, tutor feedback, speaking roles and contributions when the group has evidence. The project includes the revised report source and HTML. Confirm the author and disclosure details with the group before submission. One group member submits both HTML files and adds teammates. Each member completes their own peer evaluation. See PDF pp. 2–3, 5–11 for the corresponding requirements.
+The administrative endpoint, entry predictors, common cutoff, 70% validation sensitivity target, fixed-rule bootstrap and the slide count are group design choices. The extra threshold comparison helps interpret the consequences of those choices. It leaves the validation-selected rule in place.

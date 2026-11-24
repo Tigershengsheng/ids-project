@@ -25,7 +25,10 @@ load_results <- function() {
     "results/enrolled-definition-sensitivity.csv", "results/test-metric-intervals.csv",
     "results/test-predictions.csv", "results/primary-coefficients.csv",
     "results/fitted-models.rds", "results/bootstrap-gaps.csv",
-    "results/calibration-bins.csv", "results/training-course-composition.csv"
+    "results/calibration-bins.csv", "results/training-course-composition.csv",
+    "results/fairness-threshold-05.csv", "results/outcome-counts.csv",
+    "results/training-summary.csv", "results/variable-timing-audit.csv",
+    "results/fairness-group-intervals.csv", "results/frozen-configuration.json"
   )
   stale <- !all(file.exists(c(path, companion_outputs)))
   if (!stale) {

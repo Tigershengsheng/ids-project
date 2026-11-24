@@ -1,0 +1,61 @@
+{
+  "release_date": "2026-11-24",
+  "source_data_sha256": "3ef126de5cefff26eb11fbb4237f1a1401cb64b488e2f1d598c23cedeb4c45ae",
+  "clean_build": "R analysis from raw CSV, with no prior cached results or figures",
+  "frozen_result_tables_identical": [
+    "bootstrap-gaps.csv",
+    "calibration-bins.csv",
+    "coded-unknown-audit.csv",
+    "enrolled-definition-sensitivity.csv",
+    "fairness-gaps.csv",
+    "fairness-gender-inclusive.csv",
+    "fairness-group-intervals.csv",
+    "fairness-group-metrics.csv",
+    "fairness-threshold-05.csv",
+    "outcome-counts.csv",
+    "primary-coefficients.csv",
+    "split-counts.csv",
+    "split-membership.csv",
+    "test-metric-intervals.csv",
+    "test-metrics.csv",
+    "test-predictions.csv",
+    "training-course-attendance.csv",
+    "training-course-composition.csv",
+    "training-course-gender-rates.csv",
+    "training-gender-rates.csv",
+    "training-summary.csv",
+    "validation-thresholds.csv",
+    "variable-timing-audit.csv"
+  ],
+  "independent_checks_passed": 41,
+  "slides": 11,
+  "spoken_slides": 10,
+  "speakers": 4,
+  "pdf_pages": {
+    "01_Presentation.pdf": 11,
+    "02_Speaker_Notes.pdf": 4,
+    "03_中文排练稿.pdf": 5,
+    "04_Defence_Question_Bank.pdf": 14
+  },
+  "planned_seconds_including_transitions": 408,
+  "script_words": 684,
+  "actual_group_rehearsal": "not verified",
+  "cross_format_checks": [
+    "200/284 validation dropouts flagged",
+    "20.3 percentage point gap at 0.31",
+    "13.2 percentage point gap at 0.50",
+    "98 vs 205 total missed",
+    "11 slides opened in desktop PowerPoint"
+  ],
+  "report_body_word_estimate": 1393,
+  "word_count_method": "Rendered prose, including disclosure and headings; omits code, reference entries, figures and tables.",
+  "formal_html_sha256": {
+    "presentation.html": "f249d7288c0aa4e85e3b43cec5d468b3dc2f3275ff3b7974c720117936cc4c0e",
+    "report.html": "4700385c07ae886eaae45fa5884509bd725f446103d669910371ec3cf1603441"
+  },
+  "public_artifacts_sha256": {
+    "output/powerpoint/Student_Dropout_Presentation.pptx": "5b64ae8d968d3f8d864583619cb5acc91f03e93dfa2c7c867476bfcf363a5df6",
+    "output/reading-pdfs/01_Presentation.pdf": "b0f5b576d9cbe1d60969a5b072701bc95b139c9c45137c730f7e02b9f504e451",
+    "output/reading-pdfs/02_Speaker_Notes.pdf": "145b823333fa6f42621aa193c0ef975d1d9cc3f6dfba80d01143eb35e39ca1d3"
+  }
+}
