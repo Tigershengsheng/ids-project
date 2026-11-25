@@ -50,12 +50,22 @@
   "report_body_word_estimate": 1393,
   "word_count_method": "Rendered prose, including disclosure and headings; omits code, reference entries, figures and tables.",
   "formal_html_sha256": {
-    "presentation.html": "f249d7288c0aa4e85e3b43cec5d468b3dc2f3275ff3b7974c720117936cc4c0e",
+    "presentation.html": "97bb4b235e9ca77372123daafe4dd1d53991384855d53f738d32306c0924937b",
     "report.html": "4700385c07ae886eaae45fa5884509bd725f446103d669910371ec3cf1603441"
   },
   "public_artifacts_sha256": {
-    "output/powerpoint/Student_Dropout_Presentation.pptx": "5b64ae8d968d3f8d864583619cb5acc91f03e93dfa2c7c867476bfcf363a5df6",
-    "output/reading-pdfs/01_Presentation.pdf": "b0f5b576d9cbe1d60969a5b072701bc95b139c9c45137c730f7e02b9f504e451",
+    "output/powerpoint/Student_Dropout_Presentation.pptx": "f2a85133dc2cb6a07b4d969349aacfb7c06626405fa1ab583f5a8b76a4c7cbb2",
+    "output/reading-pdfs/01_Presentation.pdf": "94e4ce4e5a33dbaa8b94a524f0bf60776a76440620247f28e2a574b89e04203d",
     "output/reading-pdfs/02_Speaker_Notes.pdf": "145b823333fa6f42621aa193c0ef975d1d9cc3f6dfba80d01143eb35e39ca1d3"
+  },
+  "cover_revision": {
+    "date": "2026-11-25",
+    "names": [
+      "Tiger",
+      "Harry",
+      "Reiyume",
+      "yingcheLiu"
+    ],
+    "verified": "HTML, editable PowerPoint and both PDF renders; slides 2–11 pixel-identical in the browser"
   }
 }

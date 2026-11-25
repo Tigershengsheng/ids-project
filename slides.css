@@ -43,6 +43,8 @@
   font-size: 16px; line-height: 1.27; color: var(--muted);
 }
 .cover-grid { display: grid; grid-template-columns: 1.42fr .75fr; align-items: center; gap: 50px; margin-top: 15px; }
+.cover-credits { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; font-size: 19px; }
+.cover-source { font-size: 16px; }
 .title-pair h1 { font-size: 77px; letter-spacing: -3px; line-height: .99; margin: 0 0 20px; }
 .title-pair .subtitle { font-size: 36px; line-height: 1.14; color: var(--teal); max-width: 510px; }
 .title-pair .cover-question { max-width: 505px; margin-top: 39px; font-size: 22px; line-height: 1.36; }

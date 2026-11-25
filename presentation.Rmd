@@ -1,7 +1,7 @@
 ---
 title: "Student dropout warnings"
 subtitle: "How accurate are they, and who gets missed?"
-author: "Strong Tiger"
+author: "Strong Tiger — Tiger, Harry, Reiyume and yingcheLiu"
 institute: "University of Edinburgh"
 date: "24 November 2026"
 output:
@@ -65,7 +65,10 @@ class: cover
 <div class="title-pair"><h1>Student dropout<br>warnings</h1><div class="subtitle">How accurate are they,<br>and who gets missed?</div><div class="cover-question">Before first-term grades arrive, who might a university reach out to?</div></div>
 <div class="cover-art"><div class="figure-wrap">`r chart("cohort", paste(num(r$audit$rows), "dots, one for each student record in the dataset"), 360)`</div><div class="caption">`r num(r$audit$rows)` records · one dot per record</div></div>
 </div>
-<div class="foot">Strong Tiger · UCI Machine Learning Repository, dataset 697</div>
+<div class="foot cover-credits">
+<div><strong>Strong Tiger</strong><br>Tiger · Harry · Reiyume · yingcheLiu</div>
+<div class="cover-source">UCI Machine Learning Repository, dataset 697</div>
+</div>
 
 ???
 
