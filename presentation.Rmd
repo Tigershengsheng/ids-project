@@ -67,12 +67,10 @@ campus_scene <- function(slide, alt) {
 
 class: cover
 
-`r campus_scene(1, "student walking toward a university classroom")`
-
 <div class="eyebrow">University of Edinburgh · Introduction to Data Science</div>
 <div class="cover-grid">
 <div class="title-pair"><h1>Student dropout<br>warnings</h1><div class="subtitle">How accurate are they,<br>and who gets missed?</div><div class="cover-question">Before first-term grades arrive, who might a university reach out to?</div></div>
-<div class="cover-art"><div class="figure-wrap">`r chart("cohort", paste(num(r$audit$rows), "dots, one for each student record in the dataset"), 360)`</div><div class="caption">`r num(r$audit$rows)` records · one dot per record</div></div>
+<div class="cover-art"><div class="cover-cohort"><div class="figure-wrap">`r chart("cohort", paste(num(r$audit$rows), "dots, one for each student record in the dataset"), 360)`</div><div class="caption">`r num(r$audit$rows)` records · one dot per record</div></div>`r campus_scene(1, "student walking toward a university classroom")`</div>
 </div>
 <div class="foot cover-credits">
 <div><strong>Strong Tiger</strong><br>Tiger · Harry · Reiyume · yingcheLiu</div>
@@ -84,8 +82,6 @@ class: cover
 `r spoken[1]`
 
 ---
-
-`r campus_scene(2, "university corridor and classroom door")`
 
 <div class="eyebrow">The outcome</div>
 <h1>What counts as a dropout?</h1>
@@ -101,8 +97,6 @@ class: cover
 
 ---
 
-`r campus_scene(3, "notebook on a library desk")`
-
 <div class="eyebrow">Training data · `r num(r$configuration$training_n)` students</div>
 <h1>The groups overlap at enrolment</h1>
 <div class="figure-wrap">`r chart("profiles", "Training boxplots by recorded outcome. The median ages for Graduate, Enrolled and Dropout are 19, 20 and 22 years. Grades overlap across groups.", 324)`</div>
@@ -114,8 +108,6 @@ class: cover
 `r spoken[3]`
 
 ---
-
-`r campus_scene(4, "university enrolment desk")`
 
 <div class="eyebrow">Enrolment-time prediction</div>
 <h1>From enrolment records to a warning score</h1>
@@ -134,8 +126,6 @@ class: cover
 
 ---
 
-`r campus_scene(5, "campus stairs")`
-
 <div class="eyebrow">Choosing a rule · validation only</div>
 <h1>Why draw the line at `r chosen`?</h1>
 <div class="two-col choice-grid">
@@ -149,8 +139,6 @@ class: cover
 `r spoken[5]`
 
 ---
-
-`r campus_scene(6, "folders on a university staff desk")`
 
 <div class="eyebrow">Held-out test set · `r num(m$n)` students · cutoff `r chosen`</div>
 <h1>Who received a warning on the test set?</h1>
@@ -171,15 +159,16 @@ class: cover
 
 ---
 
-`r campus_scene(7, "adviser sorting follow-up folders")`
-
 <div class="eyebrow">Two cutoffs · same test students and scores</div>
 <h1>More students reached, more follow-up</h1>
 <table class="compare-table"><thead><tr><th>Cutoff</th><th>Recorded dropouts found</th><th>False warnings</th></tr></thead>
 <tbody><tr><td>0.50</td><td>`r comparison$TP`</td><td>`r comparison$FP`</td></tr>
 <tr class="chosen"><td>`r chosen`</td><td>`r m$TP`</td><td>`r m$FP`</td></tr></tbody></table>
 <div class="table-interpretation">At `r chosen` we found <strong>`r m$TP - comparison$TP` more</strong> dropout records and issued <strong>`r m$FP - comparison$FP` more</strong> false warnings.</div>
+<div class="capacity-layout">
+`r campus_scene(7, "adviser sorting follow-up folders")`
 <div class="capacity-note"><strong>Could advisers follow up?</strong> If staff can handle `r num(warnings - (comparison$TP + comparison$FP))` extra check-ins in a group this size, the lower cutoff may be worthwhile.</div>
+</div>
 <div class="foot">A false warning flags a student with no recorded dropout by the endpoint. Both cutoffs use the same test scores.</div>
 
 ???
@@ -189,8 +178,6 @@ class: cover
 ---
 
 class: fair-page
-
-`r campus_scene(8, "empty chair in a tutoring room")`
 
 <div class="eyebrow">Recorded gender · `r num(actual)` test students with a dropout record</div>
 <h1>Who did the rule miss?</h1>
@@ -206,8 +193,6 @@ class: fair-page
 
 class: fair-page
 
-`r campus_scene(9, "two rows of seats in a classroom")`
-
 <div class="eyebrow">Same students · the higher cutoff added for comparison</div>
 <h1>A smaller gap can mean more missed students</h1>
 <div class="figure-wrap">`r chart("thresholds", paste0("At 0.31: female 64/144, male 34/141. At 0.50: female 113/144, male 92/141. Both groups have higher miss rates at 0.50."), 293)`</div>
@@ -220,14 +205,15 @@ class: fair-page
 
 ---
 
-`r campus_scene(10, "student meeting an academic adviser")`
-
 <div class="eyebrow">What the evidence can support</div>
 <h1>What a university could do next</h1>
+<div class="support-layout">
+`r campus_scene(10, "student meeting an academic adviser")`
 <div class="end-actions">
 <div class="action"><div class="action-title">Offer a conversation</div><div class="action-copy">Let a person check the record and ask what support would help.</div></div>
 <div class="action"><div class="action-title">Plan for the workload</div><div class="action-copy">The primary rule flagged `r warnings` of `r num(m$n)` test students.</div></div>
 <div class="action"><div class="action-title">Test the next cohort</div><div class="action-copy">Check who is missed locally and evaluate the effect of outreach.</div></div>
+</div>
 </div>
 <div class="foot">One institution and historical enrolments. These data measure recorded outcomes; the effect of offering support needs its own evaluation.</div>
 
@@ -236,8 +222,6 @@ class: fair-page
 `r spoken[10]`
 
 ---
-
-`r campus_scene(11, "university library shelves")`
 
 <div class="eyebrow">Strong Tiger · Introduction to Data Science</div>
 <h1>Sources and acknowledgements</h1>
