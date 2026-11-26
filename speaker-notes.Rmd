@@ -79,17 +79,17 @@ Our talk is planned for **6 minutes 48 seconds**, including handovers, pointing 
 35 seconds. Point once to the chosen cutoff. The 70% target was our project choice. It is a goal on the validation records.
 :::
 
-## Slide 6: Two ways to read the same 187 students
+## Slide 6: Who received a warning on the test set?
 
 ::: {.spoken data-slide="6" data-speaker="Speaker 3"}
 `r talk[6]`
 :::
 
 ::: {.cue}
-46 seconds. Keep a finger on 187 while switching bars, then point to 285 and 409. The denominator changes even though the numerator stays the same.
+46 seconds. Point to 409 warnings and 98 missed students. Then point to the no-warning example and explain why its accuracy looks high.
 :::
 
-## Slide 7: A lower threshold catches more and flags more
+## Slide 7: More students reached, more follow-up
 
 ::: {.spoken data-slide="7" data-speaker="Speaker 3"}
 `r talk[7]`

@@ -175,21 +175,23 @@ def read_notes(build, root, count):
         raise ValueError('Missing slide-specific presenter notes. Rebuild speaker-notes.html first.')
     return notes
 
-def image_object(page, plan, keep_pixels):
-    """Match a single displayed R plot to its real PDF image box, including object-fit."""
-    images = [b for b in page.get_text('dict')['blocks'] if b['type'] == 1]
+def image_object(page, plan):
+    """Match each browser image to its printed image bounds."""
+    images = [block for block in page.get_text('dict')['blocks'] if block['type'] == 1]
     if len(plan['images']) != len(images):
         raise ValueError(f"Image roster differs on {plan['title']!r}: {len(plan['images'])} vs {len(images)}")
-    if len(images) > 1:
-        raise ValueError('Check source-to-image ordering before exporting a multi-image slide.')
-    for source, block in zip(plan['images'], images):
-        asset = Path(source['asset'])
+    for source in plan['images']:
+        target = (source['x'] * page.rect.width, source['y'] * page.rect.height,
+                  (source['x'] + source['w']) * page.rect.width,
+                  (source['y'] + source['h']) * page.rect.height)
+        block = min(images, key=lambda candidate: sum(abs(a-b) for a,b in zip(candidate['bbox'], target)))
+        images.remove(block)
         rect = pymupdf.Rect(block['bbox'])
-        info = min(page.get_image_info(xrefs=True), key=lambda obj: sum(abs(a-b) for a,b in zip(obj['bbox'],rect)))
+        info = min(page.get_image_info(xrefs=True), key=lambda obj: sum(abs(a-b) for a,b in zip(obj['bbox'], rect)))
         if not info['xref']:
-            raise ValueError(f'Could not identify the image on {plan["title"]!r}')
-        # Relative asset paths come from the current R Markdown, independent of slide number.
-        yield asset, rect, info['xref'], block['image'] if keep_pixels else None
+            raise ValueError(f"Could not identify the image on {plan['title']!r}")
+        yield Path(source['asset']), rect, info['xref'], block['image'], source['alt']
+
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
@@ -206,16 +208,16 @@ def main():
         for n, (page, plan) in enumerate(zip(printed,source['slides']), 1):
             sx, sy = 1280/page.rect.width, 720/page.rect.height
             elements = extract_page(page, (0,0,1280,720))
-            for asset, rect, xref, pixels in image_object(page, plan, True):
+            for asset, rect, xref, pixels, alt in image_object(page, plan):
                 if asset.is_absolute() or '..' in asset.parts or not asset.stem:
                     raise ValueError(f'Missing or invalid R figure asset on slide {n}')
                 if len(asset.parts) == 1:
                     asset = Path('figures')/asset
                 box = (rect.x0*sx, rect.y0*sy, rect.width*sx, rect.height*sy)
-                if asset.stem == 'talk-cohort':
+                if asset.stem == 'talk-cohort' or asset.parts[0] == 'img':
                     # The cover's 4,424 dots form one replaceable illustration.
                     elements.append(dict(type='image',data=base64.b64encode(pixels).decode(),
-                                         x=box[0],y=box[1],w=box[2],h=box[3],alt=plan['images'][0]['alt']))
+                                         x=box[0],y=box[1],w=box[2],h=box[3],alt=alt, mime='image/jpeg' if pixels.startswith(b'\xff\xd8') else 'image/png'))
                 else:
                     with pymupdf.open(root/asset.with_suffix('.pdf')) as graphic:
                         elements += extract_page(graphic[0], box)

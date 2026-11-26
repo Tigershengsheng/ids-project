@@ -18,7 +18,7 @@ for(const page of data.slides){
   for(const item of page.elements){
     const name=`source-${page.number}-${++counter}`;
     if(item.type==='image'){
-      slide.images.add({blob:Buffer.from(item.data,'base64'),contentType:'image/png',alt:item.alt || 'R illustration',
+      slide.images.add({blob:Buffer.from(item.data,'base64'),contentType:item.mime || 'image/png',alt:item.alt || 'R illustration',
         position:{left:item.x,top:item.y,width:item.w,height:item.h},fit:'contain'});
     }else if(item.type==='path'){
       const points=item.commands.flatMap(c=>c.moveTo?[c.moveTo]:c.lineTo?[c.lineTo]:c.cubicBezTo?[

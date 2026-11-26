@@ -381,10 +381,10 @@ overlap at enrolment</a></li>
 enrolment records to a warning score</a></li>
 <li><a href="#slide-5-why-draw-the-line-at-0.31" id="toc-slide-5-why-draw-the-line-at-0.31">Slide 5: Why draw the line at
 0.31?</a></li>
-<li><a href="#slide-6-two-ways-to-read-the-same-187-students" id="toc-slide-6-two-ways-to-read-the-same-187-students">Slide 6: Two
-ways to read the same 187 students</a></li>
-<li><a href="#slide-7-a-lower-threshold-catches-more-and-flags-more" id="toc-slide-7-a-lower-threshold-catches-more-and-flags-more">Slide 7:
-A lower threshold catches more and flags more</a></li>
+<li><a href="#slide-6-who-received-a-warning-on-the-test-set" id="toc-slide-6-who-received-a-warning-on-the-test-set">Slide 6: Who
+received a warning on the test set?</a></li>
+<li><a href="#slide-7-more-students-reached-more-follow-up" id="toc-slide-7-more-students-reached-more-follow-up">Slide 7: More
+students reached, more follow-up</a></li>
 <li><a href="#slide-8-who-did-the-rule-miss" id="toc-slide-8-who-did-the-rule-miss">Slide 8: Who did the rule
 miss?</a></li>
 <li><a href="#slide-9-a-smaller-gap-can-mean-more-missed-students" id="toc-slide-9-a-smaller-gap-can-mean-more-missed-students">Slide 9: A
@@ -517,42 +517,40 @@ frozen model’s separate test AUC is 0.718.</p>
 <div id="slide-5-why-draw-the-line-at-0.31" class="section level2">
 <h2>Slide 5: Why draw the line at 0.31?</h2>
 <div class="spoken" data-slide="5" data-speaker="Speaker 3">
-<p>We wanted our rule to find at least seven in ten dropout records in
-validation. Among the cutoffs that met that target, we chose the one
-with the fewest false warnings. The cutoff was 0.31. A student with a
-score at or above that value received a warning. We caught 200 of 284
-validation dropouts. We then kept the rule fixed and tried it on the
-test records.</p>
+<p>We chose the cutoff on the validation set. Our target was to flag at
+least seven in ten students with recorded dropout. Among the cutoffs
+that met it, we picked the one with the fewest false warnings. At 0.31,
+we flagged 200 of 284 such students in validation. Then we froze the
+cutoff and evaluated it on a separate test set.</p>
 </div>
 <div class="cue">
 <p>35 seconds. Point once to the chosen cutoff. The 70% target was our
 project choice. It is a goal on the validation records.</p>
 </div>
 </div>
-<div id="slide-6-two-ways-to-read-the-same-187-students" class="section level2">
-<h2>Slide 6: Two ways to read the same 187 students</h2>
+<div id="slide-6-who-received-a-warning-on-the-test-set" class="section level2">
+<h2>Slide 6: Who received a warning on the test set?</h2>
 <div class="spoken" data-slide="6" data-speaker="Speaker 3">
-<p>On the test set, 187 students received a warning and later had a
-dropout recorded. Take those students as a share of all 285 dropout
-records and we found 65.6%. That’s sensitivity. Now count them among all
-409 warnings. Only 45.7% matched a dropout record. That’s precision. A
-rule that never warned anyone would still be right about 68% of the time
-here. It would miss every single dropout.</p>
+<p>On the test set, 409 students received a warning. 187 of them had
+recorded dropout, and another 98 students with recorded dropout received
+no warning. Now imagine we warned nobody. We’d correctly leave the 604
+students with no recorded dropout unflagged. That’s 67.9% accuracy, even
+though we’d miss every one of the 285 students with recorded
+dropout.</p>
 </div>
 <div class="cue">
-<p>46 seconds. Keep a finger on 187 while switching bars, then point to
-285 and 409. The denominator changes even though the numerator stays the
-same.</p>
+<p>46 seconds. Point to 409 warnings and 98 missed students. Then point
+to the no-warning example and explain why its accuracy looks high.</p>
 </div>
 </div>
-<div id="slide-7-a-lower-threshold-catches-more-and-flags-more" class="section level2">
-<h2>Slide 7: A lower threshold catches more and flags more</h2>
+<div id="slide-7-more-students-reached-more-follow-up" class="section level2">
+<h2>Slide 7: More students reached, more follow-up</h2>
 <div class="spoken" data-slide="7" data-speaker="Speaker 3">
-<p>What did the lower cutoff buy us? Compared with 0.50, we found 107
-more dropout records. We also issued 177 more false warnings. Those
-extra invitations would take real staff time. We still missed 98
-students with a recorded dropout. Were those misses distributed
-evenly?</p>
+<p>Dropping the cutoff from 0.50 to 0.31 means 284 more students to
+follow up with on this test set. We’d reach 107 more students who later
+had a dropout recorded and issue 177 more false warnings. If the
+university can handle those extra check-ins, the lower cutoff may be
+worthwhile. We still missed 98 students. Who were they?</p>
 </div>
 <div class="cue">
 <p>30 seconds, including the handover. Let the question land. Speaker 4

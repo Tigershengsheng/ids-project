@@ -56,9 +56,18 @@ chart <- function(name, alt, height) {
   sprintf('<img class="data-figure" data-asset="%s" src="%s" alt="%s" style="max-height:%dpx">',
           path, knitr::image_uri(path), htmltools::htmlEscape(alt, attribute=TRUE), height)
 }
+
+campus_scene <- function(slide, alt) {
+  path <- sprintf("img/talk-scenes/scene-%02d.jpg", slide)
+  sprintf('<img class="campus-scene" data-asset="%s" src="%s" alt="%s">',
+          path, knitr::image_uri(path),
+          htmltools::htmlEscape(paste("AI-generated illustration:", alt), attribute=TRUE))
+}
 ```
 
 class: cover
+
+`r campus_scene(1, "student walking toward a university classroom")`
 
 <div class="eyebrow">University of Edinburgh · Introduction to Data Science</div>
 <div class="cover-grid">
@@ -76,6 +85,8 @@ class: cover
 
 ---
 
+`r campus_scene(2, "university corridor and classroom door")`
+
 <div class="eyebrow">The outcome</div>
 <h1>What counts as a dropout?</h1>
 <div class="two-col">
@@ -90,6 +101,8 @@ class: cover
 
 ---
 
+`r campus_scene(3, "notebook on a library desk")`
+
 <div class="eyebrow">Training data · `r num(r$configuration$training_n)` students</div>
 <h1>The groups overlap at enrolment</h1>
 <div class="figure-wrap">`r chart("profiles", "Training boxplots by recorded outcome. The median ages for Graduate, Enrolled and Dropout are 19, 20 and 22 years. Grades overlap across groups.", 324)`</div>
@@ -101,6 +114,8 @@ class: cover
 `r spoken[3]`
 
 ---
+
+`r campus_scene(4, "university enrolment desk")`
 
 <div class="eyebrow">Enrolment-time prediction</div>
 <h1>From enrolment records to a warning score</h1>
@@ -119,10 +134,12 @@ class: cover
 
 ---
 
+`r campus_scene(5, "campus stairs")`
+
 <div class="eyebrow">Choosing a rule · validation only</div>
 <h1>Why draw the line at `r chosen`?</h1>
 <div class="two-col choice-grid">
-<div><div class="stat">`r chosen`</div><div class="stat-label">Warn at or above this score.</div><div class="body-copy">Aim for at least 70% sensitivity, then choose the highest specificity.</div><div class="threshold-result"><strong>`r found_validation` / `r n_validation_dropout`</strong> dropout records found</div></div>
+<div><div class="stat">`r chosen`</div><div class="stat-label">Warn at or above this score.</div><div class="body-copy">Catch at least 70% of validation dropouts, then minimise false warnings.</div><div class="threshold-result"><strong>`r found_validation` / `r n_validation_dropout`</strong> students with recorded dropout flagged in validation (`r pct(r$threshold_row$Sensitivity)`).</div></div>
 <div class="figure-wrap">`r chart("validation", "Validation sensitivity falls as the threshold rises. Specificity rises. The marked threshold meets our illustrative 70 per cent sensitivity target.", 340)`</div>
 </div>
 <div class="foot">Our illustrative support target. We compared thresholds from 0.05 to 0.80 in steps of 0.01.</div>
@@ -133,11 +150,20 @@ class: cover
 
 ---
 
-<div class="eyebrow">Test results · `r num(m$n)` students · cutoff `r chosen`</div>
-<h1>Two ways to read the same `r m$TP` students</h1>
-<div class="figure-wrap test-bars">`r chart("denominators", paste0("Sensitivity: ", m$TP, " of ", actual, ", ", pct(m$Sensitivity), ". Precision: ", m$TP, " of ", warnings, ", ", pct(m$PPV), "."), 266)`</div>
-<div class="performance-foot">Always issuing no warnings gives <strong>`r pct(baseline$Accuracy)` accuracy</strong> and finds <strong>zero</strong> dropouts.</div>
-<div class="foot">Top bar: sensitivity. Bottom bar: precision. Test ROC AUC `r num(m$AUC, 3)` measures how well the scores rank students across thresholds.</div>
+`r campus_scene(6, "folders on a university staff desk")`
+
+<div class="eyebrow">Held-out test set · `r num(m$n)` students · cutoff `r chosen`</div>
+<h1>Who received a warning on the test set?</h1>
+<div class="test-summary">
+<div class="test-result"><strong>`r num(warnings)`</strong><span>students received a warning</span></div>
+<div class="test-result"><strong>`r num(m$TP)`</strong><span>of those warnings matched a recorded dropout</span></div>
+<div class="test-result"><strong>`r num(m$FN)`</strong><span>students with recorded dropout received no warning</span></div>
+</div>
+<div class="baseline-explanation">
+<strong>What if we warned nobody?</strong>
+<div>Of the `r num(baseline$n)` test students, `r num(baseline$TN)` had no recorded dropout. Predicting that outcome for everyone would be right `r pct(baseline$Accuracy)` of the time and miss all `r num(actual)` students with recorded dropout.</div>
+</div>
+<div class="foot">The test set contained `r num(actual)` students with recorded dropout. The cutoff was chosen earlier on the separate validation set.</div>
 
 ???
 
@@ -145,13 +171,16 @@ class: cover
 
 ---
 
+`r campus_scene(7, "adviser sorting follow-up folders")`
+
 <div class="eyebrow">Two cutoffs · same test students and scores</div>
-<h1>A lower threshold catches more and flags more</h1>
+<h1>More students reached, more follow-up</h1>
 <table class="compare-table"><thead><tr><th>Cutoff</th><th>Recorded dropouts found</th><th>False warnings</th></tr></thead>
 <tbody><tr><td>0.50</td><td>`r comparison$TP`</td><td>`r comparison$FP`</td></tr>
 <tr class="chosen"><td>`r chosen`</td><td>`r m$TP`</td><td>`r m$FP`</td></tr></tbody></table>
 <div class="table-interpretation">At `r chosen` we found <strong>`r m$TP - comparison$TP` more</strong> dropout records and issued <strong>`r m$FP - comparison$FP` more</strong> false warnings.</div>
-<div class="foot">A false warning means someone was flagged and had no recorded dropout by the endpoint. The scores have the same test AUC at both cutoffs.</div>
+<div class="capacity-note"><strong>Could advisers follow up?</strong> If staff can handle `r num(warnings - (comparison$TP + comparison$FP))` extra check-ins in a group this size, the lower cutoff may be worthwhile.</div>
+<div class="foot">A false warning flags a student with no recorded dropout by the endpoint. Both cutoffs use the same test scores.</div>
 
 ???
 
@@ -160,6 +189,8 @@ class: cover
 ---
 
 class: fair-page
+
+`r campus_scene(8, "empty chair in a tutoring room")`
 
 <div class="eyebrow">Recorded gender · `r num(actual)` test students with a dropout record</div>
 <h1>Who did the rule miss?</h1>
@@ -175,6 +206,8 @@ class: fair-page
 
 class: fair-page
 
+`r campus_scene(9, "two rows of seats in a classroom")`
+
 <div class="eyebrow">Same students · the higher cutoff added for comparison</div>
 <h1>A smaller gap can mean more missed students</h1>
 <div class="figure-wrap">`r chart("thresholds", paste0("At 0.31: female 64/144, male 34/141. At 0.50: female 113/144, male 92/141. Both groups have higher miss rates at 0.50."), 293)`</div>
@@ -186,6 +219,8 @@ class: fair-page
 `r spoken[9]`
 
 ---
+
+`r campus_scene(10, "student meeting an academic adviser")`
 
 <div class="eyebrow">What the evidence can support</div>
 <h1>What a university could do next</h1>
@@ -202,6 +237,8 @@ class: fair-page
 
 ---
 
+`r campus_scene(11, "university library shelves")`
+
 <div class="eyebrow">Strong Tiger · Introduction to Data Science</div>
 <h1>Sources and acknowledgements</h1>
 <div class="ref-grid">
@@ -212,6 +249,6 @@ class: fair-page
 <p>IDS modelling, uncertainty and cross-validation lectures; <a href="https://uoeids.github.io/labs/lab-08/lab-08.html">Lab 08</a> on ROC curves.</p>
 <p>Quiz 7 prompted our review of <a href="https://www.data-to-viz.com/caveat/boxplot.html">boxplots</a> and <a href="https://www.data-to-viz.com/caveat/error_bar.html">interval labels</a> in Data to Viz.</p></div>
 </div>
-<div class="disclosure">ChatGPT/Codex assisted with code and text drafts, explanations, source checks and slide production. Details and responsibilities are recorded in the report.</div>
+<div class="disclosure">ChatGPT/Codex assisted with code and text drafts, explanations, source checks, slide production and AI-generated campus illustrations. Details and responsibilities are recorded in the report.</div>
 <div class="foot"><a href="https://github.com/Tigershengsheng/ids-project">Project repository</a> · R source, data, analysis and full references</div>
 

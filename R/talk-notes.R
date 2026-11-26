@@ -14,6 +14,10 @@ talk_notes <- function() {
   male <- subset(rate, gender == "Male")
   women50 <- subset(alt, gender == "Female")
   men50 <- subset(alt, gender == "Male")
+  config <- jsonlite::read_json("results/frozen-configuration.json")
+  validation <- subset(read_result("validation-thresholds.csv"), abs(threshold - config$threshold) < 1e-8)
+  validation_dropouts <- sum(subset(read_result("split-counts.csv"),
+                                   split == "Validation" & target == "Dropout")$n)
   # The stored gap runs male minus female. Reverse the sign and the interval ends together.
   gap <- subset(read_result("fairness-gaps.csv"), metric == "FNR")
   c(
@@ -31,32 +35,27 @@ talk_notes <- function() {
       ". A score still leaves a practical question. When should it trigger a warning?"
     ),
 
-    "We wanted our rule to find at least seven in ten dropout records in validation. Among the cutoffs that met that target, we chose the one with the fewest false warnings. The cutoff was 0.31. A student with a score at or above that value received a warning. We caught 200 of 284 validation dropouts. We then kept the rule fixed and tried it on the test records.",
-
     paste0(
-      "On the test set, ",
-      num(selected$TP),
-      " students received a warning and later had a dropout recorded. Take those students as a share of all ",
-      num(selected$TP + selected$FN),
-      " dropout records and we found ",
-      pct(selected$Sensitivity),
-      ". That's sensitivity. Now count them among all ",
-      num(selected$TP + selected$FP),
-      " warnings. Only ",
-      pct(selected$PPV),
-      " matched a dropout record. That's precision. A rule that never warned anyone would still be right about ",
-      pct(baseline$Accuracy,0),
-      " of the time here. It would miss every single dropout."
+      "We chose the cutoff on the validation set. Our target was to flag at least seven in ten students with recorded dropout. Among the cutoffs that met it, we picked the one with the fewest false warnings. At 0.31, we flagged ",
+      num(round(validation_dropouts * validation$Sensitivity)), " of ", num(validation_dropouts),
+      " such students in validation. Then we froze the cutoff and evaluated it on a separate test set."
     ),
 
     paste0(
-      "What did the lower cutoff buy us? Compared with 0.50, we found ",
-      num(selected$TP-comparison$TP),
-      " more dropout records. We also issued ",
-      num(selected$FP-comparison$FP),
-      " more false warnings. Those extra invitations would take real staff time. We still missed ",
-      num(selected$FN),
-      " students with a recorded dropout. Were those misses distributed evenly?"
+      "On the test set, ", num(selected$TP + selected$FP), " students received a warning. ",
+      num(selected$TP), " of them had recorded dropout, and another ", num(selected$FN),
+      " students with recorded dropout received no warning. Now imagine we warned nobody. We'd correctly leave the ",
+      num(baseline$TN), " students with no recorded dropout unflagged. That's ",
+      pct(baseline$Accuracy), " accuracy, even though we'd miss every one of the ",
+      num(baseline$FN), " students with recorded dropout."
+    ),
+
+    paste0(
+      "Dropping the cutoff from 0.50 to 0.31 means ", num((selected$TP + selected$FP) - (comparison$TP + comparison$FP)),
+      " more students to follow up with on this test set. We'd reach ", num(selected$TP-comparison$TP),
+      " more students who later had a dropout recorded and issue ", num(selected$FP-comparison$FP),
+      " more false warnings. If the university can handle those extra check-ins, the lower cutoff may be worthwhile. We still missed ",
+      num(selected$FN), " students. Who were they?"
     ),
 
     paste0(

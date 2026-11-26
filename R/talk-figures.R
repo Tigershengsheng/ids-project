@@ -59,7 +59,7 @@ talk_figures <- function(r) {
                          age = rows[["Age at enrollment"]], grade = rows[["Admission grade"]])
   long <- tidyr::pivot_longer(training, c(age, grade), names_to = "measure", values_to = "value")
   long$measure <- factor(long$measure, levels = c("age", "grade"),
-                         labels = c("Age at enrolment (years)", "Admission grade (0–200 points)"))
+                         labels = c("Age at enrolment (years)", "Admission grade (out of 200)"))
   count <- table(training$outcome)
   labels <- setNames(paste0(names(count), "\nn = ", num(as.numeric(count))), names(count))
   profiles <- ggplot(long, aes(outcome, value, fill = outcome)) +

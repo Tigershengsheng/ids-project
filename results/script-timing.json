@@ -28,19 +28,19 @@
     {
       "slide": 5,
       "speaker": "Speaker 3",
-      "words": 68,
+      "words": 61,
       "target_seconds": 35
     },
     {
       "slide": 6,
       "speaker": "Speaker 3",
-      "words": 69,
+      "words": 57,
       "target_seconds": 46
     },
     {
       "slide": 7,
       "speaker": "Speaker 3",
-      "words": 45,
+      "words": 58,
       "target_seconds": 30
     },
     {
@@ -62,6 +62,6 @@
       "target_seconds": 32
     }
   ],
-  "total_words": 684,
+  "total_words": 678,
   "target_seconds": 408
 }
