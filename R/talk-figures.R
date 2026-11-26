@@ -2,7 +2,7 @@
 # a model or a threshold. Both charts of group misses use the same scale.
 talk_figures <- function(r) {
   suppressPackageStartupMessages(library(ggplot2))
-  paper <- "#F5F2EC"
+  paper <- "#FFFFFF"
   ink <- "#172D30"
   muted <- "#445B59"
   teal <- "#086764"

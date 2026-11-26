@@ -56,13 +56,6 @@ chart <- function(name, alt, height) {
   sprintf('<img class="data-figure" data-asset="%s" src="%s" alt="%s" style="max-height:%dpx">',
           path, knitr::image_uri(path), htmltools::htmlEscape(alt, attribute=TRUE), height)
 }
-
-campus_scene <- function(slide, alt) {
-  path <- sprintf("img/talk-scenes/scene-%02d.jpg", slide)
-  sprintf('<img class="campus-scene" data-asset="%s" src="%s" alt="%s">',
-          path, knitr::image_uri(path),
-          htmltools::htmlEscape(paste("AI-generated illustration:", alt), attribute=TRUE))
-}
 ```
 
 class: cover
@@ -70,7 +63,7 @@ class: cover
 <div class="eyebrow">University of Edinburgh · Introduction to Data Science</div>
 <div class="cover-grid">
 <div class="title-pair"><h1>Student dropout<br>warnings</h1><div class="subtitle">How accurate are they,<br>and who gets missed?</div><div class="cover-question">Before first-term grades arrive, who might a university reach out to?</div></div>
-<div class="cover-art"><div class="cover-cohort"><div class="figure-wrap">`r chart("cohort", paste(num(r$audit$rows), "dots, one for each student record in the dataset"), 360)`</div><div class="caption">`r num(r$audit$rows)` records · one dot per record</div></div>`r campus_scene(1, "student walking toward a university classroom")`</div>
+<div class="cover-art"><div class="cover-cohort"><div class="figure-wrap">`r chart("cohort", paste(num(r$audit$rows), "dots, one for each student record in the dataset"), 360)`</div><div class="caption">`r num(r$audit$rows)` records · one dot per record</div></div></div>
 </div>
 <div class="foot cover-credits">
 <div><strong>Strong Tiger</strong><br>Tiger · Harry · Reiyume · yingcheLiu</div>
@@ -99,7 +92,7 @@ class: cover
 
 <div class="eyebrow">Training data · `r num(r$configuration$training_n)` students</div>
 <h1>The groups overlap at enrolment</h1>
-<div class="figure-wrap">`r chart("profiles", "Training boxplots by recorded outcome. The median ages for Graduate, Enrolled and Dropout are 19, 20 and 22 years. Grades overlap across groups.", 324)`</div>
+<div class="figure-wrap">`r chart("profiles", "Training boxplots by recorded outcome. The median ages for Graduate, Enrolled and Dropout are 19, 20 and 22 years. Grades overlap across groups.", 370)`</div>
 <div class="takeaway">Median age was `r num(age_median["Dropout"])` for the dropout group and `r num(age_median["Graduate"])` for graduates. Admission grades overlapped too.</div>
 <div class="foot">The line inside each box is the median. Quiz 7 led us to <a href="https://www.data-to-viz.com/caveat/boxplot.html">Data to Viz</a>; group sizes are printed beneath each box.</div>
 
@@ -165,10 +158,7 @@ class: cover
 <tbody><tr><td>0.50</td><td>`r comparison$TP`</td><td>`r comparison$FP`</td></tr>
 <tr class="chosen"><td>`r chosen`</td><td>`r m$TP`</td><td>`r m$FP`</td></tr></tbody></table>
 <div class="table-interpretation">At `r chosen` we found <strong>`r m$TP - comparison$TP` more</strong> dropout records and issued <strong>`r m$FP - comparison$FP` more</strong> false warnings.</div>
-<div class="capacity-layout">
-`r campus_scene(7, "adviser sorting follow-up folders")`
 <div class="capacity-note"><strong>Could advisers follow up?</strong> If staff can handle `r num(warnings - (comparison$TP + comparison$FP))` extra check-ins in a group this size, the lower cutoff may be worthwhile.</div>
-</div>
 <div class="foot">A false warning flags a student with no recorded dropout by the endpoint. Both cutoffs use the same test scores.</div>
 
 ???
@@ -181,7 +171,7 @@ class: fair-page
 
 <div class="eyebrow">Recorded gender · `r num(actual)` test students with a dropout record</div>
 <h1>Who did the rule miss?</h1>
-<div class="figure-wrap">`r chart("misses", "Cutoff 0.31. Female: 64 of 144 missed (44.4%). Male: 34 of 141 missed (24.1%). Each denominator counts actual dropout records within that group.", 293)`</div>
+<div class="figure-wrap">`r chart("misses", "Cutoff 0.31. Female: 64 of 144 missed (44.4%). Male: 34 of 141 missed (24.1%). Each denominator counts actual dropout records within that group.", 346)`</div>
 <div class="gap"><div class="gap-main">Female minus male: <strong>`r num(gap, 1)` percentage points</strong></div><div class="gap-sub">95% bootstrap interval for this difference: `r num(limits[1], 1)` to `r num(limits[2], 1)` percentage points.</div></div>
 <div class="foot">`r num(r$bootstrap_reps)` resamples within each recorded-gender group. The fitted model and cutoff stayed fixed.</div>
 
@@ -195,7 +185,7 @@ class: fair-page
 
 <div class="eyebrow">Same students · the higher cutoff added for comparison</div>
 <h1>A smaller gap can mean more missed students</h1>
-<div class="figure-wrap">`r chart("thresholds", paste0("At 0.31: female 64/144, male 34/141. At 0.50: female 113/144, male 92/141. Both groups have higher miss rates at 0.50."), 293)`</div>
+<div class="figure-wrap">`r chart("thresholds", paste0("At 0.31: female 64/144, male 34/141. At 0.50: female 113/144, male 92/141. Both groups have higher miss rates at 0.50."), 346)`</div>
 <div class="gap"><div class="gap-main">Gap: `r num(gap, 1)` → <strong>`r num(other_gap, 1)` percentage points</strong> &nbsp;·&nbsp; Total missed: `r m$FN` → <strong>`r comparison$FN` students</strong></div></div>
 <div class="foot">These are two previously evaluated rules. The primary cutoff remains `r chosen`, chosen on the validation set.</div>
 
@@ -207,13 +197,10 @@ class: fair-page
 
 <div class="eyebrow">What the evidence can support</div>
 <h1>What a university could do next</h1>
-<div class="support-layout">
-`r campus_scene(10, "student meeting an academic adviser")`
 <div class="end-actions">
 <div class="action"><div class="action-title">Offer a conversation</div><div class="action-copy">Let a person check the record and ask what support would help.</div></div>
 <div class="action"><div class="action-title">Plan for the workload</div><div class="action-copy">The primary rule flagged `r warnings` of `r num(m$n)` test students.</div></div>
 <div class="action"><div class="action-title">Test the next cohort</div><div class="action-copy">Check who is missed locally and evaluate the effect of outreach.</div></div>
-</div>
 </div>
 <div class="foot">One institution and historical enrolments. These data measure recorded outcomes; the effect of offering support needs its own evaluation.</div>
 
@@ -233,6 +220,6 @@ class: fair-page
 <p>IDS modelling, uncertainty and cross-validation lectures; <a href="https://uoeids.github.io/labs/lab-08/lab-08.html">Lab 08</a> on ROC curves.</p>
 <p>Quiz 7 prompted our review of <a href="https://www.data-to-viz.com/caveat/boxplot.html">boxplots</a> and <a href="https://www.data-to-viz.com/caveat/error_bar.html">interval labels</a> in Data to Viz.</p></div>
 </div>
-<div class="disclosure">ChatGPT/Codex assisted with code and text drafts, explanations, source checks, slide production and AI-generated campus illustrations. Details and responsibilities are recorded in the report.</div>
+<div class="disclosure">ChatGPT/Codex assisted with code and text drafts, explanations, source checks, slide production and AI-generated campus illustrations in earlier drafts. Details and responsibilities are recorded in the report.</div>
 <div class="foot"><a href="https://github.com/Tigershengsheng/ids-project">Project repository</a> · R source, data, analysis and full references</div>
 

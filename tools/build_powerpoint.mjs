@@ -14,7 +14,7 @@ const presentation=Presentation.create({slideSize:{width:1280,height:720}});
 const spacing=[];
 let counter=0;
 for(const page of data.slides){
-  const slide=presentation.slides.add(); slide.background.fill='#F5F2EC';
+  const slide=presentation.slides.add(); slide.background.fill='#FFFFFF';
   for(const item of page.elements){
     const name=`source-${page.number}-${++counter}`;
     if(item.type==='image'){
